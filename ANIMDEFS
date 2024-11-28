@@ -1,0 +1,56 @@
+switch 1SET00 on sound MSWON pic 1SET01 tics 0
+switch 1SET01 off sound MSWOFF pic 1SET00 tics 0
+//switch 1SET02 on sound HEAL pic 1SET03 tics 0
+//switch 1SET03 off sound HEAL pic 1SET02 tics 0
+switch 1SET36 on sound PUZZ pic 1SET37 tics 0
+switch 1SET37 off sound PUZZ pic 1SET36 tics 0
+switch 2SET00 on sound MSWON pic 2SET01 tics 0
+switch 2SET01 off sound MSWOFF pic 2SET00 tics 0
+//switch 2SET02 on sound HEAL pic 2SET03 tics 0
+//switch 2SET03 off sound HEAL pic 2SET02 tics 0
+switch 2SET36 on sound PUZZ pic 2SET37 tics 0
+switch 2SET37 off sound PUZZ pic 2SET36 tics 0
+switch 3SET00 on sound MSWON pic 3SET01 tics 0
+switch 3SET01 off sound MSWOFF pic 3SET00 tics 0
+//switch 3SET02 on sound HEAL pic 3SET03 tics 0
+//switch 3SET03 off sound HEAL pic 3SET02 tics 0
+switch 3SET35 on sound PUZZ pic 3SET36 tics 0
+switch 3SET36 off sound PUZZ pic 3SET35 tics 0
+switch 4SET00 on sound PSWON pic 4SET01 tics 0
+switch 4SET01 off sound PSWOFF pic 4SET00 tics 0
+//switch 4SET02 on sound PHEAL pic 4SET03 tics 0
+//switch 4SET03 off sound PHEAL pic 4SET02 tics 0
+
+animateddoor 5SET24
+   opensound MarathonDoorClose
+   closesound MarathonDoorOpen
+   pic 5SET24 
+   pic 5SET25 
+   pic 5SET26 
+   pic 5SET27 
+   pic 5SET28 
+   pic 5SET34
+
+animateddoor 5SET29
+   opensound MarathonDoorClose
+   closesound MarathonDoorOpen
+   pic 5SET29 
+   pic 5SET30 
+   pic 5SET31 
+   pic 5SET32 
+   pic 5SET33 
+   pic 5SET34
+
+// no decals allowed on liquids :/
+
+texture 1SET19
+	pic 1SET19 tics 1
+	pic 1SET19 tics 1
+
+texture 2SET12
+	pic 2SET12 tics 1
+	pic 2SET12 tics 1
+
+texture 4SET05
+	pic 4SET05 tics 1
+	pic 4SET05 tics 1

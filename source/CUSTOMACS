@@ -1,0 +1,41 @@
+#library "CUSTOMACS"
+#include "zcommon.acs"
+
+script 777 (void)
+{
+if(checkinventory("MagnumCheck") == 2)
+{
+GiveInventory("Magnums",1);
+}
+}
+script 778 (void)
+{
+	consolecommand("fov 140");
+	delay(4200);
+	consolecommand("fov 90");
+}
+script 779 (void)
+{
+	if(CheckActorFloorTexture (0,"1SET19") == 1)
+	{
+		SetActorProperty(0,APROP_Renderstyle,STYLE_None);
+	}
+	if(CheckActorFloorTexture (0,"2SET12") == 1)
+	{
+		SetActorProperty(0,APROP_Renderstyle,STYLE_None);
+	}
+	if(CheckActorFloorTexture (0,"4SET05") == 1)
+	{
+		SetActorProperty(0,APROP_Renderstyle,STYLE_None);
+	}
+}
+script 780 (void)
+{
+	consolecommand("+altattack");
+	delay(1);
+	consolecommand("-altattack");
+}
+script 781 (void)
+{
+	SetActorState(0,"Melee.Punch",true);
+}

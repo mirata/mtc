@@ -1,0 +1,1479 @@
+ACTOR MarathonPuff replaces bulletpuff
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOEXTREMEDEATH
+  +FORCEXYBILLBOARD
+  +NOTRIGGER
+  VSpeed .01
+  Mass 5
+  scale .5
+  //YScale 0.5
+  States
+  {
+  Spawn:
+    BLUD A 0
+    PUFF E 4 A_Playsound("ding")
+    PUFF FG 4
+    stop
+  Crash:
+    BLUD A 0
+    PUFF A 0 A_Playsound("ricochet")
+    PUFF A 4 bright
+    PUFF B 4 bright
+    PUFF CD 4 bright
+    stop
+  }
+}
+ACTOR MeleePuff
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOEXTREMEDEATH
+  +FORCEXYBILLBOARD
+  VSpeed .01
+  Mass 5
+  scale .5
+  //YScale 0.5
+  States
+  {
+    Spawn:
+    TNT1 A 0
+    TNT1 A 1 A_Playsound("ding")
+    Stop
+    Crash:
+    TNT1 A 0
+    TNT1 A 1 A_Playsound("punch")
+    Stop
+  }
+}
+ACTOR MarathonBlood : Blood Replaces Blood
+{
+  SpawnID 130
+  Mass 5
+  +NOBLOCKMAP
+  +NOTELEPORT
+  +ALLOWPARTICLES
+  +FORCEXYBILLBOARD
+  scale .5
+  //YScale 0.5
+  States
+  {
+  Spawn:
+    BLUD A 0
+    BLUD A 0 A_PlaySound("fleshit")
+    BLUD ABCD 8
+    Stop
+  }
+}
+actor Punch : Weapon
+{
+  Game Doom
+  Weapon.SelectionOrder 3700
+  Weapon.Kickback 100
+  +WEAPON.WIMPY_WEAPON
+  +WEAPON.MELEEWEAPON
+  Weapon.Ammouse 0
+  Weapon.Ammogive 0
+  Weapon.AmmoType "FistClip"
+  //Weapon.WeaponScaleY 1
+  Obituary "%k knocked %o out cold."
+  +ammo_optional
+  +WEAPON.NOALERT
+  +NOAUTOAIM
+  weapon.yadjust 12
+  Weapon.PreferredSkin "PlayerFist"
+  States
+  {
+  Ready:
+    PUNG A 1 A_WeaponReady
+    loop
+  Deselect:
+    PUNG A 1 A_Lower
+    loop
+  Select:
+    PUNG A 1 A_Raise
+    loop
+  Fire:
+    PUNG A 0 ACS_ExecuteAlways(781,0,0,0,0)
+    PUNG A 0 A_JumpIf(momx >= 6,"Fire2")
+    PUNG A 0 A_JumpIf(momx <= -6,"Fire2")
+    PUNG A 0 A_JumpIf(momy >= 6,"Fire2")
+    PUNG A 0 A_JumpIf(momy <= -6,"Fire2")
+    PUNG B 2
+    PUNG C 7 A_Saw("NONE","PUNCH",2,"MeleePuff")
+    PUNG B 4
+    PUNG A 7
+    goto ready
+  Fire2:
+    PUNG B 2
+    PUNG C 7 A_Saw("NONE","PUNCH",8,"MeleePuff")
+    PUNG B 4
+    PUNG A 7
+    goto ready
+  }
+}
+ACTOR Fistclip : Ammo
+{
+  Inventory.PickupMessage "Durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 1
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 1
+  Inventory.Icon "FIST"
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  }
+}
+ACTOR MagnumPickup : CustomInventory replaces pistol
+{
+	Radius 16
+	Height 16
+	Inventory.PickupMessage ".44 magnum mega class"
+        scale .5
+  //YScale 0.5
+	States
+	{
+	Spawn:
+		MAGN H -1
+		Loop
+	Pickup:
+		TNT1 A 0 A_JumpIfInventory("MagnumCheck",2,"AlreadyHasMagnums") // Skip ahead if already has 2 Magnums
+		TNT1 A 0 A_JumpIfInventory("MagnumCheck",1,"GiveMagnums") // Check for player having only 1 magnum, if so, give him "Magnums"
+		TNT1 A 0 A_GiveInventory("MagnumCheck",1) // Now has 1 magnum
+		TNT1 A 0 A_GiveInventory("Magnum",1) // Now has Magnum Weapon
+		TNT1 A 0 A_GiveInventory("MagnumClip",8) // Load the magnum
+		Stop
+		TNT1 A 0
+		Fail
+	GiveMagnums:
+		TNT1 A 0 A_GiveInventory("MagnumCheck",1) // Now has 2 magnums
+		TNT1 A 0 A_GiveInventory("Magnums",1) // Now has Magnums Weapon
+		TNT1 A 0 A_GiveInventory("MagnumClip3",8) // Load the left hand magnum
+		TNT1 A 0 A_GiveInventory("MagnumClip2",8) // Load half of Double Magnums
+		Stop
+	AlreadyHasMagnums:
+		TNT1 A 0 A_GiveInventory("MagnumAmmo",1) // Give a clip
+		Stop
+	}
+}
+/*
+ACTOR MagnumPickup : CustomInventory replaces pistol
+{
+	Radius 16
+	Height 16
+	Inventory.PickupMessage ".44 magnum mega class"
+        scale .5
+	States
+	{
+	Spawn:
+		MAGN H -1
+		Loop
+	Pickup:
+                TNT1 A 0 A_JumpIfInventory("Magnumclip",8,6)
+		TNT1 A 0 A_GiveInventory("Magnum", 1)
+		TNT1 A 0 A_GiveInventory("MagnumCheck", 1)
+                TNT1 A 0 ACS_Execute(777,0,0,0,0)
+		TNT1 A 0 A_GiveInventory("Magnumclip", 8)
+		TNT1 A 0 A_GiveInventory("Magnumclip2", 8)
+		Stop
+		TNT1 A 0 A_JumpIfInventory("Magnumclip3",8,3)
+		TNT1 A 0 A_GiveInventory("Magnumclip3", 8)
+		TNT1 A 0 A_GiveInventory("Magnumclip2", 8)
+		Goto Pickup+1
+		TNT1 A 0
+		Fail
+	}
+}
+*/
+ACTOR MagnumsPickup : CustomInventory replaces Shotgun
+{
+	Radius 16
+	Height 16
+	Inventory.PickupMessage "2 .44 magnum mega classes"
+        scale .5
+  //YScale 0.5
+	States
+	{
+	Spawn:
+		MAGN H -1
+		Loop
+	Pickup:
+		TNT1 A 0 A_JumpIfInventory("Magnums",1,7)
+		TNT1 A 0 A_GiveInventory("Magnum", 1)
+		TNT1 A 0 A_GiveInventory("Magnums", 1)
+		TNT1 A 0 A_GiveInventory("MagnumCheck", 2)
+		TNT1 A 0 A_GiveInventory("MagnumClip", 8)
+		TNT1 A 0 A_GiveInventory("MagnumClip2", 16)
+		TNT1 A 0 A_GiveInventory("MagnumClip3", 8)
+		Stop
+		TNT1 A 0 A_GiveInventory("MagnumAmmo", 2)
+		Stop
+	}
+}
+actor Magnum : Weapon
+{
+  Game Doom
+  Weapon.SelectionOrder 1900
+  Weapon.AmmoUse 1
+  Weapon.AmmoGive 0
+  Weapon.AmmoType "MagnumClip"
+  Weapon.AmmoUse2 1
+  Weapon.AmmoType2 "MagnumAmmo"
+  //Weapon.WeaponScaleY 1
+  Obituary "%k put a cap in %o's ass."
+  Inventory.Pickupmessage "durandal does not tolerate cheaters...."
+  Attacksound "MAGNUM1"
+  +Ammo_optional
+  +Alt_Ammo_optional
+  +WEAPON.NOALERT
+  +NOAUTOAIM
+  -ACTIVATEIMPACT
+  -ACTIVATEPCROSS
+  weapon.yadjust 12
+  Weapon.PreferredSkin "PlayerPistol"
+  Decal "BulletChip"
+  -ACTIVATEIMPACT
+  States
+  {
+  Ready:
+    MAGN A 1 A_WeaponReady
+    Loop
+  Deselect:
+    MAGN A 1 A_Lower
+    Loop
+  Select:
+    MAGN A 1 A_Raise
+    Loop
+  Fire:
+    MAGN A 0 A_JumpIfNoAmmo("Dry")
+    MAGN B 0 bright A_FireBullets(0,0,1,8,"MarathonPuff",1)
+    MAGN A 0 A_Light1
+    MAGN A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+    MAGN B 5 bright NoiseAlert(0,0)
+    MAGN C 6 bright A_TakeInventory("MagnumClip2",1)
+    MAGN D 5 A_Light0
+    MAGN E 6
+    MAGN A 0 A_JumpIfNoAmmo("Dry")
+    Goto Ready
+    //MAGN A 0 ACS_Execute(780,0,0,0,0)
+    //Goto Ready
+  Dry:
+    MAGN A 0 A_JumpIfInventory("MagnumAmmo",1,"Reload")
+    MAGN A 24 A_PlayWeaponSound("DRY")
+    //MAGN A 0 ACS_Execute(780,0,0,0,0)
+    goto ready
+  Reload:
+    MAGN A 0 A_JumpIfInventory("MagnumClip",8,"Ready")
+    //MAGN A 0 A_JumpIfNoAmmo("Dry")
+    MAGN F 25
+    MAGN G 0 A_TakeInventory("MagnumAmmo",1)
+    MAGN G 0 A_GiveInventory("MagnumClip",8)
+    MAGN G 0 A_GiveInventory("MagnumClip2",8)
+    MAGN G 25 A_PlayWeaponSound("MAGNUM2")
+    goto ready
+  Spawn:
+    TNT1 A 1
+    Stop
+  }
+}
+actor Magnums : Weapon
+{
+  Game Doom
+  Weapon.SelectionOrder 1600
+  Weapon.AmmoUse 1
+  Weapon.AmmoGive 0
+  Weapon.AmmoType "MagnumClip2"
+  Weapon.AmmoUse2 2
+  Weapon.AmmoType2 "MagnumAmmo"
+  //Weapon.WeaponScaleY 1
+  Obituary "%k put 2 caps in %o's ass."
+  Inventory.Pickupmessage "durandal does not tolerate cheaters...."
+  Attacksound "MAGNUM1"
+  +Ammo_optional
+  +Alt_Ammo_optional
+  +WEAPON.NOALERT
+  +NOAUTOAIM
+  weapon.yadjust 12
+  Weapon.PreferredSkin "PlayerWoo"
+  Decal "BulletChip"
+  States
+  {
+  Ready:
+    MAG2 A 1 A_WeaponReady
+    Loop
+  Deselect:
+    MAG2 A 1 A_Lower
+    Loop
+  Select:
+    MAG2 A 1 A_Raise
+    Loop
+  Fire:
+    MAG2 A 0 A_JumpIfNoAmmo("Dry")
+    MAG2 I 0 A_JumpIfInventory("MagnumClip",1,1)
+    goto Fire+9
+    MAG2 B 0 bright A_FireBullets(0,0,1,8,"MarathonPuff",1)
+    MAG2 B 0 A_Light1
+    MAG2 B 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+    MAG2 B 2 bright NoiseAlert(0,0)
+    MAG2 C 3 bright A_TakeInventory("MagnumClip",1)
+    MAG2 D 2 A_Light0
+    MAG2 E 3
+    MAG2 A 0 A_JumpIfInventory("MagnumClip3",1,1)
+    goto fire+18
+    MAG2 F 0 bright A_FireBullets(0,0,1,8,"MarathonPuff",1)
+    MAG2 F 0 A_Light1
+    MAG2 F 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+    MAG2 F 2 bright NoiseAlert(0,0)
+    MAG2 G 3 bright A_TakeInventory("MagnumClip3",1)
+    MAG2 H 2 A_Light0
+    MAG2 I 3
+    MAG2 A 0 A_JumpIfInventory("MagnumClip",1,"ready")
+    MAG2 A 12 A_PlayWeaponSound("DRY")
+    MAG2 A 0 A_Refire
+    Goto Ready
+    //MAG2 A 0 ACS_Execute(780,0,0,0,0)
+    //Goto Ready
+  Dry:
+    MAG2 A 12 A_PlayWeaponSound("DRY")
+    MAG2 A 12 A_PlayWeaponSound("DRY")
+    //MAG2 A 0 ACS_Execute(780,0,0,0,0)
+    goto ready
+  AltFire:
+    MAG2 A 0 A_JumpIfInventory("MagnumClip2",16,"Ready")
+    MAG2 A 0 A_JumpIfNoAmmo("Ready")
+    MAG2 A 0 A_JumpIfInventory("MagnumClip",8,6)
+    MAGN F 25
+    MAGN G 0 A_TakeInventory("MagnumAmmo",1)
+    MAG2 G 0 A_GiveInventory("MagnumClip",8)
+    MAGN G 0 A_GiveInventory("MagnumClip2",8)
+    MAGN G 25 A_PlayWeaponSound("MAGNUM2")
+    MAG2 J 25
+    MAGN G 0 A_TakeInventory("MagnumAmmo",1)
+    MAG2 G 0 A_GiveInventory("MagnumClip3",8)
+    MAGN G 0 A_GiveInventory("MagnumClip2",8)
+    MAG2 K 25 A_PlayWeaponSound("MAGNUM2")
+    MAG2 G 0
+    goto ready
+  Spawn:
+    TNT1 A 1
+    Stop
+  }
+}
+ACTOR Magnumammo : Ammo replaces clip
+{
+  Inventory.PickupMessage ".44 clip"
+  Inventory.Amount 1
+  Inventory.MaxAmount 50
+  Ammo.BackpackAmount 1
+  Ammo.BackpackMaxAmount 50
+  Inventory.Icon "MAGNI0"
+  scale .5
+  //YScale 0.5
+  States
+  {
+  Spawn:
+    MAGN I -1
+    Stop
+  }
+}
+ACTOR Magnumclip : Ammo
+{
+  Inventory.PickupMessage "Durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 8
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 8
+  Inventory.Icon "MAGNH0"
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  }
+}
+ACTOR Magnumclip2 : Ammo
+{
+  Inventory.PickupMessage "Durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 16
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 16
+  Inventory.Icon "MAGNH0"
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  }
+}
+ACTOR Magnumclip3: Ammo
+{
+  Inventory.PickupMessage "Durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 8
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 8
+  Inventory.Icon "MAGNH0"
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  }
+}
+ACTOR Magnumcheck : Inventory
+{
+  Inventory.PickupMessage "Durandal does not tolerate cheaters...."
+  Inventory.Amount 1
+  Inventory.MaxAmount 3
+  Inventory.Icon "TNT1A0"
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  }
+}
+actor FusionPistolPickup : CustomInventory replaces plasmarifle
+{
+  Inventory.PickupMessage "Zeus-Class Fusion Pistol"
+  scale .5
+  //YScale 0.5
+  Translation "199:207=[2,169,183]:[1,68,80]", "240:247=[0,87,102]:[0,0,0]"
+  States
+  {
+  Spawn:
+    FUSI E -1
+    Loop
+  Pickup:
+    TNT1 A 0 A_JumpIfInventory("FusionPistol",1,2)
+    TNT1 A 0 A_GiveInventory("FusionPistol")
+    Stop
+    TNT1 A 0 A_GiveInventory("FusionAmmo",1)
+    Stop
+  }
+}
+actor FusionPistol : Weapon
+{
+  Game Doom
+  SpawnID 30
+  Weapon.SelectionOrder 100
+  Weapon.AmmoUse 1
+  Weapon.AmmoGive 20
+  Weapon.AmmoType "FusionClip"
+  Weapon.AmmoUse2 1
+  Weapon.AmmoType2 "FusionAmmo"
+  //Weapon.WeaponScaleY 1
+  Inventory.PickupMessage "Zeus-Class Fusion Pistol"
+  scale .5
+  //YScale 0.5
+  +Ammo_optional
+  +Alt_Ammo_optional
+  +WEAPON.NOALERT
+  +NOAUTOAIM
+  weapon.yadjust 12
+  Weapon.PreferredSkin "PlayerFusion"
+  States
+  {
+  Ready:
+    FUSI A 1 A_WeaponReady
+    Loop
+  Deselect:
+    FUSI A 1 A_Lower
+    Loop
+  Select:
+    FUSI A 1 A_Raise
+    Loop
+  Fire:
+    FUSI A 0 A_JumpIfNoammo("Dry")
+    FUSI A 0 A_JumpIfInventory("FusionCharge",8,"Fire2")
+    FUSI A 1 A_GiveInventory("FusionCharge",1)
+    FUSI A 0 A_ReFire
+    FUSI B 0 bright NoiseAlert(0,0)
+    FUSI A 0 A_GunFlash
+    FUSI A 0 A_FireCustomMissile("FusionLight",0,0,0,0,0)
+    FUSI A 0 A_Light1
+    FUSI B 3 bright A_FireCustomMissile("FusionBall",random(-1,1),1,0,0,0,random(-1,1))
+    FUSI A 0 A_Light0
+    FUSI A 0 A_Recoil(0.25)
+    FUSI C 2 A_TakeInventory("FusionCharge",20)
+    FUSI D 3
+    FUSI A 0 A_JumpIfNoammo("Dry")
+    Goto Ready
+    //FUSI A 0 ACS_Execute(780,0,0,0,0)
+    //Goto Ready
+  Fire2:
+    FUSI A 20 A_PlayWeaponSound("FUSION3")
+    FUSI B 0 bright NoiseAlert(0,0)
+    FUSI A 0 A_GunFlash
+    FUSI A 0 A_Light2
+    FUSI A 0 A_FireCustomMissile("FusionLight",0,0,0,0,0)
+    FUSI B 0 bright A_FireCustomMissile("PoweredFusionBall",0,1,0,0,0,0)
+    FUSI B 3 bright A_takeInventory ("FusionClip",4)
+    FUSI A 0 A_Light0
+    FUSI A 0 A_Recoil(0.75)
+    FUSI C 2 A_TakeInventory("Fusioncharge",20)
+    FUSI D 3
+    FUSI A 0 A_JumpIfNoammo("Dry")
+    Goto Ready
+    //FUSI A 0 ACS_Execute(780,0,0,0,0)
+    //Goto Ready
+  Dry:
+    FUSI A 0 A_JumpIfInventory("FusionAmmo",1,"Reload")
+    FUSI A 1
+    //FUSI A 0 ACS_Execute(780,0,0,0,0)
+    Goto Ready
+  Reload:
+    FUSI A 0 A_JumpIfinventory("FusionClip",20,"Ready")
+    FUSI AAAAAAAAAAAA 2 A_Lower
+    FUSI A 20
+    FUSI A 0 A_TakeInventory("FusionAmmo",1)
+    FUSI A 0 A_GiveInventory("FusionClip",20)
+    FUSI AAAAAAAAAAAA 2 A_Raise
+    goto ready
+  Spawn:
+    FUSI E -1
+    Stop
+  }
+}
+actor FusionBall replaces plasmaball
+{
+  Radius 4
+  Height 8
+  Speed 15
+  Damage 6
+  scale .375
+  //YScale 0.375
+  Projectile
+  -ACTIVATEIMPACT
+  -ACTIVATEPCROSS
+  DamageType "Fusion"
+  +FOILINVUL
+  +FORCEXYBILLBOARD
+  SeeSound "FUSION1"
+  DeathSound "FUSION2"
+  Obituary "%k gave %o a bad shock."
+  Decal "BaronScorch"
+  States
+  {
+  Spawn:
+    FBLL ABCD 4 bright
+    loop
+  Death:
+    FBLL EFGH 4 bright
+    stop
+  }
+}
+actor PoweredFusionBall replaces arachnotronplasma
+{
+  Radius 4
+  Height 8
+  Speed 20
+  Damage 11
+  scale .625
+  //YScale 0.625
+  Projectile
+  DamageType "Fusion"
+  +FORCEXYBILLBOARD
+  +FOILINVUL
+  SeeSound "FUSION1"
+  DeathSound "FUSION2"
+  Obituary "%k gave %o enough juice to power the entire marathon."
+  Decal "DoomImpScorch"
+  States
+  {
+  Spawn:
+    FBLL AAABBBCCCDDD 1 bright A_SpawnItem("PoweredFusionBallAfterTrail")
+    loop
+  Death:
+    FBLL EFGH 4 bright
+    stop
+  }
+}
+ACTOR PoweredFusionBallAfterTrail
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  scale .625
+  //YScale 0.625
+  States
+  {
+  Spawn:
+    FBLL IJK 3 BRIGHT
+    Stop
+  }
+}
+
+ACTOR Fusionammo : Ammo replaces cell
+{
+  Inventory.PickupMessage "fusion battery"
+  Inventory.Amount 1
+  Inventory.MaxAmount 25
+  Ammo.BackpackAmount 1
+  Ammo.BackpackMaxAmount 25
+  Translation "73:79=[149,149,34]:[53,53,19]", "160:167=[233,222,20]:[156,149,14]"
+  Inventory.Icon "FUSIF0"
+  scale .5
+  States
+  {
+  Spawn:
+    FUSI F -1
+    Stop
+  }
+}
+ACTOR Fusionclip : Ammo
+{
+  Inventory.PickupMessage "Durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 20
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 20
+  Inventory.Icon "FUSIE0"
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  }
+}
+ACTOR FusionCharge : Inventory
+{
+  Inventory.PickupMessage "Durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 20
+  Inventory.Icon "TNT1A0"
+  States
+  {
+  Spawn:
+    TNT1 A 1
+    Stop
+  }
+}
+//deprecated
+//actor MA75 : custominventory replaces chaingun
+//{
+//  Inventory.Pickupmessage "MA-75 Assault Rifle"
+//  scale .5
+//  inventory.pickupsound "misc/w_pkup"
+//  states
+//  {
+//  spawn:
+//  ASSU G -1
+//  loop
+//  pickup:
+//  TNT1 A 0 A_giveinventory("ma75assaultrifle", 1)
+//  TNT1 A 0 A_giveinventory("ma75grenadelauncher", 1)
+//  stop
+//  }
+//}
+actor ma75assaultriflePickup : CustomInventory replaces chaingun
+{
+  Inventory.PickupMessage "MA-75 Assault Rifle"
+  scale .5
+  //YScale 0.5
+  States
+  {
+  Spawn:
+    ASSU G -1
+    Loop
+  Pickup:
+    TNT1 A 0 A_JumpIfInventory("ma75assaultrifle",1,3)
+    TNT1 A 0 A_GiveInventory("ma75assaultrifle")
+	//TNT1 A 0 A_GiveInventory("ma75grenadelauncher")
+    Stop
+    TNT1 A 0 A_GiveInventory("AssaultAmmo",1)
+	TNT1 A 0 A_GiveInventory("GrenadeAmmo",1)
+    Stop
+  }
+}
+ACTOR ma75assaultrifle : Weapon
+ {
+    Weapon.SelectionOrder 44
+    Weapon.AmmoGive 52
+    Weapon.AmmoUse 1
+    Weapon.AmmoUse2 1
+    Weapon.Ammotype "assaultClip"
+    Weapon.Ammotype2 "grenadeClip"
+    //Weapon.WeaponScaleY 1
+    Inventory.Pickupmessage "MA-75 Assault Rifle"
+    Obituary "%k turned %o into swiss cheese."
+    attacksound "ASSAULT1"
+    +ammo_optional
+    +Alt_Ammo_optional
+    +WEAPON.NOALERT
+    +NOAUTOAIM
+    weapon.yadjust 13
+    //weapon.sisterweapon "MA75GrenadeLauncher"
+    scale .5
+    Weapon.PreferredSkin "PlayerRifle"
+    Decal "BulletChip"
+    States
+    {
+    Ready:
+       ASSU A 1 A_WeaponReady
+       Loop
+    Ready2:
+       ASSU A 1 A_WeaponReady
+       Loop
+    Deselect:
+       ASSU A 1 A_Lower
+       goto deselect
+    Select:
+       ASSU A 1 A_Raise
+       goto select
+    Fire:
+       ASSU A 0 A_Jumpifnoammo("dry")
+       ASSU A 0 A_JumpIfInventory("Vacuum",1,"Dry")
+       ASSU A 0 NoiseAlert(0,0)
+       ASSU A 0 A_Recoil(0.1)
+       ASSU A 0 A_Jumpifinventory("AssaultRifleSequence",8,"Fire9")
+       ASSU A 0 A_Jumpifinventory("AssaultRifleSequence",7,"Fire8")
+       ASSU A 0 A_Jumpifinventory("AssaultRifleSequence",6,"Fire7")
+       ASSU A 0 A_Jumpifinventory("AssaultRifleSequence",5,"Fire6")
+       ASSU A 0 A_Jumpifinventory("AssaultRifleSequence",4,"Fire5")
+       ASSU A 0 A_Jumpifinventory("AssaultRifleSequence",3,"Fire4")
+       ASSU A 0 A_Jumpifinventory("AssaultRifleSequence",2,"Fire3")
+       ASSU A 0 A_Jumpifinventory("AssaultRifleSequence",1,"Fire2")
+       ASSU A 0 A_Light1
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU B 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
+       ASSU A 0 A_Light0
+       ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
+       ASSU A 0 A_Refire
+       ASSU A 0 A_Jumpifnoammo("dry")
+       Goto Ready
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Fire2:
+       ASSU A 0 A_Jumpifnoammo("dry")
+       ASSU A 0 A_Light1
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU C 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
+       ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
+       ASSU A 0 A_Light0
+       ASSU A 0 A_Refire
+       ASSU A 0 A_Jumpifnoammo("dry")
+       Goto Ready
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Fire3:
+       ASSU A 0 A_Jumpifnoammo("dry")
+       ASSU A 0 A_Light1
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU D 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
+       ASSU A 0 A_Light0
+       ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
+       ASSU A 0 A_Refire
+       ASSU A 0 A_Jumpifnoammo("dry")
+       Goto Ready
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Fire4:
+       ASSU A 0 A_Jumpifnoammo("dry")
+       ASSU A 0 A_Light1
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU J 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
+       ASSU A 0 A_Light0
+       ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
+       ASSU A 0 A_Refire
+       ASSU A 0 A_Jumpifnoammo("dry")
+       Goto Ready
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Fire5:
+       ASSU A 0 A_Jumpifnoammo("dry")
+       ASSU A 0 A_Light1
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU K 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
+       ASSU A 0 A_Light0
+       ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
+       ASSU A 0 A_Refire
+       ASSU A 0 A_Jumpifnoammo("dry")
+       Goto Ready
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Fire6:
+       ASSU A 0 A_Jumpifnoammo("dry")
+       ASSU A 0 A_Light1
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU L 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
+       ASSU A 0 A_Light0
+       ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
+       ASSU A 0 A_Refire
+       ASSU A 0 A_Jumpifnoammo("dry")
+       Goto Ready
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Fire7:
+       ASSU A 0 A_Jumpifnoammo("dry")
+       ASSU A 0 A_Light1
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU M 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
+       ASSU A 0 A_Light0
+       ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
+       ASSU A 0 A_Refire
+       ASSU A 0 A_Jumpifnoammo("dry")
+       Goto Ready
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Fire8:
+       ASSU A 0 A_Jumpifnoammo("dry")
+       ASSU A 0 A_Light1
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU N 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
+       ASSU A 0 A_Light0
+       ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
+       ASSU A 0 A_Refire
+       ASSU A 0 A_Jumpifnoammo("dry")
+       Goto Ready
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Fire9:
+       ASSU A 0 A_Jumpifnoammo("dry")
+       ASSU A 0 A_Light1
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU O 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
+       ASSU A 0 A_Light0
+       ASSU B 0 bright A_TakeInventory("AssaultRifleSequence",8)
+       ASSU A 0 A_Refire
+       ASSU A 0 A_Jumpifnoammo("dry")
+       Goto Ready
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Dry:
+       ASSU A 0 A_JumpIfInventory("assaultammo",1,"Reload")
+       ASSU A 24 A_PlayWeaponSound("DRY")
+	   goto Ready
+//        ASSU A 3 A_PlayWeaponSound("dry")
+       //ASSU A 1 A_Jumpifinventory("assaultclip",52,"Ready")
+       //ASSU A 0 A_Jumpifnoammo("Ready")
+	Reload:
+       ASSU E 0 A_takeinventory("assaultammo",1)
+       ASSU E 0 A_giveinventory("assaultclip",52)
+       ASSU E 16 A_playweaponsound("MAGNUM2")
+       ASSU F 16
+       ASSU E 16
+       ASSU A 1
+       Goto Ready       
+   AltFire:
+       ASSU A 0 A_Jumpifnoammo("dry2")
+       ASSU A 0 A_JumpIfInventory("Vacuum",1,"Dry")
+       ASSU A 0 NoiseAlert(0,0)
+       ASSU A 0 A_GunFlash
+       ASSU A 0 A_Jump(170,"Fire22","Fire32")
+       ASSU A 0 A_Light2
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU B 4 bright A_FireCustomMissile("marathongrenade")
+       ASSU A 0 A_Light0
+       ASSU A 21 A_recoil(3)
+       ASSU A 0 A_Jumpifnoammo("dry2")
+       Goto Ready2
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Fire22:
+       ASSU A 0 A_Jumpifnoammo("dry2")
+       ASSU A 0 A_Light2
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU C 4 bright A_FireCustomMissile("marathongrenade")
+       ASSU A 0 A_Light0
+       ASSU A 21 A_recoil(3)
+       ASSU A 0 A_Jumpifnoammo("dry2")
+       Goto Ready2
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Fire23:
+       ASSU A 0 A_Jumpifnoammo("dry2")
+       ASSU A 0 A_Light2
+       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU D 4 bright A_FireCustomMissile("marathongrenade")
+       ASSU A 0 A_Light0
+       ASSU A 21 A_recoil(3)
+       ASSU A 0 A_Jumpifnoammo("dry2")
+       Goto Ready2
+       //ASSU A 0 ACS_Execute(780,0,0,0,0)
+       //Goto Ready
+    Dry2:
+       ASSU A 0 A_JumpIfInventory("grenadeammo",1,"Reload2")
+       ASSU A 24 A_PlayWeaponSound("DRY")
+	   goto Ready2
+	Reload2:
+       ASSU E 0 A_takeinventory("grenadeammo",1)
+       ASSU E 0 A_giveinventory("grenadeclip",7)
+       ASSU E 16 A_playweaponsound("MAGNUM2")
+       ASSU F 16
+       ASSU E 16
+       ASSU A 1
+       Goto Ready2
+    Spawn:
+       ASSU G -1
+       loop
+    }
+}
+ACTOR assaultammo : Ammo replaces clipbox
+{
+  Inventory.PickupMessage "MA-75 Clip"
+  Inventory.Amount 1
+  Inventory.MaxAmount 15
+  Ammo.BackpackAmount 1
+  Ammo.BackpackMaxAmount 15
+  Inventory.Icon "ASSUH0"
+  scale .5
+  //YScale 0.5
+  +NOCLIP
+  spawnID 100
+  radius 10
+  height 20
+  States
+  {
+  Spawn:
+    ASSU H -1
+    Stop
+  }
+}
+ACTOR assaultclip : Ammo
+{
+  Inventory.PickupMessage "durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 52
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 52
+  Inventory.Icon "ASSUG0"
+}
+ACTOR assaultriflesequence : Ammo
+{
+  Inventory.PickupMessage "durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 8
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 8
+  Inventory.Icon "ASSUG0"
+}
+ACTOR grenadeammo : Ammo replaces rocketammo
+{
+  Inventory.PickupMessage "MA-75 Grenades"
+  Inventory.Amount 1
+  Inventory.MaxAmount 8
+  Ammo.BackpackAmount 1
+  Ammo.BackpackMaxAmount 8
+  Inventory.Icon "ASSUI0"
+  scale .5
+  States
+  {
+  Spawn:
+    ASSU I -1
+    Stop
+  }
+}
+ACTOR grenadeclip : Ammo
+{
+  Inventory.PickupMessage "durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 7
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 7
+  Inventory.Icon "ASSUG0"
+}
+actor marathongrenade replaces grenade
+{
+  seesound "ASSAULT2"
+  deathsound "ASSAULT3"
+  
+  Radius 4
+  Height 8
+  Speed 15
+  Projectile
+  -DEHEXPLOSION
+  -NOGRAVITY
+  
+  gravity 1
+  -DOOMBOUNCE
+  +FORCEXYBILLBOARD
+  +EXTREMEDEATH
+  -ROCKETTRAIL
+  damagetype normal
+  scale .75
+  //YScale 0.75
+  damage 15
+  Decal "Scorch"
+  states
+  {
+  spawn:
+  GREN A 1 bright A_spawnitem("marathongrenadesmoke")
+  loop
+  death:
+  GREN A 0 A_Nogravity
+  GREN A 1 bright A_explode(64,64)
+  GREN BCDEFG 4 bright
+  stop
+  }
+}
+actor marathongrenadesmoke
+{
++NOGRAVITY
++FORCEXYBILLBOARD
+scale .5
+  //YScale 0.5
+states
+{
+spawn:
+TNT1 A 3
+SMKE ABCD 1
+stop
+}
+}
+actor X17SSMLauncherPickup : CustomInventory replaces RocketLauncher
+{
+  Inventory.PickupMessage "SPNKR-X17 SSM Launcher"
+  Inventory.PickupSound "misc/w_pkup"
+  scale .5
+  //YScale 0.5
+  States
+  {
+  Spawn:
+    SPNK I -1
+    Loop
+  Pickup:
+    TNT1 A 0 A_JumpIfInventory("X17SSMLauncher",1,2)
+    TNT1 A 0 A_GiveInventory("X17SSMLauncher")
+    Stop
+    TNT1 A 0 A_GiveInventory("RocketAmmo2",1)
+    Stop
+  }
+}
+actor X17SSMLauncher : Weapon
+{
+  Weapon.SelectionOrder 2500
+  Weapon.AmmoUse 1
+  Weapon.AmmoGive 2
+  Weapon.AmmoType "RocketClip"
+  Weapon.AmmoUse2 1
+  Weapon.AmmoType2 "RocketAmmo2"
+  //Weapon.WeaponScaleY 1
+  +WEAPON.NOAUTOFIRE
+  Inventory.PickupMessage "SPNKR-X17 SSM Launcher"
+  +WEAPON.DONTBOB
+  Obituary "%0 ate %k's SSM Missile."
+  scale .5
+  //YScale 0.5
+  +Ammo_Optional
+  +Alt_Ammo_optional
+  +WEAPON.NOALERT
+  +NOAUTOAIM
+  weapon.yadjust 12
+  Weapon.PreferredSkin "PlayerRocket"
+  States
+  {
+  Ready:
+    SPNK A 0 A_JumpIfInventory("Rocketclip",2,"Ready3")
+    SPNK A 0 A_JumpIfInventory("Rocketclip",1,"Ready2")
+    SPNK D 1 A_WeaponReady
+    Loop
+  Ready2:
+    SPNK B 1 A_WeaponReady
+    Loop
+  Ready3:
+    SPNK A 1 A_WeaponReady
+    Loop
+  Select:
+    SPNK A 0 A_JumpIfInventory("Rocketclip",2,"Select3")
+    SPNK A 0 A_JumpIfInventory("Rocketclip",1,"Select2")
+    SPNK F 2 A_Raise
+    Loop
+  Select2:
+    SPNK H 2 A_Raise
+    Loop
+  Select3:
+    SPNK G 2 A_Raise
+    Loop
+  DeSelect:
+    SPNK A 0 A_JumpIfInventory("Rocketclip",2,"DeSelect3")
+    SPNK A 0 A_JumpIfInventory("Rocketclip",1,"DeSelect2")
+    SPNK F 2 A_Lower
+    Loop
+  DeSelect2:
+    SPNK H 2 A_Lower
+    Loop
+  DeSelect3:
+    SPNK G 2 A_Lower
+    Loop
+  Fire:
+    SPNK A 0 A_JumpIfNoAmmo("Dry")
+    SPNK A 0 A_JumpIfInventory("Vacuum",1,"Ready")
+    SPNK A 0 NoiseAlert(0,0)
+    SPNK A 0 A_GunFlash
+    SPNK A 0 A_JumpIfInventory("Rocketclip",2,"Fire2")
+    SPNK A 0 A_Light(3)
+    SPNK A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+    SPNK E 1 A_FireCustomMissile("MarathonRocket",0,1,-10)
+    SPNK E 10 A_Recoil(10)
+    SPNK D 10 A_Light0
+    Goto Ready
+    //SPNK A 0 ACS_Execute(780,0,0,0,0)
+    //Goto Ready
+  Fire2:
+    SPNK C 0 A_Light(3)
+    SPNK A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+    SPNK C 1 A_FireCustomMissile("MarathonRocket",0,1,-10)
+    SPNK C 10 A_Recoil(10)
+    SPNK B 10 A_Light0
+    Goto Ready
+    //SPNK A 0 ACS_Execute(780,0,0,0,0)
+    //Goto Ready
+  AltFire:
+    SPNK A 0 A_JumpIfNoAmmo("ready")
+    SPNK A 0 A_JumpIfInventory("Rocketclip",2,"Ready")
+    SPNK A 0 A_JumpIfInventory("Rocketclip",1,"AltFire2")
+    SPNK FFFFFFFFFFFF 2 A_Lower
+    SPNK G 25
+    SPNK G 0 A_takeInventory("RocketAmmo2",1)
+    SPNK G 0 A_giveinventory("RocketClip",2)
+    SPNK GGGGGGGGGGGG 2 A_Raise
+    goto Ready
+  AltFire2:
+    SPNK HHHHHHHHHHHH 2 A_Lower
+    SPNK G 25
+    SPNK G 0 A_takeInventory("RocketAmmo2",1)
+    SPNK G 0 A_giveinventory("RocketClip",2)
+    SPNK GGGGGGGGGGGG 2 A_Raise
+    goto Ready
+    Loop
+  Dry:
+    SPNK A 0 //ACS_Execute(780,0,0,0,0)
+    Goto Ready
+  Spawn:
+    SPNK I -1
+    Stop
+  }
+}
+ACTOR rocketammo2 : Ammo replaces rocketbox
+{
+  Inventory.PickupMessage "SSM Missiles"
+  Inventory.Amount 1
+  Inventory.MaxAmount 4
+  Ammo.BackpackAmount 1
+  Ammo.BackpackMaxAmount 4
+  Inventory.Icon "SPNKL0"
+  scale .5
+  //YScale 0.5
+  States
+  {
+  Spawn:
+    SPNK J -1
+    Stop
+  }
+}
+ACTOR rocketclip : Ammo
+{
+  Inventory.PickupMessage "durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 2
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 2
+  Inventory.Icon "SPNKk0"
+}
+actor marathonrocket : rocket replaces rocket
+{
+  seesound "SPNKR1"
+  deathsound "SPNKR2"
+  //-DEHEXPLOSION
+  //+NOGRAVITY
+  //-DOOMBOUNCE
+  //+FORCEXYBILLBOARD
+  //+EXTREMEDEATH
+  //-ROCKETTRAIL
+  +ACTIVATEIMPACT
+  +ACTIVATEPCROSS
+  damagetype normal
+  scale .75
+  //YScale 0.75
+  damage 55
+  Decal "BigScorch"
+  states
+  {
+  spawn:
+  RCKT A 1 bright A_Spawnitem("marathonrocketsmoke")
+  loop
+  death:
+  GREN A 0 A_Nogravity
+  RCKT B 1 bright A_explode(256,160)
+  RCKT CDEF 12 bright
+  stop
+  }
+}
+actor marathonrocketsmoke
+{
++NOGRAVITY
++FORCEXYBILLBOARD
+scale .75
+  //YScale 0.75
+states
+{
+spawn:
+TNT1 A 3
+RCKT B 2 bright
+SMKE ABCD 1
+stop
+}
+}
+actor TOZTFlamethrowerPickup : CustomInventory replaces supershotgun
+{
+  Inventory.PickupMessage "TOZT-7 backpack napalm unit"
+  Inventory.PickupSound "misc/w_pkup"
+  scale .5
+  //YScale 0.5
+  States
+  {
+  Spawn:
+    TOZT C -1
+    Loop
+  Pickup:
+    TNT1 A 0 A_JumpIfInventory("TOZTFlamethrower",1,2)
+    TNT1 A 0 A_GiveInventory("TOZTFlamethrower")
+    Stop
+    TNT1 A 0 A_GiveInventory("FlameAmmo",1)
+    Stop
+  }
+}
+actor TOZTFlamethrower : Weapon
+{
+  Weapon.SelectionOrder 400
+  Weapon.AmmoUse 1
+  Weapon.AmmoGive 245
+  Weapon.AmmoType "flameClip"
+  Weapon.AmmoUse2 1
+  Weapon.AmmoType2 "FlameAmmo"
+  //Weapon.WeaponScaleY 1
+  +WEAPON.NOAUTOFIRE
+  Inventory.PickupMessage "TOZT-7 backpack napalm unit"
+  Obituary "%k is serving fried %o."
+  scale .5
+  //YScale 0.5
+  +Ammo_Optional
+  +Alt_Ammo_optional
+  +WEAPON.NOALERT
+  +NOAUTOAIM
+  weapon.yadjust 12
+  Weapon.PreferredSkin "PlayerThrower"
+  States
+  {
+  Ready:
+    TOZT A 1 A_WeaponReady
+    Loop
+  Select:
+    TOZT A 1 A_Raise
+    Loop
+  DeSelect:
+    TOZT A 1 A_Lower
+    Loop
+  Fire:
+    TOZT A 0 A_JumpIfNoAmmo("Ready")
+    TOZT A 0 A_JumpIfInventory("Vacuum",1,"Ready")
+    TOZT A 0 A_GunFlash
+    TOZT A 0 A_Light2
+    TOZT B 1 bright A_FireCustomMissile("MarathonflameBall")
+    TOZT B 0 A_Recoil(0.05)
+    TOZT B 0 bright NoiseAlert(0,0)
+    TOZT A 0 A_Light0
+    TOZT A 1 A_Refire
+    Goto Ready
+    //TOZT A 1 ACS_Execute(780,0,0,0,0)
+    //Goto Ready
+  AltFire:
+    TOZT A 0 A_JumpIfNoAmmo("ready")
+    TOZT A 0 A_JumpIfInventory("Flameclip",245,"Ready")
+    TOZT AAAAAAAAAAAA 3 A_Lower
+    TOZT A 55
+    TOZT A 0 A_takeInventory("FlameAmmo",1)
+    TOZT A 0 A_giveinventory("FlameClip",245)
+    TOZT AAAAAAAAAAAA 3 A_Raise
+    goto Ready
+  //Dry:
+  //  TOZT A 1
+  //  TOZT A 0 ACS_Execute(780,0,0,0,0)
+  //  Goto Ready
+  Spawn:
+    TOZT C -1
+    Stop
+  }
+}
+ACTOR flameammo : Ammo replaces cellpack
+{
+  Inventory.PickupMessage "Napalm Canister"
+  Inventory.Amount 1
+  Inventory.MaxAmount 3
+  Ammo.BackpackAmount 1
+  Ammo.BackpackMaxAmount 3
+  Inventory.Icon "TOZTD0"
+  scale .5
+  //YScale 0.5
+  States
+  {
+  Spawn:
+    TOZT D -1
+    Stop
+  }
+}
+ACTOR flameclip : Ammo
+{
+  Inventory.PickupMessage "durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 245
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 245
+  Inventory.Icon "TOZTE0"
+}
+actor marathonFlameBall : DoomImpball replaces doomImpBall
+{
+  seesound "TOAST"
+  deathsound "NONE"
+  -DEHEXPLOSION
+  +NOGRAVITY
+  -DOOMBOUNCE
+  +FORCEXYBILLBOARD
+  -ROCKETTRAIL
+  damagetype fire
+  renderstyle normal
+  alpha 1
+  scale .75
+  //YScale 0.75
+  damage 1
+  speed 24
+  Decal "Scorch"
+  states
+  {
+  spawn:
+  FLAM ABCD 1 bright
+  goto death
+  death:
+  FLAM EFG 1 bright
+  stop
+  }
+}
+actor alienpickup : custominventory replaces bfg9000
+{
+  Inventory.PickupMessage "65y';;l=-543.<<UNKNOWN WEAPON CLASS>>sy$^e> e))o) 0XFDED"
+  scale .5
+  //YScale 0.5
+  inventory.pickupsound "misc/w_pkup"
+  states
+  {
+  spawn:
+  ALEN E -1
+  loop
+  Pickup:
+    TNT1 A 0 A_JumpIfInventory("ALIENWEAPON",1,2)
+    TNT1 A 0 A_GiveInventory("ALIENWEAPON")
+    Stop
+    TNT1 A 0
+    Fail
+  }
+}
+actor ALIENWEAPON : Weapon
+{
+  Weapon.SelectionOrder 400
+  Weapon.AmmoUse 1
+  Weapon.AmmoGive 75
+  Weapon.AmmoType "AlienClip"
+  //Weapon.WeaponScaleY 1
+  +WEAPON.NOAUTOFIRE
+  scale .5
+  //YScale 0.5
+  attacksound "aliengun"
+  +NOAUTOAIM
+  weapon.yadjust 12
+  Obituary "%k owned %o pfhor style."
+  Weapon.PreferredSkin "PlayerPfhor"
+  Decal "RailScorchLower"
+  States
+  {
+  Ready:
+    ALEN A 1 A_WeaponReady
+    Loop
+  Select:
+    ALEN A 1 A_Raise
+    Loop
+  DeSelect:
+    ALEN A 0 A_JumpIfNoAmmo("DeSelect2")
+    ALEN A 1 A_Lower
+    Loop
+  DeSelect2:
+    ALEN AAAAAAAAAAAA 1 A_Lower
+    ALEN A 0 A_TakeInventory("ALIENWEAPON",1)
+    Loop
+  Fire:
+       ALEN A 0 A_Recoil(0.1)
+       ALEN A 0 A_Jumpifinventory("alienweaponsequence",2,"Fire3")
+       ALEN A 0 A_Jumpifinventory("alienweaponsequence",1,"Fire2")
+       ALEN A 0 A_Light2
+       ALEN A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ALEN B 3 bright A_FireBullets(7.5,0,3,5,"alienpuff",1,0)
+       ALEN A 0 A_Light0
+       ALEN A 0 A_GiveInventory("AlienWeaponSequence",1)
+       ALEN A 1 A_Refire
+       Goto Ready
+    Fire2:
+       ALEN A 0 A_Light2
+       ALEN A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ALEN C 3 bright A_FireBullets(7.5,0,3,5,"alienpuff",1,0)
+       ALEN A 0 A_Light0
+       ALEN A 0 A_GiveInventory("AlienWeaponSequence",1)
+       ALEN A 1 A_Refire
+       Goto Ready
+    Fire3:
+       ALEN A 0 A_Light2
+       ALEN A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ALEN D 3 bright A_FireBullets(7.5,0,3,5,"alienpuff",1,0)
+       ALEN A 0 A_Light0
+       ALEN A 0 A_TakeInventory("AlienWeaponSequence",2)
+       ALEN A 1 A_Refire
+       Goto Ready
+  Spawn:
+    ALEN E -1
+    Stop
+  }
+}
+ACTOR alienweaponsequence : Ammo
+{
+  Inventory.PickupMessage "durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 2
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 2
+  Inventory.Icon "ASSUG0"
+}
+ACTOR Vacuum : Inventory
+{
+  Inventory.PickupMessage "durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 1
+  +INVENTORY.UNDROPPABLE
+}
+ACTOR alienclip : Ammo
+{
+  Inventory.PickupMessage "durandal does not tolerate cheaters...."
+  Inventory.Amount 0
+  Inventory.MaxAmount 75
+  Ammo.BackpackAmount 0
+  Ammo.BackpackMaxAmount 75
+  Inventory.Icon "ALENAMMO"
+}
+Actor alienpuff : marathonpuff
+{
+  scale .375
+  //YScale 0.375
+  +PUFFONACTORS
+  +FORCEXYBILLBOARD
+  States
+  {
+  Spawn:
+    APUF ABCDE 2 bright
+    stop
+  Crash:
+    APUF ABCDE 2 bright
+    stop
+  }
+}

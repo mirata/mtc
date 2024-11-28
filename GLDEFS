@@ -1,0 +1,554 @@
+Glow
+{
+	Flats
+	{
+		1SET19
+		2SET12
+		4SET05
+	}
+	Walls
+	{
+		1SET19
+		2SET12
+		4SET05
+	}
+	Texture "1SET19", 2E2EFF, fullbright
+	Texture "2SET12", FFDD10, fullbright
+	Texture "4SET05", 25FF25, fullbright
+}
+pointlight MarathonPuff1
+{
+    color 1.0 1.0 0.0
+    size 32
+}
+pointlight MarathonPuff2
+{
+    color 1.0 1.0 0.0
+    size 20
+}
+pointlight MarathonPuff3
+{
+    color 1.0 1.0 0.0
+    size 12
+}
+object MarathonPuff
+{
+    frame PUFFA { light MarathonPuff1 }
+    frame PUFFB { light MarathonPuff2 }
+    frame PUFFC { light MarathonPuff3 }
+}
+pointlight AlienPuff1
+{
+    color 1.0 0.5 0.0
+    size 8
+}
+pointlight AlienPuff2
+{
+    color 1.0 0.5 0.0
+    size 12
+}
+pointlight AlienPuff3
+{
+    color 1.0 0.5 0.0
+    size 16
+}
+pointlight AlienPuff4
+{
+    color 1.0 0.5 0.0
+    size 20
+}
+pointlight AlienPuff5
+{
+    color 1.0 0.5 0.0
+    size 24
+}
+object MarathonPlayer
+{
+    frame PLAYO { light AlienPuff5 } 
+    frame PLAYP { light AlienPuff4 } 
+    frame PLAYQ { light AlienPuff3 } 
+    frame PLAYR { light AlienPuff2 } 
+}
+pointlight FusionBall1
+{
+    color 0.95 0.95 1.0
+    size 32
+}
+pointlight FusionBall2
+{
+    color 0.95 0.95 1.0
+    size 40
+}
+pointlight FusionBall3
+{
+    color 0.95 0.95 1.0
+    size 24
+}
+pointlight FusionBall4
+{
+    color 0.95 0.95 1.0
+    size 12
+}
+pointlight FusionBall5
+{
+    color 0.95 0.95 1.0
+    size 56
+}
+pointlight FusionBall6
+{
+    color 0.95 0.95 1.0
+    size 12
+}
+pointlight FusionBall7
+{
+    color 0.95 0.95 1.0
+    size 8
+}
+pointlight FusionBall8
+{
+    color 0.95 0.95 1.0
+    size 2
+}
+object FusionBall
+{
+    frame FBLLA { light FusionBall1 }
+    frame FBLLB { light FusionBall1 }
+    frame FBLLC { light FusionBall1 }
+    frame FBLLD { light FusionBall1 }
+    frame FBLLE { light FusionBall2 }
+    frame FBLLF { light FusionBall3 }
+    frame FBLLG { light FusionBall4 }
+    frame FBLLH { light FusionBall4 }
+}
+object PoweredFusionBall
+{
+    frame FBLLA { light FusionBall2 }
+    frame FBLLB { light FusionBall2 }
+    frame FBLLC { light FusionBall2 }
+    frame FBLLD { light FusionBall2 }
+    frame FBLLE { light FusionBall5 }
+    frame FBLLF { light FusionBall3 }
+    frame FBLLG { light FusionBall4 }
+    frame FBLLH { light FusionBall4 }
+}
+object PoweredFusionBallAfterTrail
+{
+    frame FBLLI { light FusionBall6 }
+    frame FBLLJ { light FusionBall7 }
+    frame FBLLK { light FusionBall8 }
+}
+pointlight MarathonGrenade1
+{
+    color 1.0 1.0 0.0
+    size 6
+}
+pointlight MarathonGrenade2
+{
+    color 1.0 1.0 0.0
+    size 48
+}
+pointlight MarathonGrenade3
+{
+    color 1.0 1.0 0.0
+    size 40
+}
+pointlight MarathonGrenade4
+{
+    color 1.0 1.0 0.0
+    size 32
+}
+pointlight MarathonGrenade5
+{
+    color 1.0 1.0 0.0
+    size 24
+}
+pointlight MarathonGrenade6
+{
+    color 1.0 1.0 0.0
+    size 16
+}
+pointlight MarathonGrenade7
+{
+    color 1.0 1.0 0.0
+    size 8
+}
+object MarathonGrenade
+{
+    frame GRENA { light MarathonGrenade1 }
+    frame GRENB { light MarathonGrenade2 }
+    frame GRENC { light MarathonGrenade3 }
+    frame GREND { light MarathonGrenade4 }
+    frame GRENE { light MarathonGrenade5 }
+    frame GRENF { light MarathonGrenade6 }
+    frame GRENG { light MarathonGrenade7 }
+}
+pointlight MarathonRocket1
+{
+    color 1.0 1.0 0.0
+    size 96
+}
+pointlight MarathonRocket2
+{
+    color 1.0 1.0 0.0
+    size 80
+}
+pointlight MarathonRocket3
+{
+    color 1.0 1.0 0.0
+    size 64
+}
+pointlight MarathonRocket4
+{
+    color 1.0 1.0 0.0
+    size 48
+}
+pointlight MarathonRocket5
+{
+    color 1.0 1.0 0.0
+    size 16
+}
+object MarathonRocket
+{
+    frame RCKTA { light MarathonRocket5 }
+    frame RCKTB { light MarathonRocket5 }
+    frame RCKTC { light MarathonRocket1 }
+    frame RCKTD { light MarathonRocket2 }
+    frame RCKTE { light MarathonRocket3 }
+    frame RCKTF { light MarathonRocket4 }
+}
+object MarathonFlameBall
+{
+    frame FLAMA { light MarathonGrenade7 }
+    frame FLAMB { light MarathonGrenade6 }
+    frame FLAMC { light MarathonGrenade5 }
+    frame FLAMD { light MarathonGrenade4 }
+    frame FLAME { light MarathonGrenade3 }
+    frame FLAMF { light MarathonGrenade2 }
+    frame FLAMG { light MarathonGrenade1 }
+}
+object AlienPuff
+{
+    frame APUFA { light AlienPuff1 }
+    frame APUFB { light AlienPuff2 }
+    frame APUFC { light AlienPuff3 }
+    frame APUFD { light AlienPuff4 }
+    frame APUFE { light AlienPuff5 }
+}
+object GunLight
+{
+    frame XXXXA { light MarathonPuff2 }
+}
+object FusionLight
+{
+    frame XXXXB { light FusionBall2 }
+}
+object CannonLight
+{
+    frame XXXXC { light AutoCannon2 }
+}
+pointlight Fighter11
+{
+    color 0.34 0.92 0.56
+    size 8
+}
+pointlight Fighter12
+{
+    color 0.34 0.92 0.56
+    size 16
+}
+pointlight Fighter13
+{
+    color 0.34 0.92 0.56
+    size 24
+}
+object Fighter1
+{
+    frame FIGHF { light Fighter11 }
+    frame FIGHG { light Fighter12 }
+    frame FIGHH { light Fighter13 }
+    frame BURNA { light AlienPuff5 } 
+    frame BURNB { light AlienPuff4 } 
+    frame BURNC { light AlienPuff3 } 
+    frame BURND { light AlienPuff2 } 
+}
+object Fighter2
+{
+    frame FIGHF { light Fighter11 }
+    frame FIGHG { light Fighter12 }
+    frame FIGHH { light Fighter13 }
+    frame BURNA { light AlienPuff5 } 
+    frame BURNB { light AlienPuff4 } 
+    frame BURNC { light AlienPuff3 } 
+    frame BURND { light AlienPuff2 } 
+}
+object Fighter3
+{
+    frame FIGHF { light Fighter11 }
+    frame FIGHG { light Fighter12 }
+    frame FIGHH { light Fighter13 }
+    frame BURNA { light AlienPuff5 } 
+    frame BURNB { light AlienPuff4 } 
+    frame BURNC { light AlienPuff3 } 
+    frame BURND { light AlienPuff2 } 
+}
+object Fighter4
+{
+    frame FIGHF { light Fighter11 }
+    frame FIGHG { light Fighter11 }
+    frame FIGHH { light Fighter13 }
+    frame BURNA { light AlienPuff5 } 
+    frame BURNB { light AlienPuff4 } 
+    frame BURNC { light AlienPuff3 } 
+    frame BURND { light AlienPuff2 } 
+}
+object FighterProjectile
+{
+    frame FIGHR { light Fighter11 }
+    frame FIGHS { light Fighter11 }
+    frame FIGHT { light Fighter12 }
+    frame FIGHU { light Fighter12 }
+    frame FIGHV { light Fighter13 }
+    frame FIGHW { light Fighter13 }
+    frame FIGHX { light Fighter12 }
+}
+pointlight Compiler11
+{
+    color 0.0 1.0 0.0
+    size 24
+}
+pointlight Compiler12
+{
+    color 0.0 1.0 0.0
+    size 16
+}
+pointlight Compiler13
+{
+    color 0.0 1.0 0.0
+    size 4
+}
+pointlight CompilerDead
+{
+    color 1.0 1.0 1.0
+    size 36
+}
+object Compiler1
+{
+    frame COMPA { light Compiler13 }
+    frame COMPB { light Compiler13 }
+    frame COMPC { light Compiler12 }
+    frame COMPD { light Compiler11 }
+    frame COMPL { light CompilerDead }
+    frame CFOGA { light CompilerDead }
+    frame CFOGB { light CompilerDead }
+    frame CFOGC { light CompilerDead }
+    frame CFOGD { light CompilerDead }
+}
+pointlight Compiler21
+{
+    color 1.0 0.95 0.12
+    size 24
+}
+pointlight Compiler22
+{
+    color 1.0 0.95 0.12
+    size 16
+}
+pointlight Compiler23
+{
+    color 1.0 0.95 0.12
+    size 4
+}
+object Compiler2
+{
+    frame COMPA { light Compiler23 }
+    frame COMPB { light Compiler23 }
+    frame COMPC { light Compiler22 }
+    frame COMPD { light Compiler21 }
+    frame COMPL { light CompilerDead }
+    frame CFOGA { light CompilerDead }
+    frame CFOGB { light CompilerDead }
+    frame CFOGC { light CompilerDead }
+    frame CFOGD { light CompilerDead }
+}
+object CompilerBall
+{
+    frame COMPE { light Compiler11 }
+    frame COMPF { light Compiler11 }
+    frame COMPJ { light Compiler12 }
+    frame COMPK { light Compiler13 }
+}
+object CompilerBallTrail
+{
+    frame COMPG { light Compiler12 }
+    frame COMPH { light Compiler11 }
+    frame COMPI { light Compiler11 }
+}
+object CompilerBall2
+{
+    frame COMPE { light Compiler21 }
+    frame COMPF { light Compiler21 }
+    frame COMPJ { light Compiler22 }
+    frame COMPK { light Compiler23 }
+}
+object CompilerBallTrail2
+{
+    frame COMPG { light Compiler22 }
+    frame COMPH { light Compiler21 }
+    frame COMPI { light Compiler21 }
+}
+object MADD
+{
+    frame MADDB { light MarathonPuff3 }
+    frame MADDC { light MarathonGrenade2 }
+    frame MADDD { light MarathonGrenade3 }
+    frame MADDE { light MarathonGrenade4 }
+    frame MADDF { light MarathonGrenade3 }
+    frame MADDG { light MarathonGrenade2 }
+    frame MADDH { light MarathonGrenade3 }
+    frame MADDI { light MarathonGrenade4 }
+    frame MADDJ { light MarathonGrenade3 }
+    frame MADDK { light MarathonGrenade2 }
+    frame MADDL { light MarathonRocket1 }
+    frame MADDM { light MarathonGrenade1 }
+}
+object BadMADD
+{
+    frame MADDB { light MarathonPuff3 }
+    frame MADDC { light MarathonGrenade2 }
+    frame MADDD { light MarathonGrenade3 }
+    frame MADDE { light MarathonGrenade4 }
+    frame MADDF { light MarathonGrenade3 }
+    frame MADDG { light MarathonGrenade2 }
+    frame MADDH { light MarathonGrenade3 }
+    frame MADDI { light MarathonGrenade4 }
+    frame MADDJ { light MarathonGrenade3 }
+    frame MADDK { light MarathonGrenade2 }
+    frame MADDL { light MarathonRocket1 }
+    frame MADDM { light MarathonGrenade1 }
+}
+object Trooper1
+{
+    frame TROPF { light MarathonPuff2 }
+    frame BURNA { light AlienPuff5 } 
+    frame BURNB { light AlienPuff4 } 
+    frame BURNC { light AlienPuff3 } 
+    frame BURND { light AlienPuff2 }
+}
+object Trooper2
+{
+    frame TROPF { light MarathonPuff2 }
+    frame BURNA { light AlienPuff5 } 
+    frame BURNB { light AlienPuff4 } 
+    frame BURNC { light AlienPuff3 } 
+    frame BURND { light AlienPuff2 }
+}
+object TrooperGrenade
+{
+    frame TGRNA { light MarathonGrenade1 }
+    frame GRENA { light MarathonGrenade1 }
+    frame GRENB { light MarathonGrenade2 }
+    frame GRENC { light MarathonGrenade3 }
+    frame GREND { light MarathonGrenade4 }
+    frame GRENE { light MarathonGrenade5 }
+    frame GRENF { light MarathonGrenade6 }
+    frame GRENG { light MarathonGrenade7 }
+}
+object BOB1
+{
+    frame BURNA { light AlienPuff5 } 
+    frame BURNB { light AlienPuff4 } 
+    frame BURNC { light AlienPuff3 } 
+    frame BURND { light AlienPuff2 }
+}
+object BOB2
+{
+    frame BURNA { light AlienPuff5 } 
+    frame BURNB { light AlienPuff4 } 
+    frame BURNC { light AlienPuff3 } 
+    frame BURND { light AlienPuff2 }
+}
+object BOB3
+{
+    frame BURNA { light AlienPuff5 } 
+    frame BURNB { light AlienPuff4 } 
+    frame BURNC { light AlienPuff3 } 
+    frame BURND { light AlienPuff2 }
+}
+object BOB4
+{
+    frame BURNA { light AlienPuff5 } 
+    frame BURNB { light AlienPuff4 } 
+    frame BURNC { light AlienPuff3 } 
+    frame BURND { light AlienPuff2 }
+}
+object BadBOB
+{
+    frame DUDEJ { light MarathonRocket1 }
+    frame DUDEK { light MarathonRocket2 }
+    frame DUDEL { light MarathonRocket3 }
+    frame DUDEM { light MarathonRocket4 }
+    frame BURNA { light AlienPuff5 } 
+    frame BURNB { light AlienPuff4 } 
+    frame BURNC { light AlienPuff3 } 
+    frame BURND { light AlienPuff2 }
+}
+object Hunter1
+{
+    frame HUNTF { light Hunter11 }
+    frame HUNTG { light Hunter12 }
+    frame HUNTL { light MarathonGrenade4 }
+    frame HUNTM { light MarathonGrenade3 }
+    frame HUNTN { light MarathonGrenade2 }
+    frame HUNTO { light MarathonGrenade1 }
+}
+object Hunter2
+{
+    frame HUNTF { light Hunter11 }
+    frame HUNTG { light Hunter12 }
+    frame HUNTL { light MarathonGrenade4 }
+    frame HUNTM { light MarathonGrenade3 }
+    frame HUNTN { light MarathonGrenade2 }
+    frame HUNTO { light MarathonGrenade1 }
+}
+object Hunter3
+{
+    frame HUNTF { light Hunter11 }
+    frame HUNTG { light Hunter12 }
+    frame HUNTL { light MarathonGrenade4 }
+    frame HUNTM { light MarathonGrenade3 }
+    frame HUNTN { light MarathonGrenade2 }
+    frame HUNTO { light MarathonGrenade1 }
+}
+pointlight Hunter11
+{
+    color 0.0 1.0 0.2
+    size 10
+}
+pointlight Hunter12
+{
+    color 0.0 1.0 0.2
+    size 21
+}
+pointlight Hunter13
+{
+    color 0.0 1.0 0.2
+    size 28
+}
+pointlight Hunter14
+{
+    color 0.0 1.0 0.2
+    size 31
+}
+pointlight Hunter15
+{
+    color 0.0 1.0 0.2
+    size 25
+}
+object HunterShot
+{
+    frame HUNTQ { light Hunter11 }
+    frame HUNTR { light Hunter12 }
+    frame HUNTS { light Hunter13 }
+    frame HUNTT { light Hunter14 }
+    frame HUNTU { light Hunter15 }
+}

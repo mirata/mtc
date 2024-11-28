@@ -1,0 +1,47 @@
+{
+name = "PlayerFist"
+sprite = PLAY
+crouchsprite = PLAY
+}
+
+{
+name = "PlayerPistol"
+sprite = PLAP
+crouchsprite = PLAP
+}
+
+{
+name = "PlayerWoo"
+sprite = PLAW
+crouchsprite = PLAW
+}
+
+{
+name = "PlayerFusion"
+sprite = PLAF
+crouchsprite = PLAF
+}
+
+{
+name = "PlayerRifle"
+sprite = PLAA
+crouchsprite = PLAA
+}
+
+{
+name = "PlayerRocket"
+sprite = PLAR
+crouchsprite = PLAR
+}
+
+{
+name = "PlayerThrower"
+sprite = PLAT
+crouchsprite = PLAT
+}
+
+{
+name = "PlayerPfhor"
+sprite = PLAU
+crouchsprite = PLAU
+}

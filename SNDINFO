@@ -1,0 +1,219 @@
+HEAVEN HEAVEN
+TITLE TITLE
+HEAL HEAL
+PHEAL PHEAL
+MSWON MSWON
+MSWOFF MSWOFF
+$attenuation MSWON 2
+$attenuation MSWOFF 2
+PSWON PSWON
+PSWOFF PSWOFF
+$attenuation PSWON 2
+$attenuation PSWOFF 2
+MLFGO MLFGO
+MLFSTOP MLFSTOP
+$attenuation MLFGO 2
+$attenuation MLFSTOP 2
+PLFGO PLFGO
+PLFSTOP PLFSTOP
+MDRUP MDRUP
+MDRDOWN MDRDOWN
+MDRSTK MDRSTK
+$attenuation MDRUP 2
+$attenuation MDRDOWN 2
+$attenuation MDRSTK 2
+PDRUP PDRUP
+PDRDOWN PDRDOWN
+PUZZ PUZZ
+TERM TERM
+AIRFILL AIRFILL
+SAVE SAVE
+BEEP BEEP
+splat splat
+misc/chat 			TERM
+menu/activate			TERM	// Activate a new menu
+menu/backup			BEEP	// Backup to previous menu
+menu/prompt			BEEP	// Activate a prompt "menu"
+menu/cursor			BEEP	// Move cursor up/down
+menu/change			SAVE	// Select new value for option
+menu/invalid			TERM		// Menu not available
+menu/dismiss			SAVE	// Dismiss a prompt message
+menu/choose			BEEP	// Choose a menu item
+menu/clear			BEEP	// Close top menu
+slop slop
+misc/gibbed slop
+$playeralias	player	male	*death		NONE
+$playeralias	player	male	*xdeath		NONE
+$playersound	player	male	*gibbed		slop
+$playeralias	player	male	*pain100	NONE
+$playersounddup	player	male	*pain75		*pain100
+$playersounddup	player	male	*pain50		*pain100
+$playersounddup	player	male	*pain25		*pain100
+$playeralias	player	male	*grunt		NONE
+$playersounddup	player	male	*land		*grunt
+$playeralias	player	male	*jump		NONE
+$playeralias	player	male	*fist		NONE
+$playeralias	player	male	*usefail	NONE
+$playeralias	player	male	*taunt		BOB
+$playersound    player  male    *burndeath      burn
+$playersound    player  male    *suffocate      UUUGH
+none none
+BURN BURN
+$random PAIN { PAIN1 PAIN2 }
+PAIN1 PAIN1
+PAIN2 PAIN2
+$random playerdie { DIE1 DIE2 }
+die1 die1
+die2 die2
+bob1 bob1
+bob2 bob2
+bob3 bob3
+bob4 bob4
+bob5 bob5
+bob6 bob6
+bob7 bob7
+bob8 bob8
+bob9 bob9
+bob10 bob10
+bob11 bob11
+bob12 bob12
+bob13 bob13
+bob14 bob14
+bob15 bob15
+bob16 bob16
+bob17 bob17
+bob18 bob18
+bob19 bob19
+bob20 bob20
+bob21 bob21
+bob22 bob22
+bob23 bob23
+bob24 bob24
+bob25 bob25
+bob26 bob26
+bob27 bob27
+bob28 bob28
+bob29 bob29
+bob30 bob30
+bob31 bob31
+bob32 bob32
+bob33 bob33
+bob34 bob34
+bob35 bob35
+bob36 bob36
+bob37 bob37
+bob38 bob38
+bob39 bob39
+bob40 bob40
+bob41 bob41
+bob42 bob42
+bob43 bob43
+bob44 bob44
+bob45 bob45
+VAC1 VAC1
+VAC2 VAC2
+VAC3 VAC3
+VAC4 VAC4
+VAC5 VAC5
+VAC6 VAC6
+VAC7 VAC7
+VAC8 VAC8
+VAC9 VAC9
+VAC10 VAC10
+VAC11 VAC11
+VAC12 VAC12
+VAC13 VAC13
+VAC14 VAC14
+VAC15 VAC15
+VAC16 VAC16
+VAC17 VAC17
+VAC18 VAC18
+VAC19 VAC19
+VAC20 VAC20
+VAC21 VAC21
+VAC22 VAC22
+VAC23 VAC23
+VAC24 VAC24
+VAC25 VAC25
+VAC26 VAC26
+VAC27 VAC27
+VAC28 VAC28
+VAC29 VAC29
+VAC30 VAC30
+VAC31 VAC31
+VAC32 VAC32
+$random BOB { BOB1 BOB2 BOB3 BOB4 BOB5 BOB6 BOB7 BOB8 BOB9 BOB10 BOB11 BOB12 BOB13 BOB14 BOB15 BOB16 BOB17 BOB18 BOB19 BOB20 BOB21 BOB22 BOB23 BOB24 BOB25 BOB26 BOB27 BOB28 BOB29 BOB30 BOB31 BOB32 BOB33 BOB34 BOB35 BOB36 BOB37 BOB38 BOB39 BOB40 BOB41 BOB42 BOB43 BOB44 BOB45 VAC1 VAC2 VAC3 VAC4 VAC5 VAC8 VAC9 VAC10 VAC11 VAC12 VAC13 VAC14 VAC15 VAC16 VAC17 VAC18 VAC19 VAC20 VAC21 VAC22 VAC23 VAC24 VAC25 VAC26 VAC27 VAC28 VAC29 VAC30 VAC31 VAC32 }
+MAGNUM1 MAGNUM1
+MAGNUM2 MAGNUM2
+PUNCH PUNCH
+DRY DRY
+FLESHIT1 FLESHIT1
+FLESHIT2 FLESHIT2
+FLESHIT3 FLESHIT3
+RICO1 RICO1
+$limit RICO1 10
+RICO2 RICO2
+$limit RICO2 10
+$random ricochet { RICO1 RICO2 }
+DING1 DING1
+DING2 DING2
+$random DING { DING1 DING2 }
+$random fleshit { FLESHIT1 FLESHIT2 FLESHIT3 }
+FUSION1 FUSION1
+$limit FUSION1 5
+FUSION2 FUSION2
+FUSION3 FUSION3
+assault1 assault1
+$limit assault1 10
+assault2 assault2
+assault3 assault3
+SPNKR1 SPNKR1
+SPNKR2 SPNKR2
+toast toast
+$limit toast 10
+aliengun aliengun
+AUTOFIRE AUTOFIRE
+$random PFHOR { PFHOR1 PFHOR2 PFHOR3 }
+PFHOR1 PFHOR1
+PFHOR2 PFHOR2
+PFHOR3 PFHOR3
+$random PFHORDIE { PFHORD1 PFHORD2 }
+PFHORD1 PFHORD1
+PFHORD2 PFHORD2
+PFHORAT1 PFHORAT1
+PFHORAT2 PFHORAT2
+PFHORBURN PFHORBRN
+COMPATK1 COMPATK1
+COMPATK2 COMPATK2
+COMPPAIN COMPPAIN
+COMPDEAD COMPDEAD
+WASPSEE1 WASPSEE1
+WASPSEE2 WASPSEE2
+WASPSEE3 WASPSEE3
+WASPFLP1 WASPFLP1
+WASPFLP2 WASPFLP2
+WASPFLP3 WASPFLP3
+WASPSPIT WASPSPIT
+WASPHIT WASPHIT
+$random WASPSEE { WASPSEE1 WASPSEE2 WASPSEE3 }
+$random WASPFLAP { WASPFLP1 WASPFLP2 WASPFLP3 }
+HULKATTK HULKATTK
+HULKDEAD HULKDEAD
+SPIDSEE SPIDSEE
+SPIDSPIT SPIDSPIT
+SPIDPAIN SPIDPAIN
+SPIDACT SPIDACT
+SPIDDETH SPIDDETH
+SPIDHIT SPIDHIT
+SPIDKICK SPIDKICK
+intermission/tick		BEEP
+intermission/cooptotal		BURN
+intermission/nextstage		BEEP
+intermission/paststats		MAGNUM2
+intermission/pastcoopstats	MAGNUM2
+intermission/pastdmstats	SLOP
+HUNTFIRE HUNTFIRE
+HUNTDEAD HUNTDEAD
+HUNTBOOM HUNTBOOM
+HUNTHIT HUNTHIT
+

@@ -1,0 +1,55 @@
+[enu default]
+
+TXT_RANDOMGOODBYE_1 = "LOG OFF";
+TXT_RANDOMGOODBYE_2 = "LOG OFF";
+TXT_RANDOMGOODBYE_3 = "LOG OFF";
+
+LOADNET = "you cannot load a game when playing online.";
+QLOADNET = "you cannot quickload when playing online.";
+QSAVESPOT = "you need to pick out a slot for quicksaving.";
+SAVEDEAD = "you need to be in-game to save.";
+QSPROMPT = "you are about to overwrite game\n\n'%s',\n\nare you sure you want to?";
+QLPROMPT = "you are about to quickload game\n\n'%s',\n\nare you sure you want to?";
+NEWGAME = "you cannot start a new game while playing online.";
+NIGHTMARE = "Before proceeding any further, you\nmust take the oath of the vidmaster:\n\nI pledge to punch all switches,\nto never shoot where i\ncan use grenades,\nto admit the existence\nof no level, except\ntotal carnage,\nto never use caps lock as\nmy run key,\nand to never, ever leave\na single BoB alive.\n\npress y to accept.";
+SWSTRING = "OK, WHAT THE FUCK ARE YOU DOING USING THE DEMO\nVERSION OF DOOM? GET OFF YOUR ASS AND GO TO\nwww.idsoftware.com AND BUY THE FULL GAME!!!";
+NETEND = "you can't end an online game!\nit's just not fair to everyone else...";
+ENDGAME = "Are you sure you want to cancel a game in progress?";
+SAVENET = "you cannot save while playing online.";
+
+
+QUITMSG = "What are you doing? Press N right now...";
+
+
+QUITMSG1 = "get outta here and go back\nto your boring ghouls vs. humans.";
+QUITMSG2 = "Your lucky i don't blast your vent\ncore for trying to leave.";
+QUITMSG3 = "i wouldn't leave if i were you.\ndurandal might shoot you\nwith his shotgun...";
+QUITMSG4 = "get outta here and go back\nto your boring zombie horde.";
+QUITMSG5 = "if you didn't like marathon,\nthen why the hell did you download\nthis wad?";
+QUITMSG6 = "Security Guard for sale! Cheap!\nMoving, MUST sell.\nPress Y to be sold to the pfhor.";
+QUITMSG7 = "liked this mod? want the real game?\nvisit source.bungie.org/get for all 3 games!";
+
+
+QUITMSG8 = "There are obviously many things\nwhich you do not understand, and\nmay never be able too...";
+QUITMSG9 = "don't go now, there's a \ngang of juggernauts waiting\nat the desktop!";
+QUITMSG10 = "get outta here and go back\nto your boring doom 2 deathmatches.";
+QUITMSG11 = "Durandal will not appreciate your attempt\nto leave...";
+QUITMSG12 = "Some vidmaster YOU are...";
+QUITMSG13 = "Frog Blast the vent core!";
+QUITMSG14 = "press y to crash the\nU.E.S.C. Marathon right into\nyour house.";
+
+
+OB_WATER = "%o ran out of oxygen.";
+
+
+AMSTR_FOLLOWON = "Following your position";
+AMSTR_FOLLOWOFF = "Use the arrows to scroll across the map";
+AMSTR_MARKEDSPOT = "Marked Spot";
+AMSTR_MARKSCLEARED = "All Marks Cleared";
+STSTR_MUS = "Music Changed";
+STSTR_DQDON = "Kindergarten Mode ON";
+STSTR_DQDOFF = "Kindergarten Mode OFF";
+STSTR_KFAADDED = "Bigger Guns given to you...";
+STSTR_FAADDED = "Bigger Guns given to you...";
+STSTR_CHOPPERS = "You have entered the most useless cheat ever";
+STSTR_CLEV = "Prepare to vid...\n";

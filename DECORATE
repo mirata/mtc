@@ -1,0 +1,1443 @@
+ACTOR term2 10001
+{
+  conversationID 2
+  Radius 20
+  Height 14
+  States
+  {
+  Spawn:
+    TNT1 A -1 bright
+    Stop
+  }
+}
+ACTOR term3 10002
+{
+  conversationID 3
+  Radius 20
+  Height 14
+  States
+  {
+  Spawn:
+    TNT1 A -1 bright
+    Stop
+  }
+}
+ACTOR term4 10003
+{
+  conversationID 4
+  Radius 20
+  Height 14
+  States
+  {
+  Spawn:
+    TNT1 A -1 bright
+    Stop
+  }
+}
+ACTOR term5 10004
+{
+  conversationID 5
+  Radius 20
+  Height 14
+  States
+  {
+  Spawn:
+    TNT1 A -1 bright
+    Stop
+  }
+}
+ACTOR term6 10005
+{
+  conversationID 6
+  Radius 20
+  Height 14
+  States
+  {
+  Spawn:
+    TNT1 A -1 bright
+    Stop
+  }
+}
+ACTOR term7 10006
+{
+  conversationID 7
+  Radius 20
+  Height 14
+  States
+  {
+  Spawn:
+    TNT1 A -1 bright
+    Stop
+  }
+}
+ACTOR term8 10007
+{
+  conversationID 8
+  Radius 20
+  Height 14
+  States
+  {
+  Spawn:
+    TNT1 A -1 bright
+    Stop
+  }
+}
+ACTOR term9 10008
+{
+  conversationID 9
+  Radius 20
+  Height 14
+  States
+  {
+  Spawn:
+    TNT1 A -1 bright
+    Stop
+  }
+}
+
+ACTOR MarathonPlayer : DoomPlayer
+{
+  Speed 1
+  Health 150
+  Radius 11
+  Height 48
+  Mass 100
+  PainChance 0
+  scale .5
+  //YScale 0.5
+  Player.ForwardMove .5,.5
+  Player.SideMove .5,.5
+  Player.DisplayName "Cyborg"
+  Player.StartItem "Magnum"
+  Player.StartItem "Punch"
+  Player.StartItem "MagnumClip", 8
+  Player.StartItem "MagnumClip2", 8
+  Player.StartItem "MagnumAmmo", 3
+  Player.StartItem "MagnumCheck", 1
+  Player.StartItem "OxygenTank", 420
+  Player.WeaponSlot 1, Punch
+  Player.WeaponSlot 2, Magnum, Magnums
+  Player.WeaponSlot 3, FusionPistol
+  Player.WeaponSlot 4, MA75AssaultRifle
+  Player.WeaponSlot 5, X17SSMLauncher
+  Player.Weaponslot 6, TOZTFlamethrower
+  Player.WeaponSlot 7, AlienWeapon
+  Player.ColorRange 112, 127
+  Player.MaxHealth 450
+  Player.ViewHeight 40
+  Player.ViewBob .1
+  Player.AttackZOffset 12
+  damagefactor "suffocate" ,1.0
+  PainChance "suffocate", 0
+  +DONTGIB
+  +NOSKIN
+  +SLIDESONWALLS
+  States
+  {
+  Spawn:
+    PLAY E -1
+    Loop
+  See:
+    PLAY ABCD 4
+    Loop
+  Missile:
+    PLAY E 1
+    Goto Spawn
+  Melee:
+    PLAY F 2 bright
+    PLAY E 1
+    Goto Spawn
+  Melee.Punch:
+    PLAY F 4
+    PLAY E 1
+    Goto Spawn
+  Death:
+    PLAY G 0 A_NoBlocking
+    PLAY G 5 A_Playerscream
+    PLAY G 1 A_Checkfloor("Death1")
+    wait
+  Death1:
+    PLAY H 5
+    PLAY H 1 A_Checkfloor("Death2")
+    wait
+  Death2:
+    PLAY I 5
+    PLAY I 1 A_Checkfloor("Death3")
+    wait
+  Death3:
+    PLAY J 1 A_PlaySound("Splat")
+    PLAY J -1 ACS_Execute(779,0,0,0,0)
+    Stop
+  Death.Drowning:
+    PLAY G 0 A_NoBlocking
+    PLAY G 5 A_Playsound("*suffocate")
+    PLAY G 1 A_Checkfloor("Death.Drowning1")
+    wait
+  Death.Drowning1:
+    PLAY H 5
+    PLAY H 1 A_Checkfloor("Death.Drowning2")
+    wait
+  Death.Drowning2:
+    PLAY I 5
+    PLAY I 1 A_Checkfloor("Death.Drowning3")
+    wait
+  Death.Drowning3:
+    PLAY J 1
+    PLAY J -1 ACS_Execute(779,0,0,0,0)
+    Stop
+  Death.Crush:
+    PLAY G 0 A_NoBlocking
+    PLAY G 5 A_Playsound("*burndeath")
+    PLAY G 1 A_Checkfloor("Death.Crush1")
+    wait
+  Death.Crush1:
+    PLAY K 5
+    PLAY K 1 A_Checkfloor("Death.Crush2")
+    wait
+  Death.Crush2:
+    PLAY L 5
+    PLAY L 1 A_Checkfloor("Death.Crush3")
+    wait
+  Death.Crush3:
+    PLAY M 5
+    PLAY M 1 A_Checkfloor("Death.Crush4")
+    wait
+  Death.Crush4:
+    PLAY N 1 A_XScream
+    PLAY N -1 ACS_Execute(779,0,0,0,0)
+    Stop
+  XDeath:
+    PLAY G 5 A_Playerscream
+    PLAY G 1 A_Checkfloor("XDeath1")
+    wait
+  XDeath1:
+    PLAY K 5
+    PLAY K 1 A_Checkfloor("XDeath2")
+    wait
+  XDeath2:
+    PLAY L 5
+    PLAY L 1 A_Checkfloor("XDeath3")
+    wait
+  XDeath3:
+    PLAY M 5
+    PLAY M 1 A_Checkfloor("XDeath4")
+    wait
+  XDeath4:
+    PLAY N 1 A_XScream
+    PLAY N -1 ACS_Execute(779,0,0,0,0)
+    Stop
+  Burn:
+    PLAY O 0 bright A_NoBlocking
+    PLAY O 5 bright A_Playsound("*burndeath")
+    PLAY O 1 bright A_Checkfloor("Burn1")
+    wait
+  Burn1:
+    PLAY P 5 bright
+    PLAY P 1 bright A_Checkfloor("Burn2")
+    wait
+  Burn2:
+    PLAY Q 5 bright
+    PLAY Q 1 bright A_Checkfloor("Burn3")
+    wait
+  Burn3:
+    PLAY R 5 bright
+    PLAY R 1 bright A_Checkfloor("Burn4")
+    wait
+  Burn4:
+    PLAY S -1 ACS_Execute(779,0,0,0,0)
+    stop
+  Death.LavaFire:
+    PLAY O 0 bright A_NoBlocking
+    PLAY O 5 bright A_Playsound("*burndeath")
+    PLAY O 1 bright A_Checkfloor("Death.LavaFire1")
+    wait
+  Death.LavaFire1:
+    PLAY P 5 bright
+    PLAY P 1 bright A_Checkfloor("Death.LavaFire2")
+    wait
+  Death.LavaFire2:
+    PLAY Q 5 bright
+    PLAY Q 1 bright A_Checkfloor("Death.LavaFire3")
+    wait
+  Death.LavaFire3:
+    PLAY R 5 bright
+    PLAY R 1 bright A_Checkfloor("Death.LavaFire4")
+    wait
+  Death.LavaFire4:
+    PLAY S -1 ACS_Execute(779,0,0,0,0)
+    stop
+  }
+}
+#include "SCRIPTS/pickups.txt"
+#include "SCRIPTS/weapons.txt"
+#include "SCRIPTS/props.txt"
+//#include "SCRIPTS/fighter.txt"
+//#include "SCRIPTS/compiler.txt"
+
+ACTOR Wasp1 replaces lostsoul
+{
+  Health 16
+  Radius 10
+  Height 20
+  Mass 50
+  Speed 10
+  Painchance 200
+  Monster
+  +FLOAT
+  +NOGRAVITY
+  +DONTOVERLAP
+  +MISSILEMORE
+  +SPAWNFLOAT
+  +NOSPLASHALERT
+  SeeSound "WASPSEE"
+  AttackSound "WASPSPIT"
+  PainSound ""
+  DeathSound "WASPSEE"
+  ActiveSound "WASPFLAP"
+  Obituary "%o was poisoned by a wasp's venom."
+  HitObituary "%o was stung by a wasp."
+  scale .25
+  //YScale 0.25
+  bloodcolor purple
+  +DONTGIB
+  States
+  {
+  Spawn:
+    WASP A 0 A_PlaySound("WASPFLAP")
+    WASP ABCB 6 A_Look
+    Loop
+  See:
+    WASP A 0 A_PlaySound("WASPFLAP")
+    WASP AABBCCBB 3 A_Chase
+    Loop
+  Melee:
+    WASP DE 6 A_FaceTarget
+    WASP F 6 A_CustomMeleeAttack(random(5,12),"WASPSPIT","WASPSPIT")
+    Goto See
+  Missile:
+    WASP DE 6 A_FaceTarget
+    WASP F 6 A_CustomMissile("SpitBall",4,0,random(-1,1),8,random(-1,1))
+    Goto See
+  Death:
+    WASP A 0 A_Gravity
+    WASP M 0 A_NoBlocking
+    WASP M 5 A_Scream
+    WASP NOP 5
+    loop
+  Crash:
+    WASP Q 7 A_PlaySound("SPLAT")
+    WASP R 7
+    WASP S -1 ACS_Execute(779,0,0,0,0)
+    Stop
+  }
+}
+ACTOR SpitBall
+{
+  Radius 8
+  Height 8
+  Speed 10
+  FastSpeed 20
+  Damage 2
+  Projectile
+  -ACTIVATEPCROSS
+  -ACTIVATEIMPACT
+  +SPAWNSOUNDSOURCE
+  SeeSound "WASPSPIT"
+  DeathSound "WASPHIT"
+  scale .5
+  //YScale 0.5
+  States
+  {
+  Spawn:
+    WASP G 1
+    Loop
+  Death:
+    WASP HIGJKL 5
+    Stop
+  }
+}
+ACTOR Wasp2 : Wasp1 replaces cacodemon
+{
+  health 30
+  Translation "64:79=80:111", "176:191=112:127"
+  +MISSILEEVENMORE
+  -MISSILEMORE
+}
+ACTOR Wasp3 : Wasp1 replaces stealthcacodemon
+{
+  health 60
+  Translation "64:79=48:79", "176:191=[161,0,100]:[0,0,0]"
+  +MISSILEEVENMORE
+}
+actor MADD replaces Arachnotron
+{
+  obituary "%o fell victim to friendly fire."
+  health 150
+  radius 24
+  height 32
+  mass 600
+  speed 6
+  Translation "202:207=[2,157,174]:[0,83,106]", "240:247=[1,86,101]:[0,0,0]"
+  painchance 0
+  seesound ""
+  painsound ""
+  deathsound "SPNKR2"
+  activesound ""
+  attacksound "MAGNUM1"
+  MONSTER
+  +FLOORCLIP
+  +SPAWNFLOAT
+  +NOBLOOD
+  +FLOAT
+  +NOGRAVITY
+  +FRIENDLY
+  +DONTGIB
+  +NOSPLASHALERT
+  scale .5
+  //YScale 0.5
+  damagefactor "fire", 0.0
+  Decal "BulletChip"
+  states
+  {
+  Spawn:
+    MADD A 3 A_Look
+    loop
+  See:
+    MADD A 3 A_Chase
+    loop
+  Missile:
+    MADD A 1 A_FaceTarget
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    goto See
+  Death:
+    MADD C 0 bright A_SpawnItem("MADDBoom1")
+    MADD C 3 bright A_Playsound("ASSAULT3")
+    MADD DEF 3 bright
+    MADD G 0 bright A_SpawnItem("MADDBoom1")
+    MADD G 3 bright A_Playsound("ASSAULT3")
+    MADD HI 3 bright
+    MADD J 0 bright A_SpawnItem("MADDBoom1")
+    MADD J 3 bright A_Playsound("ASSAULT3")
+    MADD K 3 bright A_NoBlocking
+    MADD L 0 bright A_SpawnItem("MADDBoom2")
+    MADD L 3 bright A_Scream
+    MADD M -1 bright ACS_Execute(779,0,0,0,0)
+    stop
+  }
+}
+actor MADDBoom1
+{
+  Projectile
+  +EXTREMEDEATH
+  speed 1
+  States
+  {
+    Spawn:
+      TNT1 A 0
+      TNT1 A 0 A_Explode(64,64)
+      Stop
+  }
+}
+actor MADDBoom2
+{
+  Projectile
+  +EXTREMEDEATH
+  speed 1
+  States
+  {
+    Spawn:
+      TNT1 A 0
+      TNT1 A 0 A_Explode(96,96)
+      Stop
+  }
+}
+actor badMADD : MADD replaces stealtharachnotron
+{
+  obituary "%o didn't beware of low flying defense drones."
+  -FRIENDLY
+  Translation "200:207=[97,137,97]:[33,51,33]", "240:246=[26,40,26]:[0,0,0]"
+  States
+  {
+    Missile:
+    MADD A 0 A_Jump(64,"Missile2")
+    MADD A 1 A_FaceTarget
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    goto See
+    Missile2:
+    MADD A 0
+    MADD A 2 A_FaceTarget
+    MADD B 2 bright A_CustomMissile("marathongrenade",20,0,random(-1,1),8,random(-1,1))
+    goto see
+    }
+}
+actor Trooper1 replaces doomimp
+{
+  obituary "%o was shot by a trooper."
+  hitobituary "%o was shot by a trooper."
+  health 45
+  radius 10
+  height 56
+  mass 100
+  speed 5
+  painchance 0
+  seesound "PFHOR"
+  painsound ""
+  attacksound "ASSAULT1"
+  deathsound "PFHORDIE"
+  activesound "PFHOR"
+  MONSTER
+  +FLOORCLIP
+  scale .4
+  //YScale 0.4
+  bloodcolor "ff ff 33"
+  +DONTGIB
+  +NOSPLASHALERT
+  Decal "BulletChip"
+  states
+  {
+  Spawn:
+    TROP E 10 A_Look
+    loop
+  See:
+    TROP ABCD 3 A_Chase
+    loop
+  Missile:
+    TROP E 1 A_Jump(32,"Missile2")
+    TROP E 2 A_FaceTarget
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    goto See
+  Missile2:
+    TROP E 3 A_FaceTarget
+    TROP F 3 bright A_CustomMissile("TrooperGrenade",22,0,random(-5,5),8,random(-5,5))
+    TROP E 3
+    goto See
+  Death:
+    TROP G 0 A_FaceTarget
+    TROP G 8 A_Scream
+    TROP G 1 A_CheckFloor("Death2")
+    wait
+  Death2:
+    TROP H 8 A_NoBlocking
+    TROP H 1 A_CheckFloor("Death3")
+    wait
+  Death3:
+    TROP I 8
+    TROP I 1 A_CheckFloor("Death4")
+    wait
+  Death4:
+    TROP J 1 A_Playsound("Splat")
+    TROP J -1 ACS_Execute(779,0,0,0,0)
+    stop
+  Death.Crush:
+    TROP G 0 A_FaceTarget
+    TROP G 8 A_PlaySound("PFHORBURN")
+    TROP G 1 A_CheckFloor("Death.Crush2")
+    wait
+  Death.Crush2:
+    TROP H 8 A_NoBlocking
+    TROP H 1 A_CheckFloor("Death.Crush3")
+    wait
+  Death.Crush3:
+    TROP I 8
+    TROP I 1 A_CheckFloor("Death.Crush4")
+    wait
+  Death.Crush4:
+    TROP J 1 A_Playsound("Splat")
+    TROP J -1 ACS_Execute(779,0,0,0,0)
+    stop
+  Burn:
+    BURN A 5 bright A_PlaySound("PFHORBURN")
+    BURN A 1 bright A_CheckFloor("Burn2")
+    wait
+  Burn2:
+    BURN B 5 bright A_NoBlocking
+    BURN B 1 bright A_CheckFloor("Burn3")
+    wait
+  Burn3:
+    BURN C 5 bright
+    BURN C 1 bright A_CheckFloor("Burn4")
+    wait
+  Burn4:
+    BURN D 5 bright
+    BURN D 1 bright A_CheckFloor("Burn5")
+    wait
+  Burn5:
+    BURN E -1 ACS_Execute(779,0,0,0,0)
+    stop
+  Death.LavaFire:
+    BURN A 0 bright A_NoBlocking
+    BURN A 5 bright A_Playsound("PFHORBURN")
+    BURN A 1 bright A_Checkfloor("Death.LavaFire1")
+    wait
+  Death.LavaFire1:
+    BURN B 5 bright
+    BURN B 1 bright A_Checkfloor("Death.LavaFire2")
+    wait
+  Death.LavaFire2:
+    BURN C 5 bright
+    BURN C 1 bright A_Checkfloor("Death.LavaFire3")
+    wait
+  Death.LavaFire3:
+    BURN D 5 bright
+    BURN D 1 bright A_Checkfloor("Death.LavaFire4")
+    wait
+  Death.LavaFire4:
+    BURN E -1 ACS_Execute(779,0,0,0,0)
+    stop
+  }
+}
+ACTOR Trooper2 : Trooper1 replaces darkimp
+{
+  health 85
+  Translation "112:127=[161,0,100]:[0,0,0]"
+  states
+  {
+  Missile:
+    TROP E 1 A_Jump(48,"Missile2")
+    TROP E 2 A_FaceTarget
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0)
+    TROP E 2
+    goto See
+  Missile2:
+    TROP E 3 A_FaceTarget
+    TROP F 3 bright A_CustomMissile("TrooperGrenade",22,0,random(-5,5),8,random(-5,5))
+    TROP E 3
+    TROP F 3 bright A_CustomMissile("TrooperGrenade",22,0,random(-5,5),8,random(-5,5))
+    TROP E 3
+    goto See
+    }
+}
+actor troopergrenade : marathongrenade
+{
+  seesound "ASSAULT1"
+  deathsound "ASSAULT3"
+  -DEHEXPLOSION
+  -NOGRAVITY
+  gravity 1
+  -DOOMBOUNCE
+  +FORCEXYBILLBOARD
+  +EXTREMEDEATH
+  -ROCKETTRAIL
+  damagetype normal
+  scale .75
+  //YScale 0.75
+  damage 4
+  Decal "Scorch"
+  states
+  {
+  spawn:
+  TGRN A 1 bright
+  loop
+  death:
+  GREN A 0 A_Nogravity
+  GREN A 1 bright A_explode(32,32,1)
+  GREN BCDEFG 4 bright
+  stop
+  }
+}
+actor Hulk1 replaces Fatso
+{
+  spawnid 112
+  obituary "%o was squashed by a Hulk."
+  health 1500
+  radius 48
+  height 84
+  mass 1000
+  speed 8
+  painchance 80
+  Translation "201:208=[1,210,230]:[0,83,106]"
+  seesound ""
+  painsound ""
+  deathsound "HULKDEAD"
+  activesound ""
+  MONSTER
+  +FLOORCLIP
+  Translation "201:207=[0,176,201]:[0,68,77]", "240:246=[0,54,62]:[0,0,0]"
+  BloodColor "00 B0 C9"
+  Scale .75
+  //YScale 0.75
+  MeleeRange 64
+  DamageFactor "fire", 0.0
+  +DONTGIB
+  +NOSPLASHALERT
+  states
+  {
+  Spawn:
+    HULK A 10 A_Look
+    loop
+  See:
+    HULK BBCCDDEE 4 A_Chase
+    loop
+  Melee:
+    HULK F 5 A_FaceTarget
+    HULK F 0 A_PlaySound("HULKATTK")
+    HULK G 5 A_FaceTarget
+    HULK H 5 A_FaceTarget
+    HULK I 5 A_CustomMeleeattack(random(32,96),"PFHORAT2","NONE","normal",1)
+    goto See
+  Pain:
+    HULK A 3
+    HULK A 3
+    goto See
+  Death:
+    HULK J 12 A_Scream
+    HULK J 1 A_CheckFloor("Death1")
+    Wait
+  Death1:
+    HULK K 12 A_NoBlocking
+    HULK K 1 A_CheckFloor("Death2")
+  Death2:
+    HULK L -1 ACS_Execute(779,0,0,0,0)
+    Stop
+  }
+}
+actor Hulk2 : Hulk1 replaces Hectebus
+{
+  spawnid 158
+  health 2250
+  speed 12
+  BloodColor "39 E4 8B"
+  Translation "201:207=[57,228,139]:[8,73,39]", "240:246=[6,59,31]:[0,0,0]", "84:111=80:107", "253:254=[0,0,0]:[208,30,0]", "43:47=[151,22,0]:[18,2,0]", "112:127=[0,176,201]:[0,0,0]"
+  states
+  {
+  Melee:
+    HULK F 5 A_FaceTarget
+    HULK F 0 A_PlaySound("HULKATTK")
+    HULK G 5 A_FaceTarget
+    HULK H 5 A_FaceTarget
+    HULK I 5 A_CustomMeleeattack(random(48,144),"PFHORAT2","NONE","normal",1)
+    goto See
+  }
+}
+ACTOR BoBSpawner replaces CommanderKeen
+{
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_Jump(192,"Spawn2","Spawn3","Spawn4")
+    TNT1 A 1 A_SpawnItem("BoB1")
+    Stop
+  Spawn2:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("BoB2")
+    Stop
+  Spawn3:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("BoB3")
+    Stop
+  Spawn4:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("BoB4")
+    Stop
+  }
+}
+
+actor BoB1
+{
+  obituary "%o hacked the game."
+  health 20
+  radius 12
+  height 56
+  mass 100
+  speed 8
+  painchance 255
+  seesound ""
+  attacksound ""
+  painsound "PAIN"
+  deathsound "PLAYERDIE"
+  activesound ""
+  MONSTER
+  +FLOORCLIP
+  +FRIENDLY
+  +FRIGHTENED
+  -COUNTKILL
+  +DONTGIB
+  +NOSPLASHALERT
+  scale .5
+  //YScale 0.5
+  states
+  {
+  Spawn:
+    DUDE A 5 A_Look2
+    Loop
+    DUDE A 8
+    Loop
+    DUDE A 8
+    Loop
+    DUDE BBCCDDEE 4 A_Wander
+    DUDE E 0 A_Jump(4,1)
+    loop
+    DUDE E 0 A_Playsound("BOB33")
+    Goto Spawn+3
+  See:
+    DUDE BBCCDDEE 4 A_Chase
+    DUDE E 0 A_Jump(4,1)
+    loop
+    DUDE E 0 A_Playsound("BOB33")
+    goto See
+  Pain:
+    DUDE A 3
+    DUDE A 3 A_Pain
+    goto See
+  Death:
+    DUDE F 5 A_Scream
+    DUDE F 1 A_Checkfloor("Death1")
+    wait
+  Death1:
+    DUDE G 5 A_NoBlocking
+    DUDE G 1 A_Checkfloor("Death2")
+    wait
+  Death2:
+    DUDE H 5
+    DUDE H 1 A_Checkfloor("Death3")
+    wait
+  Death3:
+    DUDE I 1 A_PlaySound("Splat")
+    DUDE I -1 ACS_Execute(779,0,0,0,0)
+    wait
+  XDeath:
+    DUDE J 5 A_Scream
+    DUDE J 1 A_Checkfloor("XDeath1")
+    wait
+  XDeath1:
+    DUDE K 5 A_NoBlocking
+    DUDE K 1 A_Checkfloor("XDeath2")
+    wait
+  XDeath2:
+    DUDE L 5
+    DUDE L 1 A_Checkfloor("XDeath3")
+    wait
+  XDeath3:
+    DUDE M 5
+    DUDE M 1 A_Checkfloor("XDeath4")
+    wait
+  XDeath4:
+    DUDE N 1 A_XScream
+    DUDE N -1 ACS_Execute(779,0,0,0,0)
+    wait
+  Death.Crush:
+    DUDE J 5 A_Playsound("BURN")
+    DUDE J 1 A_Checkfloor("Death.Crush1")
+    wait
+  Death.Crush1:
+    DUDE K 5 A_NoBlocking
+    DUDE K 1 A_Checkfloor("Death.Crush2")
+    wait
+  Death.Crush2:
+    DUDE L 5
+    DUDE L 1 A_Checkfloor("Death.Crush3")
+    wait
+  Death.Crush3:
+    DUDE M 5
+    DUDE M 1 A_Checkfloor("Death.Crush4")
+    wait
+  Death.Crush4:
+    DUDE N 1 A_XScream
+    DUDE N -1 ACS_Execute(779,0,0,0,0)
+    wait
+  Burn:
+    BURN A 5 bright A_Playsound("BURN")
+    BURN A 1 bright A_Checkfloor("Burn1")
+    wait
+  Burn1:
+    BURN B 5 bright A_NoBlocking
+    BURN B 1 bright A_Checkfloor("Burn2")
+    wait
+  Burn2:
+    BURN C 5 bright
+    BURN C 1 bright A_Checkfloor("Burn3")
+    wait
+  Burn3:
+    BURN D 5 bright
+    BURN D 1 bright A_Checkfloor("Burn4")
+    wait
+  Burn4:
+    BURN E -1 ACS_Execute(779,0,0,0,0)
+    stop
+  Death.LavaFire:
+    BURN A 0 bright A_NoBlocking
+    BURN A 5 bright A_Playsound("BURN")
+    BURN A 1 bright A_Checkfloor("Death.LavaFire1")
+    wait
+  Death.LavaFire1:
+    BURN B 5 bright
+    BURN B 1 bright A_Checkfloor("Death.LavaFire2")
+    wait
+  Death.LavaFire2:
+    BURN C 5 bright
+    BURN C 1 bright A_Checkfloor("Death.LavaFire3")
+    wait
+  Death.LavaFire3:
+    BURN D 5 bright
+    BURN D 1 bright A_Checkfloor("Death.LavaFire4")
+    wait
+  Death.LavaFire4:
+    BURN E -1 ACS_Execute(779,0,0,0,0)
+    stop
+  }
+}
+actor BoB2 : BoB1
+{
+  Translation "112:127=[255,231,22]:[0,0,0]"
+}
+actor BoB3 : BoB1
+{
+  Translation "112:127=[0,176,201]:[0,0,0]"
+}
+actor BoB4 : BoB1
+{
+  Translation "112:127=[246,37,0]:[0,0,0]"
+}
+actor BadBoB replaces ExplosiveBarrel
+{
+  obituary "%o couldn't tell a bomb from a person."
+  health 1
+  radius 12
+  height 56
+  mass 100
+  speed 8
+  painchance 200
+  seesound "BOB34"
+  attacksound ""
+  painsound ""
+  deathsound "SPNKR2"
+  activesound ""
+  MONSTER
+  +FLOORCLIP
+  +DONTGIB
+  +NOSPLASHALERT
+  scale .5
+  //YScale 0.5
+  bloodcolor yellow
+  Translation "176:191=[255,231,22]:[20,18,2]"
+  states
+  {
+  Spawn:
+    DUDE A 10 A_Look
+    loop
+  See:
+    DUDE BBCCDDEE 4 A_Chase
+    DUDE E 0 A_Jump(4,1)
+    loop
+    DUDE E 0 A_Playsound("BOB34")
+    goto See
+  Pain:
+    DUDE A 3
+    DUDE A 3 A_Pain
+    goto See
+  Melee:
+    DUDE A 3 A_FaceTarget
+    DUDE A 1 A_Die
+    Goto See
+  Death:
+    DUDE J 0 A_SpawnItem("BoBBoom")
+    DUDE J 5 bright A_Scream
+    DUDE J 1 bright A_Checkfloor("Death1")
+    wait
+  Death1:
+    DUDE K 5 bright A_NoBlocking
+    DUDE K 1 bright A_Checkfloor("Death2")
+    wait
+  Death2:
+    DUDE L 5 bright
+    DUDE L 1 bright A_Checkfloor("Death3")
+    wait
+  Death3:
+    DUDE M 5 bright
+    DUDE M 1 bright A_Checkfloor("Death4")
+    wait
+  Death4:
+    DUDE N 1 A_XScream
+    DUDE N -1 ACS_Execute(779,0,0,0,0)
+    wait
+  Burn:
+    BURN A 5 bright A_Playsound("BURN")
+    BURN A 1 bright A_Checkfloor("Burn1")
+    wait
+  Burn1:
+    BURN B 5 bright A_NoBlocking
+    BURN B 1 bright A_Checkfloor("Burn2")
+    wait
+  Burn2:
+    BURN C 5 bright
+    BURN C 1 bright A_Checkfloor("Burn3")
+    wait
+  Burn3:
+    BURN D 5 bright
+    BURN D 1 bright A_Checkfloor("Burn4")
+    wait
+  Burn4:
+    BURN E -1 ACS_Execute(779,0,0,0,0)
+    stop
+  Death.LavaFire:
+    BURN A 0 bright A_NoBlocking
+    BURN A 5 bright A_Playsound("*burndeath")
+    BURN A 1 bright A_Checkfloor("Death.LavaFire1")
+    wait
+  Death.LavaFire1:
+    BURN B 5 bright
+    BURN B 1 bright A_Checkfloor("Death.LavaFire2")
+    wait
+  Death.LavaFire2:
+    BURN C 5 bright
+    BURN C 1 bright A_Checkfloor("Death.LavaFire3")
+    wait
+  Death.LavaFire3:
+    BURN D 5 bright
+    BURN D 1 bright A_Checkfloor("Death.LavaFire4")
+    wait
+  Death.LavaFire4:
+    BURN E -1 ACS_Execute(779,0,0,0,0)
+    stop
+  }
+}
+actor BoBBoom
+{
+  Projectile
+  +EXTREMEDEATH
+  speed 1
+  States
+  {
+    Spawn:
+      TNT1 A 0
+      TNT1 A 0 A_Explode(128,128)
+      Stop
+  }
+}
+
+ACTOR SlimeBall
+{
+  Game Doom
+  Radius 10
+  Height 8
+  Speed 7
+  FastSpeed 14
+  Damage 3
+  Projectile
+  -NOBLOCKMAP
+  -ACTIVATEIMPACT
+  -ACTIVATEPCROSS
+  DeathSound "SPLAT"
+  scale .25
+  States
+  {
+  Spawn:
+    BSPI MNOP 3
+    Loop
+  Death:
+    BSPI QRS 4
+    stop
+  }
+}
+ACTOR ExitStone : CustomInventory 32767
+{
+  Inventory.PickupMessage "Green Stone"
+  Scale 0.5
+  //YScale 0.5
+  States
+  {
+    Spawn:
+	ESTN A -1 bright
+	Loop
+    Pickup:
+	TNT1 A 0 Exit_Normal(0)
+	Stop
+	}
+}
+ACTOR Invisibility : PowerupGiver replaces blursphere
+{
+  +COUNTITEM
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.MaxAmount 0
+  Powerup.Duration 2100
+  Powerup.Type "Shadow"
+  Inventory.PickupMessage "INVISIBILITY"
+  scale .5
+  //YScale 0.5
+  States
+  {
+    Spawn:
+    INVI A -1 Bright
+    Loop
+  }
+}
+ACTOR Speed : PowerupGiver replaces turbosphere
+{
+  +COUNTITEM
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.MaxAmount 0
+  Powerup.Duration 2100
+  Powerup.Type "Speed"
+  Inventory.PickupMessage "SPEED BOOST"
+  scale .5
+  //YScale 0.5
+  States
+  {
+    Spawn:
+    SPED A -1 Bright
+    Loop
+  }
+}
+ACTOR Extravision : CustomInventory replaces berserk
+{
+  +COUNTITEM
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.PickupMessage "EXTRAVISION"
+  Inventory.PickupSound "misc/p_pkup"
+  scale .5
+  //YScale 0.5
+  States
+  {
+  Spawn:
+    XTRA A -1 bright
+    Stop
+  Pickup:
+    TNT1 A 0 ACS_Execute(778,0,0,0,0)
+    Stop
+  }
+}
+ACTOR DeadBoBSpawner replaces DeadMarine
+{
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_Jump(192,"Spawn2","Spawn3","Spawn4")
+    TNT1 A 1 A_SpawnItem("DeadBoB1")
+    Stop
+  Spawn2:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("DeadBoB2")
+    Stop
+  Spawn3:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("DeadBoB3")
+    Stop
+  Spawn4:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("DeadBoB4")
+    Stop
+  }
+}
+
+actor DeadBoB1
+{
+  -SOLID
+  radius 12
+  height 56
+  mass 100
+  scale .5
+  //YScale 0.5
+  states
+  {
+  Spawn:
+    DUDE I -1
+    stop
+  }
+}
+actor DeadBoB2 : DeadBoB1
+{
+  Translation "112:127=[255,231,22]:[0,0,0]"
+}
+actor DeadBoB3 : DeadBoB1
+{
+  Translation "112:127=[0,176,201]:[0,0,0]"
+}
+actor DeadBoB4 : DeadBoB1
+{
+  Translation "112:127=[246,37,0]:[0,0,0]"
+}
+actor Hunter1 replaces revenant
+{
+  obituary "%o became a trophy for a hunter."
+  hitobituary "%o became a trophy for a hunter."
+  health 110
+  radius 13
+  height 56
+  mass 1000
+  speed 7
+  painchance 0
+  seesound "SPIDSEE"
+  painsound ""
+  attacksound ""
+  deathsound "HUNTDEAD"
+  activesound "PFHOR"
+  MONSTER
+  +FLOORCLIP
+  scale .45
+  //YScale 0.45
+  +NOBLOOD
+  +DONTGIB
+  +NOSPLASHALERT
+  damagefactor "fire", 0.0
+  states
+  {
+  Spawn:
+    HUNT E 10 A_Look
+    loop
+  See:
+    HUNT AABBCCDD 3 A_Chase
+    loop
+  Missile:
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
+    HUNT E 3
+    goto See
+  Death:
+    HUNT H 5 A_FaceTarget
+    HUNT H 1 A_CheckFloor("Death2")
+    wait
+  Death2:
+    HUNT I 5 A_NoBlocking
+    HUNT I 1 A_CheckFloor("Death3")
+    wait
+  Death3:
+    HUNT J 5
+    HUNT J 1 A_CheckFloor("Death4")
+    wait
+  Death4:
+    HUNT K 1 A_Scream
+    HUNT K -1 ACS_Execute(779,0,0,0,0)
+    stop
+  XDeath:
+    HUNT H 5 A_FaceTarget
+    HUNT H 1 A_CheckFloor("XDeath2")
+    wait
+  XDeath2:
+    HUNT L 0 bright A_Explode(64,64)
+    HUNT L 0 bright A_playsound("HUNTBOOM")
+    HUNT L 5 bright A_NoBlocking
+    HUNT L 1 bright A_CheckFloor("XDeath3")
+    wait
+  XDeath3:
+    HUNT M 5 bright
+    HUNT M 1 bright A_CheckFloor("XDeath4")
+    wait
+  XDeath4:
+    HUNT N 5 bright
+    HUNT N 1 bright A_CheckFloor("XDeath5")
+    wait
+  XDeath5:
+    HUNT O 5 bright
+    HUNT O 1 bright A_CheckFloor("XDeath6")
+    wait
+  XDeath6:
+    HUNT P 1
+    HUNT P -1 ACS_Execute(779,0,0,0,0)
+    stop
+  Death.Crush:
+    HUNT H 5 A_FaceTarget
+    HUNT H 1 A_CheckFloor("Death.Crush2")
+    wait
+  Death.Crush2:
+    HUNT L 0 bright A_Explode(64,64)
+    HUNT L 0 bright A_playsound("HUNTBOOM")
+    HUNT L 5 bright A_NoBlocking
+    HUNT L 1 bright A_CheckFloor("Death.Crush3")
+    wait
+  Death.Crush3:
+    HUNT M 5 bright
+    HUNT M 1 bright A_CheckFloor("Death.Crush4")
+    wait
+  Death.Crush4:
+    HUNT N 5 bright
+    HUNT N 1 bright A_CheckFloor("Death.Crush5")
+    wait
+  Death.Crush5:
+    HUNT O 5 bright
+    HUNT O 1 bright A_CheckFloor("Death.Crush6")
+    wait
+  Death.Crush6:
+    HUNT P 1
+    HUNT P -1 ACS_Execute(779,0,0,0,0)
+    stop
+  }
+}
+ACTOR Hunter2 : Hunter1 replaces archvile
+{
+  health 220
+  Translation "128:151=[59,91,59]:[26,40,26]", "152:159=[97,137,97]:[26,40,26]", "12:15=[26,40,26]:[0,0,0]"
+  states
+  {
+  Missile:
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
+    HUNT E 3
+    goto See
+    }
+}
+ACTOR Hunter3 : Hunter1 replaces cyberdemon
+{
+  health 1800
+  radius 25
+  height 96
+  scale .7
+  Translation "128:151=[22,59,101]:[8,22,37]", "152:159=[36,95,163]:[8,22,37]", "12:15=[8,22,37]:[0,0,0]"
+  states
+  {
+  Missile:
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",80,11,random(-1,1),8,random(-1,1))
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",80,11,random(-1,1),8,random(-1,1))
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",80,11,random(-1,1),8,random(-1,1))
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",80,11,random(-1,1),8,random(-1,1))
+    HUNT F 6 bright A_FaceTarget
+    HUNT G 3 bright A_CustomMissile("HunterShot",80,11,random(-1,1),8,random(-1,1))
+    HUNT E 3
+    goto See
+  Death:
+    HUNT H 5 A_FaceTarget
+    HUNT H 1 A_CheckFloor("Death2")
+    wait
+  Death2:
+    HUNT L 0 bright A_Explode(192,192)
+    HUNT L 0 bright A_playsound("HUNTBOOM")
+    HUNT L 5 bright A_NoBlocking
+    HUNT L 1 bright A_CheckFloor("Death3")
+    wait
+  Death3:
+    HUNT M 5 bright
+    HUNT M 1 bright A_CheckFloor("Death4")
+    wait
+  Death4:
+    HUNT N 5 bright
+    HUNT N 1 bright A_CheckFloor("Death5")
+    wait
+  Death5:
+    HUNT O 5 bright
+    HUNT O 1 bright A_CheckFloor("Death6")
+    wait
+  Death6:
+    HUNT P 1
+    HUNT P -1 ACS_Execute(779,0,0,0,0)
+    stop
+    }
+}
+actor HunterShot : BaronBall
+{
+  height 7
+  radius 7
+  seesound "HUNTFIRE"
+  deathsound "HUNTHIT"
+  +NOGRAVITY
+  +FORCEXYBILLBOARD
+  renderstyle translucent
+  alpha 1
+  scale .375
+  damage 2
+  Decal "BaronScorch"
+  states
+  {
+  Spawn:
+  HUNT Q 1 bright
+  loop
+  Death:
+  HUNT RSTU 2 bright
+  stop
+  }
+}
+actor GunLight
+{
+  +NOGRAVITY
+  states
+  {
+  Spawn:
+  XXXX A 3 bright
+  stop
+  }
+}
+actor FusionLight
+{
+  +NOGRAVITY
+  states
+  {
+  Spawn:
+  XXXX B 3 bright
+  stop
+  }
+}
+actor CannonLight
+{
+  +NOGRAVITY
+  states
+  {
+  Spawn:
+  XXXX C 3 bright
+  stop
+  }
+}

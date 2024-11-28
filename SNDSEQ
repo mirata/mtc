@@ -1,0 +1,69 @@
+:MarathonDoorOpen
+	play		MDRUP
+	nostopcutoff
+end
+
+:MarathonDoorClose
+	play		MDRDOWN
+	nostopcutoff
+end
+
+:PfhorDoorOpen
+	play		PDRUP
+	nostopcutoff
+end
+
+:PfhorDoorClose
+	play		PDRDOWN
+	nostopcutoff
+end
+:SilentDoorOpen
+	play		NONE
+	nostopcutoff
+end
+
+:SilentDoorClose
+	play		NONE
+	nostopcutoff
+end
+[DoorMarathon
+        Door 0
+	0		MarathonDoorOpen
+	1		MarathonDoorClose
+	2		MarathonDoorOpen
+	3		MarathonDoorClose
+]
+
+[DoorPfhor
+        Door 1
+	0		PfhorDoorOpen
+	1		PfhorDoorClose
+	2		PfhorDoorOpen
+	3		PfhorDoorClose
+]
+[DoorSilent
+        Door 2
+	0		SilentDoorOpen
+	1		SilentDoorClose
+	2		SilentDoorOpen
+	3		SilentDoorClose
+]
+:MarathonPlatform
+	platform 0
+	play   MLFGO
+	stopsound	MLFSTOP
+end
+:PfhorPlatform
+	platform 1
+	play   PLFGO
+	stopsound	PLFSTOP
+end
+:SilentPlatform
+	platform 2
+	play   NONE
+end
+:MarathonPlatformStart
+	platform 3
+	play   MLFGO
+	stopsound	NONE
+end

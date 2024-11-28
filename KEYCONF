@@ -1,0 +1,11 @@
+clearplayerclasses
+addplayerclass marathonplayer
+
+weaponsection Marathon
+SetSlot 1 Punch BetaMagnum
+SetSlot 2 Magnum Magnums BetaAutoCannon
+SetSlot 3 FusionPistol
+SetSlot 4 MA75AssaultRifle MA75GrenadeLauncher
+SetSlot 5 X17SSMLauncher
+SetSlot 6 TOZTFlamethrower
+SetSlot 7 AlienWeapon

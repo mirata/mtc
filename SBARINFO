@@ -1,0 +1,217 @@
+height 76;
+monospacefonts true, "0";
+
+statusbar normal
+{
+	drawimage "MARBAR", -65, 0;
+        DrawImage "AMMOBOX", 108, 151;
+        DrawNumber 2, INDEXFONT, green, MagnumAmmo, 118, 152;
+        DrawNumber 2, INDEXFONT, green, FusionAmmo, 118, 158;
+        DrawNumber 2, INDEXFONT, green, AssaultAmmo, 118, 164;
+        DrawNumber 2, INDEXFONT, green, GrenadeAmmo, 118, 170;
+        DrawNumber 2, INDEXFONT, green, RocketAmmo2, 118, 176;
+        DrawNumber 2, INDEXFONT, green, FlameAmmo, 118, 182;
+	WeaponAmmo FistClip
+        {
+        DrawImage "FIST", 254, 184;
+        }
+        WeaponAmmo MagnumClip
+        {
+        DrawNumber 1, INDEXFONT, green, ammo1, 308, 184;
+        DrawImage "ICONMAGR", 274, 189 ,centerbottom;
+        }
+        WeaponAmmo MagnumClip2
+        {
+        DrawNumber 1, INDEXFONT, green, MagnumClip, 308, 184;
+        DrawImage "ICONMAGR", 274, 189 ,centerbottom;
+        DrawNumber 1, INDEXFONT, green, MagnumClip3, 220, 184;
+        DrawImage "ICONMAGL", 220, 189 ,centerbottom;
+        }
+        WeaponAmmo FusionClip
+        {
+        DrawBar "GREENBAR", "BLACKBAR", ammo1, vertical, 300, 156;
+        DrawImage "ICONFUSI", 274, 187 ,centerbottom;
+        }
+        WeaponAmmo AssaultClip
+        {
+        DrawNumber 2, INDEXFONT, green, ammo1, 308, 184;
+        DrawImage "ICONASSU", 262, 189 ,centerbottom;
+        }
+        WeaponAmmo GrenadeClip
+        {
+        DrawNumber 1, INDEXFONT, green, ammo1, 308, 184;
+        DrawImage "ICONASSU", 262, 189 ,centerbottom;
+        }
+        WeaponAmmo RocketClip
+        {
+        DrawNumber 1, INDEXFONT, green, ammo1, 308, 184;
+        DrawImage "ICONSPNK", 254, 187 ,centerbottom;
+        }
+        WeaponAmmo FlameClip
+        {
+        DrawBar "GRENFBAR", "BLCKFBAR", ammo1, vertical, 228, 156;
+        DrawImage "ICONTOZT", 279, 187 ,centerbottom;
+        }
+        WeaponAmmo AlienClip
+        {
+        DrawImage "ALENAMM2", 259, 190, centerbottom;
+        }
+        DrawBar "BLUEBAR", "BLANKBAR", OxygenTank, vertical, 19, 59;
+        DrawBar "HPBAR", "BLANKBAR", Health, vertical, 293, 59;
+        DrawSelectedInventory INDEXFONT, 33, 144, 83, 176, green;
+	gamemode deathmatch
+	{
+		drawnumber 3, HUDFONT_DOOM, untranslated, frags, 55, 152;
+	}
+}
+statusbar automap
+{
+	drawimage "MAPBAR", -65, 0;
+        DrawImage "AMMOBOX", 108, 151;
+        DrawNumber 2, INDEXFONT, green, MagnumAmmo, 118, 152;
+        DrawNumber 2, INDEXFONT, green, FusionAmmo, 118, 158;
+        DrawNumber 2, INDEXFONT, green, AssaultAmmo, 118, 164;
+        DrawNumber 2, INDEXFONT, green, GrenadeAmmo, 118, 170;
+        DrawNumber 2, INDEXFONT, green, RocketAmmo2, 118, 176;
+        DrawNumber 2, INDEXFONT, green, FlameAmmo, 118, 182;
+	WeaponAmmo FistClip
+        {
+        DrawImage "FIST", 254, 184;
+        }
+        WeaponAmmo MagnumClip
+        {
+        DrawNumber 1, INDEXFONT, green, ammo1, 308, 184;
+        DrawImage "ICONMAGR", 274, 189 ,centerbottom;
+        }
+        WeaponAmmo MagnumClip2
+        {
+        DrawNumber 1, INDEXFONT, green, MagnumClip, 308, 184;
+        DrawImage "ICONMAGR", 274, 189 ,centerbottom;
+        DrawNumber 1, INDEXFONT, green, MagnumClip3, 220, 184;
+        DrawImage "ICONMAGL", 220, 189 ,centerbottom;
+        }
+        WeaponAmmo FusionClip
+        {
+        DrawBar "GREENBAR", "BLACKBAR", ammo1, vertical, 300, 156;
+        DrawImage "ICONFUSI", 274, 187 ,centerbottom;
+        }
+        WeaponAmmo AssaultClip
+        {
+        DrawNumber 2, INDEXFONT, green, ammo1, 308, 184;
+        DrawImage "ICONASSU", 262, 189 ,centerbottom;
+        }
+        WeaponAmmo GrenadeClip
+        {
+        DrawNumber 1, INDEXFONT, green, ammo1, 308, 184;
+        DrawImage "ICONASSU", 262, 189 ,centerbottom;
+        }
+        WeaponAmmo RocketClip
+        {
+        DrawNumber 1, INDEXFONT, green, ammo1, 308, 184;
+        DrawImage "ICONSPNK", 254, 187 ,centerbottom;
+        }
+        WeaponAmmo FlameClip
+        {
+        DrawBar "GRENFBAR", "BLCKFBAR", ammo1, vertical, 228, 156;
+        DrawImage "ICONTOZT", 279, 187 ,centerbottom;
+        }
+        WeaponAmmo AlienClip
+        {
+        DrawImage "ALENAMM2", 259, 190, centerbottom;
+        }
+        DrawSelectedInventory INDEXFONT, 33, 144, 83, 176, green;
+	gamemode deathmatch
+	{
+		drawnumber 3, HUDFONT_DOOM, untranslated, frags, 55, 152;
+	}
+}
+statusbar inventory
+{
+        DrawImage "BLAKBOX", 108, 151;
+        DrawInventoryBar Doom, noartibox, noarrows, 4, INDEXFONT, 105, 152, 150, 176, green;
+}
+statusbar inventoryfullscreen, 0.4
+{
+        DrawInventoryBar Doom, noartibox, noarrows, 4, HUDFONT_DOOM, 108, 152, 158, 176, untranslated; 
+}
+statusbar fullscreen, 0.4
+{
+	DrawBar "HPBAR", "BLANKBAR", Health, vertical, 309, 148;
+        DrawBar "BLUEBAR", "BLANKBAR", OxygenTank, vertical, 3, 148;
+        WeaponAmmo AlienClip
+        {
+	drawimage ammoicon1, 160, 200, centerbottom;
+        }
+        WeaponAmmo FistClip
+        {
+	drawimage ammoicon1, 160, 200, centerbottom;
+        }
+        WeaponAmmo FlameClip
+        {
+        DrawBar "GRENFBAR", "BLCKFBAR", ammo1, vertical, 36, 166;
+        DrawImage "ICONTOZT", 88, 200 ,centerbottom;
+        }
+        WeaponAmmo FusionClip
+        {
+        DrawBar "GREENBAR", "BLACKBAR", ammo1, vertical, 86, 166;
+        DrawImage "ICONFUSI", 50, 200 ,centerbottom;
+        }
+        WeaponAmmo MagnumClip
+        {
+        drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo1, 32, 189;
+        DrawImage "ICONMAGR", 55, 200 ,centerbottom;
+        }
+        WeaponAmmo MagnumClip2
+        {
+        drawnumber 2147483647, HUDFONT_DOOM, untranslated, Magnumclip3, 77, 189;
+        DrawImage "ICONMAGL", 40, 200 ,centerbottom;
+        drawnumber 2147483647, HUDFONT_DOOM, untranslated, Magnumclip, 97, 189;
+        DrawImage "ICONMAGR", 120, 200 ,centerbottom;
+        }
+        WeaponAmmo AssaultClip
+        {
+        drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo1, 112, 189;
+        DrawImage "ICONASSU", 60, 200 ,centerbottom;
+        }
+        WeaponAmmo GrenadeClip
+        {
+        drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo1, 112, 189;
+        DrawImage "ICONASSU", 60, 200 ,centerbottom;
+        }
+        WeaponAmmo RocketClip
+        {
+        drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo1, 112, 189;
+        DrawImage "ICONSPNK", 60, 200 ,centerbottom;
+        }
+	usesammo
+	{
+		usessecondaryammo
+		{
+			drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo2, 224, 189;
+			inventorybarnotvisible
+			{
+				drawselectedinventory centerbottom, HUDFONT_DOOM, 280, 189, 305, 189, untranslated;
+			}
+		}
+		usessecondaryammo not
+		{
+			inventorybarnotvisible
+			{
+				drawselectedinventory centerbottom, HUDFONT_DOOM, 280, 189, 305, 189, untranslated;
+			}
+		}
+	}
+	
+	usesammo not
+	{
+		inventorybarnotvisible
+		{
+			drawselectedinventory centerbottom, HUDFONT_DOOM, 280, 189, 305, 189, untranslated;
+		}
+	}
+
+	gamemode deathmatch
+	{
+		drawnumber 2147483647, HUDFONT_DOOM, untranslated, frags, 315, 4;
+	}
+}
