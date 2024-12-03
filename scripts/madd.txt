@@ -1,0 +1,131 @@
+actor MADD replaces Arachnotron
+{
+  obituary "%o fell victim to friendly fire."
+  health 150
+  radius 24
+  height 32
+  mass 600
+  speed 6
+  Translation "202:207=[2,157,174]:[0,83,106]", "240:247=[1,86,101]:[0,0,0]"
+  painchance 0
+  seesound ""
+  painsound ""
+  deathsound "SPNKR2"
+  activesound ""
+  attacksound "MAGNUM1"
+  MONSTER
+  +FLOORCLIP
+  +SPAWNFLOAT
+  +NOBLOOD
+  +FLOAT
+  +NOGRAVITY
+  +FRIENDLY
+  +DONTGIB
+  +NOSPLASHALERT
+  scale .5
+  //YScale 0.5
+  damagefactor "fire", 0.0
+  Decal "BulletChip"
+  states
+  {
+  Spawn:
+    MADD A 3 A_Look
+    loop
+  See:
+    MADD A 3 A_Chase
+    loop
+  Missile:
+    MADD A 1 A_FaceTarget
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    goto See
+  Death:
+    MADD C 0 bright A_SpawnItem("MADDBoom1")
+    MADD C 3 bright A_Playsound("ASSAULT3")
+    MADD DEF 3 bright
+    MADD G 0 bright A_SpawnItem("MADDBoom1")
+    MADD G 3 bright A_Playsound("ASSAULT3")
+    MADD HI 3 bright
+    MADD J 0 bright A_SpawnItem("MADDBoom1")
+    MADD J 3 bright A_Playsound("ASSAULT3")
+    MADD K 3 bright A_NoBlocking
+    MADD L 0 bright A_SpawnItem("MADDBoom2")
+    MADD L 3 bright A_Scream
+    MADD M -1 bright ACS_Execute(779,0,0,0,0)
+    stop
+  }
+}
+actor MADDBoom1
+{
+  Projectile
+  +EXTREMEDEATH
+  speed 1
+  States
+  {
+    Spawn:
+      TNT1 A 0
+      TNT1 A 0 A_Explode(64,64)
+      Stop
+  }
+}
+actor MADDBoom2
+{
+  Projectile
+  +EXTREMEDEATH
+  speed 1
+  States
+  {
+    Spawn:
+      TNT1 A 0
+      TNT1 A 0 A_Explode(96,96)
+      Stop
+  }
+}
+actor badMADD : MADD replaces stealtharachnotron
+{
+  obituary "%o didn't beware of low flying defense drones."
+  -FRIENDLY
+  Translation "200:207=[97,137,97]:[33,51,33]", "240:246=[26,40,26]:[0,0,0]"
+  States
+  {
+    Missile:
+    MADD A 0 A_Jump(64,"Missile2")
+    MADD A 1 A_FaceTarget
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    MADD B 2 bright A_CustomBulletAttack(1.5,1.5,1,4,"marathonpuff",0,0)
+    MADD A 2
+    goto See
+    Missile2:
+    MADD A 0
+    MADD A 2 A_FaceTarget
+    MADD B 2 bright A_CustomMissile("marathongrenade",20,0,random(-1,1),8,random(-1,1))
+    goto see
+    }
+}

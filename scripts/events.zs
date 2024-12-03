@@ -12,18 +12,21 @@ class JuggernautExplosion : EventHandler
     if(show)
     {
         timeout++;
-        intensity = 1.0 - (timeout / 64.0);
-        if(timeout > 64)
+        intensity = 1.0 - (timeout / 80.0);
+        if(timeout > 80)
         {
             show = false;
         }
     }
   }
 
-  override void WorldThingDied(WorldEvent e)
+  override void WorldThingDestroyed(WorldEvent e)
   {
-    show = true;
-    timeout = 0;
+    if (e.Thing.GetClass() == "Juggernaut")
+    {
+      show = true;
+      timeout = 0;
+    }
   }
 
   // UI Scope: you cannot alter data here
@@ -56,8 +59,11 @@ class ProjectileFlyby : EventHandler
 
   override void WorldThingDamaged(WorldEvent e)
   {
-    show = true;
-    timeout = 0;
+    if(e.Inflictor.GetClass() == "FighterProjectile")
+    {
+      show = true;
+      timeout = 0;
+    }
   }
 
   // UI Scope: you cannot alter data here

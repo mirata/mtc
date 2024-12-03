@@ -8,6 +8,7 @@ DoomEdNums
    16011 = "Compiler2"
    16012 = "Compiler3"
    16013 = "Compiler4"
+   17000 = "Juggernaut"
 }
 
 gameinfo

@@ -213,6 +213,33 @@ class FighterProjectile : Actor
     +FORCEXYBILLBOARD;
     Decal "BaronScorch";
   }
+
+  bool isClose;
+  double closeDistance;
+  bool played;
+
+  override void Tick()
+  {
+    super.Tick();
+    
+    PlayerPawn p = Players[consoleplayer].mo;
+    double d = p.Distance3D(self);
+    if(!isClose && d < 70)
+    {
+      isClose = true;
+      closeDistance = d;
+    } 
+    else if(isClose && !played && d > closeDistance)
+    {
+      bool alive = InStateSequence(self.curState, self.ResolveState("Spawn"));
+      //Console.Printf("Alive: %d", alive);
+      if(alive) {
+        S_StartSound("FIGHFBY", 0, 0, 1, ATTN_NORM, 0.0, 0.0);
+        played = true;
+      }
+    }
+  }
+
   States
   {
     Spawn:

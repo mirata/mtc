@@ -27,6 +27,7 @@ class Compiler1 : Actor
     scale .375;
     //YScale 0.375;
   }
+
 	States
 	{
 		Spawn:
@@ -38,7 +39,7 @@ class Compiler1 : Actor
 		Missile:
 			COMP B 7 Bright A_FaceTarget;
 			COMP C 7 Bright A_FaceTarget;
-			COMP D 7 Bright A_CustomMissile("Compilerball",42,0,0,8,0);
+			COMP D 7 Bright A_CustomMissile("CompilerBall",42,0,0,8,0);
 			COMP C 7 Bright A_FaceTarget;
 			goto See;
 		Pain:
@@ -155,6 +156,33 @@ class CompilerBall : Actor
     scale .5;
     //YScale 0.5;
   }
+
+  bool isClose;
+  double closeDistance;
+  bool played;
+
+  override void Tick()
+  {
+    super.Tick();
+    
+    PlayerPawn p = Players[consoleplayer].mo;
+    double d = p.Distance3D(self);
+    if(!isClose && d < 70)
+    {
+      isClose = true;
+      closeDistance = d;
+    } 
+    else if(isClose && !played && d > closeDistance)
+    {
+      bool alive = InStateSequence(self.curState, self.ResolveState("Spawn"));
+      //Console.Printf("Alive: %d", alive);
+      if(alive) {
+        S_StartSound("COMPFBY", 0, 0, 1, ATTN_NORM, 0.0, 0.0);
+        played = true;
+      }
+    }
+  }
+
   States
   {
     Spawn:
