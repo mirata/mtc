@@ -25,7 +25,7 @@ class Juggernaut : Actor
     deathsound "JUGWARN";
     activesound "";
     bloodcolor "ff ff 33";
-    scale 1.4;
+    scale 0.8;
     //YScale 0.4;
   }
 

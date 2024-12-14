@@ -99,8 +99,8 @@ ACTOR MarathonPlayer : DoomPlayer
 {
   Speed 1
   Health 150
-  Radius 11
-  Height 48
+  Radius 12
+  Height 51
   Mass 100
   PainChance 0
   scale .5
@@ -271,11 +271,11 @@ ACTOR MarathonPlayer : DoomPlayer
 #include "scripts/pickups.txt"
 #include "scripts/weapons.txt"
 #include "scripts/props.txt"
-//#include "scripts/fighter.txt"
-//#include "scripts/compiler.txt"
 #include "scripts/wasp.txt"
 #include "scripts/madd.txt"
-#include "scripts/trooper.txt"
+//#include "scripts/fighter.txt"
+//#include "scripts/compiler.txt"
+//#include "scripts/trooper.txt"
 
 
 actor Hulk1 replaces Fatso
@@ -799,7 +799,7 @@ actor Hunter1 replaces revenant
   hitobituary "%o became a trophy for a hunter."
   health 110
   radius 13
-  height 56
+  height 51
   mass 1000
   speed 7
   painchance 0
@@ -810,7 +810,7 @@ actor Hunter1 replaces revenant
   activesound "PFHOR"
   MONSTER
   +FLOORCLIP
-  scale .45
+  scale .4
   //YScale 0.45
   +NOBLOOD
   +DONTGIB

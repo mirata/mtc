@@ -24,8 +24,8 @@ class Compiler1 : Actor
     activesound "";
     attacksound "";
     damagefactor "fire", 0.0;
-    scale .375;
-    //YScale 0.375;
+    scale .375; //with proper scale it should probably be 0.375 vertical due to the vertical warp
+    //YScale 0.375; 
   }
 
 	States

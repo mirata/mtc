@@ -2,7 +2,7 @@ class Fighter1 : Actor
 {
   Default
   {
-    //$Title "Pfhor Fighter"
+    //$Title "Fighter"
     //$Angled
     //$Category "Marathon Monsters"
     MONSTER;
@@ -12,8 +12,8 @@ class Fighter1 : Actor
     obituary "%o was smacked down by a fighter.";
     hitobituary "%o was smacked down by a fighter.";
     health 25;
-    radius 10;
-    height 56;
+    radius 13;
+    height 51;
     mass 100;
     speed 7;
     painchance 0;
@@ -152,7 +152,7 @@ class Fighter2 : Fighter1
 {
   Default
   {
-    //$Title "Pfhor Fighter Major"
+    //$Title "Fighter Major"
     health 50;
     Translation "112:127=[161,0,100]:[0,0,0]";
   }
@@ -161,7 +161,7 @@ class Fighter3 : Fighter1
 {
   Default
   {
-    //$Title "Pfhor Projectile Fighter"
+    //$Title "Projectile Fighter"
     health 50;
     Translation "112:127=[246,37,0]:[0,0,0]", "200:207=[57,228,139]:[5,44,24]", "240:246=[5,44,24]:[0,0,0]";
   }
@@ -178,7 +178,7 @@ class Fighter4 : Fighter1
 {
   Default
   {
-    //$Title "Pfhor Projectile Fighter Major"
+    //$Title "Projectile Fighter Major"
     health 50;
     Translation "112:127=[12,0,255]:[0,0,0]", "200:207=[57,228,139]:[5,44,24]", "240:246=[5,44,24]:[0,0,0]";
     speed 9;

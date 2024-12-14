@@ -8,6 +8,8 @@ DoomEdNums
    16011 = "Compiler2"
    16012 = "Compiler3"
    16013 = "Compiler4"
+   16020 = "Trooper1"
+   16021 = "Trooper2"
    17000 = "Juggernaut"
 }
 
@@ -38,7 +40,8 @@ gameinfo
    dimamount = 0.5
    definventorymaxamount = 25
    PlayerClass = "MarathonPlayer"
-  AddEventHandlers = "JuggernautExplosion", "ProjectileFlyby"
+   StatusBarClass = "MarathonStatusBar"
+   AddEventHandlers = "JuggernautExplosion", "ProjectileFlyby"
 }
 
 Automap
