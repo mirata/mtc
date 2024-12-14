@@ -9,7 +9,11 @@ DoomEdNums
    16012 = "Compiler3"
    16013 = "Compiler4"
    16020 = "Trooper1"
-   16021 = "Trooper2"
+   16021 = "Trooper2"   
+   16030 = "Bob1"
+   16031 = "Bob2"
+   16032 = "Bob3"
+   16033 = "Bob4"
    17000 = "Juggernaut"
 }
 
