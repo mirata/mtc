@@ -283,3 +283,31 @@ ACTOR BetaBarrel 20017
     Stop
   }
 }
+
+actor DeadBoB1
+{
+  -SOLID
+  radius 12
+  height 56
+  mass 100
+  scale .5
+  //YScale 0.5
+  states
+  {
+  Spawn:
+    DUDE I -1
+    stop
+  }
+}
+actor DeadBoB2 : DeadBoB1
+{
+  Translation "112:127=[255,231,22]:[0,0,0]"
+}
+actor DeadBoB3 : DeadBoB1
+{
+  Translation "112:127=[0,176,201]:[0,0,0]"
+}
+actor DeadBoB4 : DeadBoB1
+{
+  Translation "112:127=[246,37,0]:[0,0,0]"
+}

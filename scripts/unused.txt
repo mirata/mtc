@@ -1,0 +1,87 @@
+
+ACTOR BoBSpawner replaces CommanderKeen
+{
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_Jump(192,"Spawn2","Spawn3","Spawn4")
+    TNT1 A 1 A_SpawnItem("BoB1")
+    Stop
+  Spawn2:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("BoB2")
+    Stop
+  Spawn3:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("BoB3")
+    Stop
+  Spawn4:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("BoB4")
+    Stop
+  }
+}
+
+ACTOR SlimeBall
+{
+  Game Doom
+  Radius 10
+  Height 8
+  Speed 7
+  FastSpeed 14
+  Damage 3
+  Projectile
+  -NOBLOCKMAP
+  -ACTIVATEIMPACT
+  -ACTIVATEPCROSS
+  DeathSound "SPLAT"
+  scale .25
+  States
+  {
+  Spawn:
+    BSPI MNOP 3
+    Loop
+  Death:
+    BSPI QRS 4
+    stop
+  }
+}
+ACTOR ExitStone : CustomInventory 32767
+{
+  Inventory.PickupMessage "Green Stone"
+  Scale 0.5
+  //YScale 0.5
+  States
+  {
+    Spawn:
+	ESTN A -1 bright
+	Loop
+    Pickup:
+	TNT1 A 0 Exit_Normal(0)
+	Stop
+	}
+}
+ACTOR DeadBoBSpawner replaces DeadMarine
+{
+  States
+  {
+  Spawn:
+    TNT1 A 0
+    TNT1 A 0 A_Jump(192,"Spawn2","Spawn3","Spawn4")
+    TNT1 A 1 A_SpawnItem("DeadBoB1")
+    Stop
+  Spawn2:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("DeadBoB2")
+    Stop
+  Spawn3:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("DeadBoB3")
+    Stop
+  Spawn4:
+    TNT1 A 0
+    TNT1 A 1 A_SpawnItem("DeadBoB4")
+    Stop
+  }
+}

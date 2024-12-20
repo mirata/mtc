@@ -453,35 +453,35 @@ object TrooperGrenade
     frame GRENF { light MarathonGrenade6 }
     frame GRENG { light MarathonGrenade7 }
 }
-object BOB1
+object Bob2
 {
     frame BURNA { light AlienPuff5 } 
     frame BURNB { light AlienPuff4 } 
     frame BURNC { light AlienPuff3 } 
     frame BURND { light AlienPuff2 }
 }
-object BOB2
+object Bob2
 {
     frame BURNA { light AlienPuff5 } 
     frame BURNB { light AlienPuff4 } 
     frame BURNC { light AlienPuff3 } 
     frame BURND { light AlienPuff2 }
 }
-object BOB3
+object Bob3
 {
     frame BURNA { light AlienPuff5 } 
     frame BURNB { light AlienPuff4 } 
     frame BURNC { light AlienPuff3 } 
     frame BURND { light AlienPuff2 }
 }
-object BOB4
+object Bob4
 {
     frame BURNA { light AlienPuff5 } 
     frame BURNB { light AlienPuff4 } 
     frame BURNC { light AlienPuff3 } 
     frame BURND { light AlienPuff2 }
 }
-object BadBOB
+object AssimilatedBob
 {
     frame DUDEJ { light MarathonRocket1 }
     frame DUDEK { light MarathonRocket2 }

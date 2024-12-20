@@ -155,7 +155,7 @@ class Bob2 : Bob1
     Default
     {
         //$Title "Civilian Science"
-        Translation "112:127=[255,231,22]:[0,0,0]";
+        Translation "112:127=[0,176,201]:[0,0,0]";
     }
   
 }
@@ -165,7 +165,7 @@ class Bob3 : Bob1
     Default
     {
         //$Title "Civilian Security"
-        Translation "112:127=[0,176,201]:[0,0,0]";
+        Translation "112:127=[246,37,0]:[0,0,0]";
     }
 }
 
@@ -174,7 +174,7 @@ class Bob4 : Bob1
     Default
     {
         //$Title "Civilian Engineering"
-        Translation "112:127=[246,37,0]:[0,0,0]";
+        Translation "112:127=[255,231,22]:[0,0,0]";
     }
 }
 

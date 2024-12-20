@@ -54,9 +54,9 @@ class Juggernaut : Actor
       //WASP F 6 A_CustomMissile("SpitBall",4,0,random(-1,1),8,random(-1,1))
       Goto See;
     Death:
-      JUGG A 0 A_Gravity;
+      JUGG A 0 A_NoGravity;
       JUGG A 0 A_NoBlocking;
-      JUGG A 0 A_ChangeVelocity(0, 0, -0.1, CVF_RELATIVE);
+      JUGG A 0 A_ChangeVelocity(0, 0, -1, CVF_REPLACE);
       // FBMB F 30 A_PlaySound("JUGWARN", CHAN_BODY, 1, true);
       JUGG D 30 A_Scream;
       Loop;
