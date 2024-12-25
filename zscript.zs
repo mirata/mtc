@@ -1,6 +1,7 @@
 version "4.11"
 
 //#include "scripts/player.zs"
+#include "scripts/marathonactor.zs"
 #include "scripts/fighter.zs"
 #include "scripts/trooper.zs"
 #include "scripts/enforcer.zs"

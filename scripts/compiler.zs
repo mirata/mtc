@@ -1,4 +1,4 @@
-class Compiler1 : Actor
+class Compiler1 : MarathonActor
 {
   Default
   {
@@ -86,6 +86,7 @@ class Compiler3 : Compiler1
   Default
   {
     //$Title "Compiler Stealth"
+    MarathonActor.invisibleHud true;
     Translation "Shadow";
     RenderStyle "STYLE_Translucent";
     alpha 0.25;
@@ -115,6 +116,7 @@ class Compiler4 : Compiler2
   Default
   {
     //$Title "Compiler Stealth Major"
+    MarathonActor.invisibleHud true;
     Translation "Shadow";
     RenderStyle "STYLE_Translucent";
     alpha 0.25;

@@ -1,4 +1,4 @@
-class Enforcer1 : Actor
+class Enforcer1 : MarathonActor
 {
   Default
   {

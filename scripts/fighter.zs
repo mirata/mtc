@@ -1,4 +1,4 @@
-class Fighter1 : Actor
+class Fighter1 : MarathonActor
 {
   Default
   {
@@ -26,6 +26,7 @@ class Fighter1 : Actor
     scale .4;
     //YScale 0.4;
   }
+
   States
   {
     Spawn:

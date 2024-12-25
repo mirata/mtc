@@ -1,4 +1,4 @@
-class Juggernaut : Actor
+class Juggernaut : MarathonActor
 {
   Default
   {

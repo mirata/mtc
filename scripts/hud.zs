@@ -78,29 +78,12 @@ Class MarathonStatusBar : BaseStatusBar
 				DrawImage("FRNDHUD", (radarCenter.x, radarCenter.y), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, opacity, (-1, -1), (0.5, 0.5));
 			}
 
-			let it = ThinkerIterator.Create("Actor");
-			Actor a = null;
-			while (a = Actor(it.next()))
+			let it = ThinkerIterator.Create("MarathonActor");
+			Thinker thinker = null;
+			while (thinker = it.next())
 			{
-				if(a.health <= 0 || a == CPlayer.mo)
-				{
-					continue;
-				}
-
-				bool show = false;
-				bool friendly = false;
-				let className = a.GetClassName();
-
-				if(className == "Fighter1" || className == "Fighter2" || className == "Fighter3" || className == "Fighter4")
-				{
-					show = true;
-				}
-				if(className == "Bob1" || className == "Bob2" || className == "Bob3" || className == "Bob4")
-				{
-					show = true;
-					friendly = true;
-				}
-				if(!show)
+				let a = MarathonActor(thinker);
+				if(a == null || a.health <= 0)
 				{
 					continue;
 				}
@@ -110,15 +93,13 @@ Class MarathonStatusBar : BaseStatusBar
 				{
 					continue;
 				}
-				
+
 				let pos = CPlayer.mo.pos;
 
 				Vector2 relativePosition = ((a.pos.x - pos.x) / 14, (a.pos.y - pos.y) / 14);
 				let offset = CPlayer.mo.RotateVector(relativePosition, -(CPlayer.mo.angle - 90));
 ;
-				// // Console.Printf("%f, %f", a.Vel.x, a.Vel.y);
-
-				DrawImage(friendly ? "FRNDHUD" : "ALNHUD", (offset.x + radarCenter.x, -offset.y + radarCenter.y), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5, 0.5));
+				DrawImage(a.friendlyHud ? "FRNDHUD" : "ALNHUD", (offset.x + radarCenter.x, -offset.y + radarCenter.y), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, a.hudOpacity, (-1, -1), (0.5, 0.5));
 
 				// Console.Printf("Distance to BOB: %d", dist);
 			}

@@ -1,10 +1,11 @@
-class Bob1 : Actor
+class Bob1 : MarathonActor
 {
     Default
     {
         //$Title "Civilian Crew"
         //$Angled
         //$Category "Marathon Monsters"
+        MarathonActor.friendlyHud true;
         MONSTER;
         +FLOORCLIP;
         +FRIENDLY;
@@ -194,10 +195,12 @@ class Bob4 : Bob1
     }
 }
 
-class AssimilatedBob : Actor
+class AssimilatedBob : MarathonActor
 {
     Default
     {
+        //$Title "Assimilated Civilian"
+        MarathonActor.friendlyHud true;
         MONSTER;
         +FLOORCLIP;
         +DONTGIB;

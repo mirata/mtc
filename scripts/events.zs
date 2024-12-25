@@ -59,6 +59,10 @@ class ProjectileFlyby : EventHandler
 
   override void WorldThingDamaged(WorldEvent e)
   {
+    if(e.Thing.GetClassName() != "MarathonPlayer")
+    {
+      return;
+    }
     if(e.Inflictor.GetClass() == "FighterProjectile")
     {
       show = true;
