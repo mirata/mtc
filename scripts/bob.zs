@@ -125,7 +125,23 @@ class Bob1 : Actor
             BURN D 1 Bright A_Checkfloor("Burn4");
             Wait;
         Burn4:
-            BURN E -1 ACS_Execute(779,0,0,0,0);
+            BURN E -1 {
+                let tex = TexMan.GetName(self.FloorPic);
+				Console.Printf("%s", tex);
+                A_SetRenderStyle(1, STYLE_None);
+                // if(CheckActorFloorTexture (0,"1SET19") == 1)
+                // {
+                //     SetActorProperty(0,APROP_Renderstyle,STYLE_None);
+                // }
+                // if(CheckActorFloorTexture (0,"2SET12") == 1)
+                // {
+                //     SetActorProperty(0,APROP_Renderstyle,STYLE_None);
+                // }
+                // if(CheckActorFloorTexture (0,"4SET05") == 1)
+                // {
+                //     SetActorProperty(0,APROP_Renderstyle,STYLE_None);
+                // }
+            }
             Stop;
         Death.LavaFire:
             BURN A 0 Bright A_NoBlocking;

@@ -424,7 +424,7 @@ actor Hunter1 replaces revenant
   activesound "PFHOR"
   MONSTER
   +FLOORCLIP
-  scale .4
+  scale .45
   //YScale 0.45
   +NOBLOOD
   +DONTGIB

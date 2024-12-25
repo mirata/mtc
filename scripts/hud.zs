@@ -39,10 +39,121 @@ Class MarathonStatusBar : BaseStatusBar
 		else if (state == HUD_Fullscreen)
 		{
 			BeginHUD();
-			DrawFullScreen2 ();
-            DrawImage("ICONASSU", (0, 0), DI_SCREEN_CENTER_BOTTOM);
-            DrawBar("HPBAR", "BLANKBAR", CPlayer.health * 3, 450, (10, -10), 0, SHADER_VERT | SHADER_REVERSE, DI_SCREEN_LEFT_BOTTOM);
+			DrawFullScreen2();
+
+			let scale = (0.5, 0.5);
+			let radarCenter = (3, -47);
+
+			DrawImage("HUD", (-50, 0), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);
+			DrawImage("RADAR", (radarCenter.x - 32.5, radarCenter.y + 33), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);
+			
+            DrawImage("AR75", (50, 0), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, 1, (-1, -1), scale);
+
+			let healthLeftover = CPlayer.mo.health % 150;
+			double healthPercent = CPlayer.mo.health / 150.0;
+
+			let pos = (10, -20);
+            // DrawImage("BAR", pos, DI_SCREEN_CENTER_BOTTOM | DI_ITEM_LEFT_TOP, 1, (-1, -1), scale);
+            DrawImage("HEALTH1", (106, -26.5), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5 * healthPercent, 0.5));
+
+			// let tex = TexMan.CheckForTexture("HEALTH1");
+			// let size = TexMan.GetScaledSize(tex);
+			// SetClipRect(pos.x, pos.y, size.x * 0.5, size.y * 0.5, DI_SCREEN_CENTER_BOTTOM);
+			// DrawTexture(tex, pos, DI_SCREEN_CENTER_BOTTOM | DI_ITEM_LEFT_TOP, 1, (-1, -1), scale);
+			// ClearClipRect();
+
+
+            // DrawImage("BAR", (10, -10), DI_SCREEN_CENTER_BOTTOM);
+            // DrawBar("HEALTH1", "BAR", CPlayer.health, 150, (10, -10), 0, SHADER_HORZ, DI_SCREEN_CENTER_BOTTOM);
+			
+            // DrawBar("HPBAR", "BLANKBAR", CPlayer.health * 3, 450, (10, -10), 0, SHADER_VERT | SHADER_REVERSE, DI_SCREEN_LEFT_BOTTOM);
+			
+			if(CPLayer.mo.Vel.Length() >= 0)
+			{
+				let opacity = CPLayer.mo.Vel.Length();
+				if(opacity > 1)
+				{
+					opacity = 1;
+				}
+				DrawImage("FRNDHUD", (radarCenter.x, radarCenter.y), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, opacity, (-1, -1), (0.5, 0.5));
+			}
+
+			let it = ThinkerIterator.Create("Actor");
+			Actor a = null;
+			while (a = Actor(it.next()))
+			{
+				if(a.health <= 0 || a == CPlayer.mo)
+				{
+					continue;
+				}
+
+				bool show = false;
+				bool friendly = false;
+				let className = a.GetClassName();
+
+				if(className == "Fighter1" || className == "Fighter2" || className == "Fighter3" || className == "Fighter4")
+				{
+					show = true;
+				}
+				if(className == "Bob1" || className == "Bob2" || className == "Bob3" || className == "Bob4")
+				{
+					show = true;
+					friendly = true;
+				}
+				if(!show)
+				{
+					continue;
+				}
+
+				double dist = CPlayer.mo.Distance3D(a);
+				if(dist > 448)
+				{
+					continue;
+				}
+				
+				let pos = CPlayer.mo.pos;
+
+				Vector2 relativePosition = ((a.pos.x - pos.x) / 14, (a.pos.y - pos.y) / 14);
+				let offset = CPlayer.mo.RotateVector(relativePosition, -(CPlayer.mo.angle - 90));
+;
+				// // Console.Printf("%f, %f", a.Vel.x, a.Vel.y);
+
+				DrawImage(friendly ? "FRNDHUD" : "ALNHUD", (offset.x + radarCenter.x, -offset.y + radarCenter.y), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5, 0.5));
+
+				// Console.Printf("Distance to BOB: %d", dist);
+			}
+
+
+
+ 			// let t = FindClosestTarget("Bob1"); // Replace "PlayerPawn" with your desired class
+			// if(t != null)
+			// {
+			// 	//Console.Printf("Target: %s", t.GetClassName());
+			// }
 		}
+	}
+
+	Actor FindClosestTarget(string className)
+	{
+		Actor closest = null;
+		double closestDist = 0x7FFFFFFF; // Start with a very large distance
+		let it = ThinkerIterator.Create(className);
+		Actor a = null;
+		while (a = Actor(it.next()))
+		{
+			if(a.health <= 0)
+			{
+				continue;
+			}
+			double dist = CPlayer.mo.Distance3D(a);
+			Console.Printf("Distance to BOB: %d", dist);
+			if (dist < closestDist)
+			{
+				closestDist = dist;
+				closest = a;
+			}
+		}
+		return closest;
 	}
 
 	Vector2 GetKeysBarWidthAndHeight () //(Credit to Blue Shadow)
