@@ -47,6 +47,7 @@ Class MarathonStatusBar : BaseStatusBar
 			DrawImage("HUD", (-50, 0), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);
 			DrawImage("RADAR", (radarCenter.x - 32.5, radarCenter.y + 33), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);
 			
+            DrawImage("WPNHUD", (50, 0), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, 1, (-1, -1), scale);
             DrawImage("AR75", (50, 0), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, 1, (-1, -1), scale);
 
 			let healthLeftover = CPlayer.mo.health % 150;
@@ -54,7 +55,13 @@ Class MarathonStatusBar : BaseStatusBar
 
 			let pos = (10, -20);
             // DrawImage("BAR", pos, DI_SCREEN_CENTER_BOTTOM | DI_ITEM_LEFT_TOP, 1, (-1, -1), scale);
-            DrawImage("HEALTH1", (106, -26.5), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5 * healthPercent, 0.5));
+            DrawImage("HEALTH1", (51, -22), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5 * healthPercent, 0.5));
+            DrawImage("BAR", (51, -22), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5, 0.5), STYLE_Add);
+
+			let oxygen = GetAmount("OxygenTank");
+			let oxygenPercent = double(oxygen) / 420;
+            DrawImage("OXYGEN", (51, -7.5), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5 * oxygenPercent, 0.5));
+            DrawImage("BAR", (51, -7.5), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5, 0.5), STYLE_Add);
 
 			// let tex = TexMan.CheckForTexture("HEALTH1");
 			// let size = TexMan.GetScaledSize(tex);
@@ -88,7 +95,7 @@ Class MarathonStatusBar : BaseStatusBar
 					continue;
 				}
 
-				double dist = CPlayer.mo.Distance3D(a);
+				double dist = CPlayer.mo.Distance2D(a);
 				if(dist > 448)
 				{
 					continue;
@@ -96,10 +103,14 @@ Class MarathonStatusBar : BaseStatusBar
 
 				let pos = CPlayer.mo.pos;
 
-				Vector2 relativePosition = ((a.pos.x - pos.x) / 14, (a.pos.y - pos.y) / 14);
-				let offset = CPlayer.mo.RotateVector(relativePosition, -(CPlayer.mo.angle - 90));
-;
-				DrawImage(a.friendlyHud ? "FRNDHUD" : "ALNHUD", (offset.x + radarCenter.x, -offset.y + radarCenter.y), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, a.hudOpacity, (-1, -1), (0.5, 0.5));
+				//these functions support portals
+				let relativePosition = CPlayer.mo.Vec2To(a);
+				let angle = CPlayer.mo.AngleTo(a);
+
+				let offset = a.RotateVector((0, dist), angle - CPlayer.mo.angle);
+
+
+				DrawImage(a.friendlyHud ? "FRNDHUD" : "ALNHUD", ((offset.x / 14) + radarCenter.x, -(offset.y / 14) + radarCenter.y), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, a.hudOpacity, (-1, -1), (0.5, 0.5));
 
 				// Console.Printf("Distance to BOB: %d", dist);
 			}
