@@ -63,7 +63,9 @@ class ProjectileFlyby : EventHandler
     {
       return;
     }
-    if(e.Inflictor.GetClass() == "FighterProjectile")
+    let inflictorClass = e.Inflictor.GetClassName();
+    Console.Printf("%s", inflictorClass);
+    // if(e.Inflictor.GetClassName() == "FighterProjectile")
     {
       show = true;
       timeout = 0;

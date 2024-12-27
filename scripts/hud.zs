@@ -34,47 +34,55 @@ Class MarathonStatusBar : BaseStatusBar
 		if (state == HUD_StatusBar)
 		{
 			BeginHUD();
-			DrawFullScreen1 ();
+			DrawFullScreen1();
 		}
 		else if (state == HUD_Fullscreen)
 		{
+			Console.Printf("%d x %d", HorizontalResolution, VerticalResolution);
 			BeginHUD();
 			DrawFullScreen2();
 
-			let scale = (0.5, 0.5);
-			let radarCenter = (3, -47);
+			let scale = (0.6, 0.6);
+			let radarCenter = (106, -94);
+			let horizontalPosition = -110;
+			let verticalPosition = -20;
 
-			DrawImage("HUD", (-50, 0), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);
-			DrawImage("RADAR", (radarCenter.x - 32.5, radarCenter.y + 33), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);
+			let radarOffset = (42, -28);
+			let healthOffset = (202, -43);
+			let oxygenOffset = (202, -15);
+
+			DrawImage("HUD", (-horizontalPosition, verticalPosition), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);
 			
-            DrawImage("WPNHUD", (50, 0), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, 1, (-1, -1), scale);
-            DrawImage("AR75", (50, 0), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, 1, (-1, -1), scale);
+			DrawImage("RADAR", (-horizontalPosition + (radarOffset.x * scale.x), verticalPosition + (radarOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);
+			
+            DrawImage("WPNHUD", (horizontalPosition, verticalPosition), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, 1, (-1, -1), scale);
+            DrawImage("AR75", (horizontalPosition, verticalPosition), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, 1, (-1, -1), scale);
 
-			let healthLeftover = CPlayer.mo.health % 150;
-			double healthPercent = CPlayer.mo.health / 150.0;
+			if(CPlayer.mo.health > 300)
+			{
+				double healthPercent = (CPlayer.mo.health - 300.0) / 150.0;
+            	DrawImage("HEALTH2", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x, scale.y));
+            	DrawImage("HEALTH3", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x * healthPercent, scale.y));
+			}
+			else if(CPlayer.mo.health > 150)
+			{
+				double healthPercent = (CPlayer.mo.health - 150.0) / 150.0;
+            	DrawImage("HEALTH1", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x, scale.y));
+            	DrawImage("HEALTH2", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x * healthPercent, scale.y));
+			}
+			else
+			{
+				double healthPercent = CPlayer.mo.health / 150.0;
+            	DrawImage("HEALTH1", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x * healthPercent, scale.y));
+			}
 
-			let pos = (10, -20);
-            // DrawImage("BAR", pos, DI_SCREEN_CENTER_BOTTOM | DI_ITEM_LEFT_TOP, 1, (-1, -1), scale);
-            DrawImage("HEALTH1", (51, -22), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5 * healthPercent, 0.5));
-            DrawImage("BAR", (51, -22), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5, 0.5), STYLE_Add);
+            DrawImage("BAR", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale, STYLE_Add);
 
 			let oxygen = GetAmount("OxygenTank");
 			let oxygenPercent = double(oxygen) / 420;
-            DrawImage("OXYGEN", (51, -7.5), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5 * oxygenPercent, 0.5));
-            DrawImage("BAR", (51, -7.5), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (0.5, 0.5), STYLE_Add);
+            DrawImage("OXYGEN", (-horizontalPosition + (oxygenOffset.x * scale.x), verticalPosition + (oxygenOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x * oxygenPercent, scale.y));
+            DrawImage("BAR", (-horizontalPosition + (oxygenOffset.x * scale.x), verticalPosition + (oxygenOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale, STYLE_Add);
 
-			// let tex = TexMan.CheckForTexture("HEALTH1");
-			// let size = TexMan.GetScaledSize(tex);
-			// SetClipRect(pos.x, pos.y, size.x * 0.5, size.y * 0.5, DI_SCREEN_CENTER_BOTTOM);
-			// DrawTexture(tex, pos, DI_SCREEN_CENTER_BOTTOM | DI_ITEM_LEFT_TOP, 1, (-1, -1), scale);
-			// ClearClipRect();
-
-
-            // DrawImage("BAR", (10, -10), DI_SCREEN_CENTER_BOTTOM);
-            // DrawBar("HEALTH1", "BAR", CPlayer.health, 150, (10, -10), 0, SHADER_HORZ, DI_SCREEN_CENTER_BOTTOM);
-			
-            // DrawBar("HPBAR", "BLANKBAR", CPlayer.health * 3, 450, (10, -10), 0, SHADER_VERT | SHADER_REVERSE, DI_SCREEN_LEFT_BOTTOM);
-			
 			if(CPLayer.mo.Vel.Length() >= 0)
 			{
 				let opacity = CPLayer.mo.Vel.Length();
@@ -82,7 +90,7 @@ Class MarathonStatusBar : BaseStatusBar
 				{
 					opacity = 1;
 				}
-				DrawImage("FRNDHUD", (radarCenter.x, radarCenter.y), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, opacity, (-1, -1), (0.5, 0.5));
+				DrawImage("FRNDHUD", (-horizontalPosition + (radarCenter.x * scale.x), verticalPosition + (radarCenter.y * scale.y)), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, opacity, (-1, -1), scale);
 			}
 
 			let it = ThinkerIterator.Create("MarathonActor");
@@ -108,20 +116,13 @@ Class MarathonStatusBar : BaseStatusBar
 				let angle = CPlayer.mo.AngleTo(a);
 
 				let offset = a.RotateVector((0, dist), angle - CPlayer.mo.angle);
+				offset = (offset.x / 7, offset.y / 7);
 
 
-				DrawImage(a.friendlyHud ? "FRNDHUD" : "ALNHUD", ((offset.x / 14) + radarCenter.x, -(offset.y / 14) + radarCenter.y), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, a.hudOpacity, (-1, -1), (0.5, 0.5));
+				DrawImage(a.friendlyHud ? "FRNDHUD" : "ALNHUD", (-horizontalPosition + ((radarCenter.x + offset.x) * scale.x), verticalPosition + ((radarCenter.y - offset.y) * scale.y)), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, a.hudOpacity, (-1, -1), scale);
 
 				// Console.Printf("Distance to BOB: %d", dist);
 			}
-
-
-
- 			// let t = FindClosestTarget("Bob1"); // Replace "PlayerPawn" with your desired class
-			// if(t != null)
-			// {
-			// 	//Console.Printf("Target: %s", t.GetClassName());
-			// }
 		}
 	}
 
