@@ -38,25 +38,58 @@ Class MarathonStatusBar : BaseStatusBar
 		}
 		else if (state == HUD_Fullscreen)
 		{
-			Console.Printf("%d x %d", HorizontalResolution, VerticalResolution);
 			BeginHUD();
 			DrawFullScreen2();
 
 			let scale = (0.6, 0.6);
 			let radarCenter = (106, -94);
-			let horizontalPosition = -110;
+			let horizontalPosition = 110;
 			let verticalPosition = -20;
 
 			let radarOffset = (42, -28);
 			let healthOffset = (202, -43);
 			let oxygenOffset = (202, -15);
+			let weaponOffset = (-10, -15);
 
-			DrawImage("HUD", (-horizontalPosition, verticalPosition), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);
-			
-			DrawImage("RADAR", (-horizontalPosition + (radarOffset.x * scale.x), verticalPosition + (radarOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);
-			
+			DrawImage("HUD", (-horizontalPosition, verticalPosition), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);		
+			DrawImage("RADAR", (-horizontalPosition + (radarOffset.x * scale.x), verticalPosition + (radarOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM  | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale);			
             DrawImage("WPNHUD", (horizontalPosition, verticalPosition), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, 1, (-1, -1), scale);
-            DrawImage("AR75", (horizontalPosition, verticalPosition), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, 1, (-1, -1), scale);
+
+			let weapon = GetWeaponTag();
+			let weaponGraphic = "";
+			if(weapon == "Magnum")
+			{
+				weaponGraphic = "PIST";
+			} 
+			else if(weapon == "Magnums")
+			{
+				weaponGraphic = "PIST2";
+			}
+			else if(weapon == "FusionPistol")
+			{
+				weaponGraphic = "FUSION";
+			}
+			else if(weapon == "MA75AssaultRifle")
+			{
+				Console.Printf("Is ma75");
+				weaponGraphic = "MA75";
+			}
+			else if(weapon == "X17SSMLauncher")
+			{
+				weaponGraphic = "SPNKR";
+			}
+			else if(weapon == "TOZTFlamethrower")
+			{
+				weaponGraphic = "TOZT";
+			}
+			else if(weapon == "AlienWeapon")
+			{
+				weaponGraphic = "ALNWPN";
+			}
+			if(weaponGraphic != "")
+			{
+				DrawImage(weaponGraphic, (horizontalPosition + (weaponOffset.x * scale.x), verticalPosition + (weaponOffset.y * scale.y)), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, 1, (-1, -1), scale);
+			}
 
 			if(CPlayer.mo.health > 300)
 			{

@@ -58,7 +58,6 @@ class Juggernaut : MarathonActor
       JUGG A 0 A_NoGravity;
       JUGG A 0 A_NoBlocking;
       JUGG A 0 A_ChangeVelocity(0, 0, -1, CVF_REPLACE);
-      // FBMB F 30 A_PlaySound("JUGWARN", CHAN_BODY, 1, true);
       JUGG D 30 A_Scream;
       Loop;
     Crash:

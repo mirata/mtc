@@ -1,6 +1,7 @@
-version "4.11"
+version "4.6.1"
 
-//#include "scripts/player.zs"
+#include "scripts/weapons/magnum.zs"
+#include "scripts/player.zs"
 #include "scripts/marathonactor.zs"
 #include "scripts/fighter.zs"
 #include "scripts/trooper.zs"

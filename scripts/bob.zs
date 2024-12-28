@@ -32,6 +32,7 @@ class Bob1 : MarathonActor
     States
     {
         Spawn:
+            DUDE A 0;
             DUDE A 5 A_Look2;
             Loop;
             DUDE A 8;
