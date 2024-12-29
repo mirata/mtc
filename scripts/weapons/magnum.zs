@@ -47,7 +47,7 @@ class Magnum : Weapon
             //Goto Ready;
         Dry:
             MAGN A 0 A_JumpIfInventory("MagnumAmmo",1,"Reload");
-            MAGN A 24 A_PlayWeaponSound("DRY");
+            MAGN A 24 A_StartSound("DRY", CHAN_WEAPON);
             //MAGN A 0 ACS_Execute(780,0,0,0,0);
             goto ready;
         Reload:
@@ -57,7 +57,7 @@ class Magnum : Weapon
             MAGN G 0 A_TakeInventory("MagnumAmmo",1);
             MAGN G 0 A_GiveInventory("MagnumClip",8);
             MAGN G 0 A_GiveInventory("MagnumClip2",8);
-            MAGN G 25 A_PlayWeaponSound("MAGNUM2");
+            MAGN G 25 A_StartSound("MAGNUM2");
             goto ready;
         Spawn:
             TNT1 A 1;
@@ -117,14 +117,14 @@ class Magnums : Weapon
             MAG2 H 2 A_Light0;
             MAG2 I 3;
             MAG2 A 0 A_JumpIfInventory("MagnumClip",1,"ready");
-            MAG2 A 12 A_PlayWeaponSound("DRY");
+            MAG2 A 12 A_StartSound("DRY", CHAN_WEAPON);
             MAG2 A 0 A_Refire;
             Goto Ready;
             //MAG2 A 0 ACS_Execute(780,0,0,0,0);
             //Goto Ready;
         Dry:
-            MAG2 A 12 A_PlayWeaponSound("DRY");
-            MAG2 A 12 A_PlayWeaponSound("DRY");
+            MAG2 A 12 A_StartSound("DRY", CHAN_WEAPON);
+            MAG2 A 12 A_StartSound("DRY", CHAN_WEAPON);
             //MAG2 A 0 ACS_Execute(780,0,0,0,0);
             goto ready;
         AltFire:
@@ -135,12 +135,12 @@ class Magnums : Weapon
             MAGN G 0 A_TakeInventory("MagnumAmmo",1);
             MAG2 G 0 A_GiveInventory("MagnumClip",8);
             MAGN G 0 A_GiveInventory("MagnumClip2",8);
-            MAGN G 25 A_PlayWeaponSound("MAGNUM2");
+            MAGN G 25 A_StartSound("MAGNUM2", CHAN_WEAPON);
             MAG2 J 25;
             MAGN G 0 A_TakeInventory("MagnumAmmo",1);
             MAG2 G 0 A_GiveInventory("MagnumClip3",8);
             MAGN G 0 A_GiveInventory("MagnumClip2",8);
-            MAG2 K 25 A_PlayWeaponSound("MAGNUM2");
+            MAG2 K 25 A_StartSound("MAGNUM2", CHAN_WEAPON);
             MAG2 G 0;
             goto ready;
         Spawn:

@@ -5,6 +5,7 @@ class Fighter1 : MarathonActor
     //$Title "Fighter"
     //$Angled
     //$Category "Marathon Monsters"
+    MarathonActor.hurtByLava true;
     MONSTER;
     +FLOORCLIP;
     +NOSPLASHALERT;
@@ -33,11 +34,12 @@ class Fighter1 : MarathonActor
       FIGH E 10 A_Look;
       Loop;
     See:
+      FIGH A 0 TargetBobs();
       FIGH ABCD 3 A_Chase;
       Loop;
     Melee:
       FIGH E 6 A_FaceTarget;
-      FIGH A 0 A_PlaySound("PFHORAT1");
+      FIGH A 0 A_StartSound("PFHORAT1");
       FIGH FG 6 Bright A_FaceTarget;
       FIGH H 6 Bright A_CustomMeleeattack(random(4,32),"PFHORAT2","NONE","normal",1);
       goto See;
@@ -55,7 +57,7 @@ class Fighter1 : MarathonActor
       FIGH K 1 A_CheckFloor("Death4");
       Wait;
     Death4:
-      FIGH L 1 A_Playsound("Splat");
+      FIGH L 1 A_StartSound("Splat");
       FIGH L -1 ACS_Execute(779,0,0,0,0);
       Stop;
     XDeath:
@@ -80,12 +82,12 @@ class Fighter1 : MarathonActor
       FIGH P 1 A_CheckFloor("XDeath6");
       Wait;
     XDeath6:
-      FIGH Q 1 A_Playsound("Slop");
+      FIGH Q 1 A_StartSound("Slop");
       FIGH Q -1 ACS_Execute(779,0,0,0,0);
       Stop;
     Death.Crush:
       FIGH I 0 A_FaceTarget;
-      FIGH I 8 A_Playsound("PFHORBURN");
+      FIGH I 8 A_StartSound("PFHORBURN");
       FIGH I 1 A_CheckFloor("Death.Crush2");
       Wait;
     Death.Crush2:
@@ -105,11 +107,11 @@ class Fighter1 : MarathonActor
       FIGH P 1 A_CheckFloor("Death.Crush6");
       Wait;
     Death.Crush6:
-      FIGH Q 1 A_Playsound("Slop");
+      FIGH Q 1 A_StartSound("Slop");
       FIGH Q -1 ACS_Execute(779,0,0,0,0);
       Stop;
     Burn:
-      BURN A 5 Bright A_PlaySound("PFHORBURN");
+      BURN A 5 Bright A_StartSound("PFHORBURN");
       BURN A 1 Bright A_CheckFloor("Burn2");
       Wait;
     Burn2:
@@ -129,7 +131,7 @@ class Fighter1 : MarathonActor
       Stop;
     Death.LavaFire:
       BURN A 0 Bright A_NoBlocking;
-      BURN A 5 Bright A_Playsound("PFHORBURN");
+      BURN A 5 Bright A_StartSound("PFHORBURN");
       BURN A 1 Bright A_Checkfloor("Death.LavaFire1");
       Wait;
     Death.LavaFire1:

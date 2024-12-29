@@ -13,12 +13,12 @@ ACTOR MarathonPuff replaces bulletpuff
   {
   Spawn:
     BLUD A 0
-    PUFF E 4 A_Playsound("ding")
+    PUFF E 4 A_StartSound("ding")
     PUFF FG 4
     stop
   Crash:
     BLUD A 0
-    PUFF A 0 A_Playsound("ricochet")
+    PUFF A 0 A_StartSound("ricochet")
     PUFF A 4 bright
     PUFF B 4 bright
     PUFF CD 4 bright
@@ -39,11 +39,11 @@ ACTOR MeleePuff
   {
     Spawn:
     TNT1 A 0
-    TNT1 A 1 A_Playsound("ding")
+    TNT1 A 1 A_StartSound("ding")
     Stop
     Crash:
     TNT1 A 0
-    TNT1 A 1 A_Playsound("punch")
+    TNT1 A 1 A_StartSound("punch")
     Stop
   }
 }
@@ -61,7 +61,7 @@ ACTOR MarathonBlood : Blood Replaces Blood
   {
   Spawn:
     BLUD A 0
-    BLUD A 0 A_PlaySound("fleshit")
+    BLUD A 0 A_StartSound("fleshit")
     BLUD ABCD 8
     Stop
   }
@@ -359,7 +359,7 @@ actor FusionPistol : Weapon
     //FUSI A 0 ACS_Execute(780,0,0,0,0)
     //Goto Ready
   Fire2:
-    FUSI A 20 A_PlayWeaponSound("FUSION3")
+    FUSI A 20 A_StartSound("FUSION3", CHAN_WEAPON)
     FUSI B 0 bright NoiseAlert(0,0)
     FUSI A 0 A_GunFlash
     FUSI A 0 A_Light2
@@ -698,15 +698,15 @@ ACTOR MA75AssaultRifle : Weapon
        //Goto Ready
     Dry:
        ASSU A 0 A_JumpIfInventory("assaultammo",1,"Reload")
-       ASSU A 24 A_PlayWeaponSound("DRY")
+       ASSU A 24 A_StartSound("DRY", CHAN_WEAPON)
 	   goto Ready
-//        ASSU A 3 A_PlayWeaponSound("dry")
+//        ASSU A 3 A_StartSound("dry", CHAN_WEAPON)
        //ASSU A 1 A_Jumpifinventory("assaultclip",52,"Ready")
        //ASSU A 0 A_Jumpifnoammo("Ready")
 	Reload:
        ASSU E 0 A_takeinventory("assaultammo",1)
        ASSU E 0 A_giveinventory("assaultclip",52)
-       ASSU E 16 A_playweaponsound("MAGNUM2")
+       ASSU E 16 A_StartSound("MAGNUM2", CHAN_WEAPON)
        ASSU F 16
        ASSU E 16
        ASSU A 1
@@ -750,12 +750,12 @@ ACTOR MA75AssaultRifle : Weapon
        //Goto Ready
     Dry2:
        ASSU A 0 A_JumpIfInventory("grenadeammo",1,"Reload2")
-       ASSU A 24 A_PlayWeaponSound("DRY")
+       ASSU A 24 A_StartSound("DRY", CHAN_WEAPON)
 	   goto Ready2
 	Reload2:
        ASSU E 0 A_takeinventory("grenadeammo",1)
        ASSU E 0 A_giveinventory("grenadeclip",7)
-       ASSU E 16 A_playweaponsound("MAGNUM2")
+       ASSU E 16 A_StartSound("MAGNUM2", CHAN_WEAPON)
        ASSU F 16
        ASSU E 16
        ASSU A 1

@@ -61,7 +61,7 @@ class Juggernaut : MarathonActor
       JUGG D 30 A_Scream;
       Loop;
     Crash:
-      JUGG A 0 A_PlaySound("JUGDIE");
+      JUGG A 0 A_StartSound("JUGDIE");
       TNT1 A 0 A_Explode(500, 512);
       Stop;
   }

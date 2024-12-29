@@ -1,10 +1,11 @@
-class Trooper1 : Actor
+class Trooper1 : MarathonActor
 {
   Default
   {
     //$Title "Trooper"
     //$Angled
     //$Category "Marathon Monsters"
+    MarathonActor.hurtByLava true;
     MONSTER;
     +NOSPLASHALERT;
     +DONTGIB;
@@ -29,12 +30,34 @@ class Trooper1 : Actor
     //YScale 0.4;
   }
 
+
+// 	void A_TroopAttack()
+// 	{
+// 		let targ = target;
+// 		if (targ)
+// 		{
+// 			if (CheckMeleeRange())
+// 			{
+// 				int damage = random[pr_troopattack](1, 8) * 3;
+// 				A_StartSound ("imp/melee", CHAN_WEAPON);
+// 				int newdam = targ.DamageMobj (self, self, damage, "Melee");
+// 				targ.TraceBleed (newdam > 0 ? newdam : damage, self);
+// 			}
+// 			else
+// 			{
+// 				// launch a missile
+// 				SpawnMissile (targ, "DoomImpBall");
+// 			}
+// 		}
+// 	}
+
   States
   {
     Spawn:
       TROP E 10 A_Look;
       loop;
     See:
+      TROP A 0 TargetBobs();
       TROP ABCD 3 A_Chase;
       loop;
     Missile:
@@ -76,12 +99,12 @@ class Trooper1 : Actor
       TROP I 1 A_CheckFloor("Death4");
       wait;
     Death4:
-      TROP J 1 A_Playsound("Splat");
+      TROP J 1 A_StartSound("Splat");
       TROP J -1 ACS_Execute(779,0,0,0,0);
       stop;
     Death.Crush:
       TROP G 0 A_FaceTarget;
-      TROP G 8 A_PlaySound("PFHORBURN");
+      TROP G 8 A_StartSound("PFHORBURN");
       TROP G 1 A_CheckFloor("Death.Crush2");
       wait;
     Death.Crush2:
@@ -93,11 +116,11 @@ class Trooper1 : Actor
       TROP I 1 A_CheckFloor("Death.Crush4");
       wait;
     Death.Crush4:
-      TROP J 1 A_Playsound("Splat");
+      TROP J 1 A_StartSound("Splat");
       TROP J -1 ACS_Execute(779,0,0,0,0);
       stop;
     Burn:
-      BURN A 5 bright A_PlaySound("PFHORBURN");
+      BURN A 5 bright A_StartSound("PFHORBURN");
       BURN A 1 bright A_CheckFloor("Burn2");
       wait;
     Burn2:
@@ -117,7 +140,7 @@ class Trooper1 : Actor
       stop;
     Death.LavaFire:
       BURN A 0 bright A_NoBlocking;
-      BURN A 5 bright A_Playsound("PFHORBURN");
+      BURN A 5 bright A_StartSound("PFHORBURN");
       BURN A 1 bright A_Checkfloor("Death.LavaFire1");
       wait;
     Death.LavaFire1:
@@ -187,7 +210,8 @@ class TrooperGrenade : Actor
     -DOOMBOUNCE;
     +FORCEXYBILLBOARD;
     +EXTREMEDEATH;
-    -ROCKETTRAIL;
+    Projectile;
+    Speed 10;
     seesound "ASSAULT1";
     deathsound "ASSAULT3";
     Decal "Scorch";

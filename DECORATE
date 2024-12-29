@@ -98,7 +98,6 @@ ACTOR term9 10008
 #include "scripts/pickups.txt"
 #include "scripts/weapons.txt"
 #include "scripts/props.txt"
-#include "scripts/wasp.txt"
 #include "scripts/madd.txt"
 #include "scripts/unused.txt"
 
@@ -137,7 +136,7 @@ actor Hulk1 replaces Fatso
     loop
   Melee:
     HULK F 5 A_FaceTarget
-    HULK F 0 A_PlaySound("HULKATTK")
+    HULK F 0 A_StartSound("HULKATTK")
     HULK G 5 A_FaceTarget
     HULK H 5 A_FaceTarget
     HULK I 5 A_CustomMeleeattack(random(32,96),"PFHORAT2","NONE","normal",1)
@@ -158,7 +157,7 @@ actor Hulk1 replaces Fatso
     Stop
   }
 }
-actor Hulk2 : Hulk1 replaces Hectebus
+actor Hulk2 : Hulk1
 {
   spawnid 158
   health 2250
@@ -169,7 +168,7 @@ actor Hulk2 : Hulk1 replaces Hectebus
   {
   Melee:
     HULK F 5 A_FaceTarget
-    HULK F 0 A_PlaySound("HULKATTK")
+    HULK F 0 A_StartSound("HULKATTK")
     HULK G 5 A_FaceTarget
     HULK H 5 A_FaceTarget
     HULK I 5 A_CustomMeleeattack(random(48,144),"PFHORAT2","NONE","normal",1)
@@ -195,7 +194,7 @@ ACTOR Invisibility : PowerupGiver replaces blursphere
     Loop
   }
 }
-ACTOR Speed : PowerupGiver replaces turbosphere
+ACTOR Speed : PowerupGiver
 {
   +COUNTITEM
   +INVENTORY.AUTOACTIVATE
@@ -232,209 +231,6 @@ ACTOR Extravision : CustomInventory replaces berserk
   }
 }
 
-
-actor Hunter1 replaces revenant
-{
-  obituary "%o became a trophy for a hunter."
-  hitobituary "%o became a trophy for a hunter."
-  health 110
-  radius 13
-  height 51
-  mass 1000
-  speed 7
-  painchance 0
-  seesound "SPIDSEE"
-  painsound ""
-  attacksound ""
-  deathsound "HUNTDEAD"
-  activesound "PFHOR"
-  MONSTER
-  +FLOORCLIP
-  scale .45
-  //YScale 0.45
-  +NOBLOOD
-  +DONTGIB
-  +NOSPLASHALERT
-  damagefactor "fire", 0.0
-  states
-  {
-  Spawn:
-    HUNT E 10 A_Look
-    loop
-  See:
-    HUNT AABBCCDD 3 A_Chase
-    loop
-  Missile:
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
-    HUNT E 3
-    goto See
-  Death:
-    HUNT H 5 A_FaceTarget
-    HUNT H 1 A_CheckFloor("Death2")
-    wait
-  Death2:
-    HUNT I 5 A_NoBlocking
-    HUNT I 1 A_CheckFloor("Death3")
-    wait
-  Death3:
-    HUNT J 5
-    HUNT J 1 A_CheckFloor("Death4")
-    wait
-  Death4:
-    HUNT K 1 A_Scream
-    HUNT K -1 ACS_Execute(779,0,0,0,0)
-    stop
-  XDeath:
-    HUNT H 5 A_FaceTarget
-    HUNT H 1 A_CheckFloor("XDeath2")
-    wait
-  XDeath2:
-    HUNT L 0 bright A_Explode(64,64)
-    HUNT L 0 bright A_playsound("HUNTBOOM")
-    HUNT L 5 bright A_NoBlocking
-    HUNT L 1 bright A_CheckFloor("XDeath3")
-    wait
-  XDeath3:
-    HUNT M 5 bright
-    HUNT M 1 bright A_CheckFloor("XDeath4")
-    wait
-  XDeath4:
-    HUNT N 5 bright
-    HUNT N 1 bright A_CheckFloor("XDeath5")
-    wait
-  XDeath5:
-    HUNT O 5 bright
-    HUNT O 1 bright A_CheckFloor("XDeath6")
-    wait
-  XDeath6:
-    HUNT P 1
-    HUNT P -1 ACS_Execute(779,0,0,0,0)
-    stop
-  Death.Crush:
-    HUNT H 5 A_FaceTarget
-    HUNT H 1 A_CheckFloor("Death.Crush2")
-    wait
-  Death.Crush2:
-    HUNT L 0 bright A_Explode(64,64)
-    HUNT L 0 bright A_playsound("HUNTBOOM")
-    HUNT L 5 bright A_NoBlocking
-    HUNT L 1 bright A_CheckFloor("Death.Crush3")
-    wait
-  Death.Crush3:
-    HUNT M 5 bright
-    HUNT M 1 bright A_CheckFloor("Death.Crush4")
-    wait
-  Death.Crush4:
-    HUNT N 5 bright
-    HUNT N 1 bright A_CheckFloor("Death.Crush5")
-    wait
-  Death.Crush5:
-    HUNT O 5 bright
-    HUNT O 1 bright A_CheckFloor("Death.Crush6")
-    wait
-  Death.Crush6:
-    HUNT P 1
-    HUNT P -1 ACS_Execute(779,0,0,0,0)
-    stop
-  }
-}
-ACTOR Hunter2 : Hunter1 replaces archvile
-{
-  health 220
-  Translation "128:151=[59,91,59]:[26,40,26]", "152:159=[97,137,97]:[26,40,26]", "12:15=[26,40,26]:[0,0,0]"
-  states
-  {
-  Missile:
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",56,4,random(-1,1),8,random(-1,1))
-    HUNT E 3
-    goto See
-    }
-}
-ACTOR Hunter3 : Hunter1 replaces cyberdemon
-{
-  health 1800
-  radius 25
-  height 96
-  scale .7
-  Translation "128:151=[22,59,101]:[8,22,37]", "152:159=[36,95,163]:[8,22,37]", "12:15=[8,22,37]:[0,0,0]"
-  states
-  {
-  Missile:
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",80,11,random(-1,1),8,random(-1,1))
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",80,11,random(-1,1),8,random(-1,1))
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",80,11,random(-1,1),8,random(-1,1))
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",80,11,random(-1,1),8,random(-1,1))
-    HUNT F 6 bright A_FaceTarget
-    HUNT G 3 bright A_CustomMissile("HunterShot",80,11,random(-1,1),8,random(-1,1))
-    HUNT E 3
-    goto See
-  Death:
-    HUNT H 5 A_FaceTarget
-    HUNT H 1 A_CheckFloor("Death2")
-    wait
-  Death2:
-    HUNT L 0 bright A_Explode(192,192)
-    HUNT L 0 bright A_playsound("HUNTBOOM")
-    HUNT L 5 bright A_NoBlocking
-    HUNT L 1 bright A_CheckFloor("Death3")
-    wait
-  Death3:
-    HUNT M 5 bright
-    HUNT M 1 bright A_CheckFloor("Death4")
-    wait
-  Death4:
-    HUNT N 5 bright
-    HUNT N 1 bright A_CheckFloor("Death5")
-    wait
-  Death5:
-    HUNT O 5 bright
-    HUNT O 1 bright A_CheckFloor("Death6")
-    wait
-  Death6:
-    HUNT P 1
-    HUNT P -1 ACS_Execute(779,0,0,0,0)
-    stop
-    }
-}
-actor HunterShot : BaronBall
-{
-  height 7
-  radius 7
-  seesound "HUNTFIRE"
-  deathsound "HUNTHIT"
-  +NOGRAVITY
-  +FORCEXYBILLBOARD
-  renderstyle translucent
-  alpha 1
-  scale .375
-  damage 2
-  Decal "BaronScorch"
-  states
-  {
-  Spawn:
-  HUNT Q 1 bright
-  loop
-  Death:
-  HUNT RSTU 2 bright
-  stop
-  }
-}
 actor GunLight
 {
   +NOGRAVITY

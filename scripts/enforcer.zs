@@ -5,6 +5,7 @@ class Enforcer1 : MarathonActor
     //$Title "Enforcer"
     //$Angled
     //$Category "Marathon Monsters"
+    MarathonActor.hurtByLava true;
     MONSTER;
     +FLOORCLIP;
     +NOSPLASHALERT;
@@ -20,6 +21,7 @@ class Enforcer1 : MarathonActor
     Translation "192:207=[0,176,201]:[0,14,15]", "168:191=[161,0,100]:[51,0,32]", "208:223=[237,215,20]:[54,49,7]";
     seesound "PFHOR";
     painsound "";
+    attacksound "ASSAULT1";
     deathsound "PFHORDIE";
     activesound "PFHOR";
     bloodcolor "ff ff 33";
@@ -27,51 +29,10 @@ class Enforcer1 : MarathonActor
     //YScale 0.4;
   }
 
-  Actor FindClosestTarget(string className)
-  {
-    Actor closest = null;
-    double closestDist = 0x7FFFFFFF; // Start with a very large distance
-    let it = ThinkerIterator.Create(className);
-    Actor a = null;
-    while (a = Actor(it.next()))
-    {
-        double dist = Distance3D(a);
-        if (dist < closestDist)
-        {
-            closestDist = dist;
-            closest = a;
-        }
-    }
-    return closest;
-  }
-
-  void TargetBobs()
-  {
-    if (target == null || target.health <= 0) // If no target is set
-      {
-          //Console.Printf("Finding new target");
-          let t = FindClosestTarget("Bob1"); // Replace "PlayerPawn" with your desired class
-          if(t != null)
-          {
-            //Console.Printf("Target: %s", t.GetClassName());
-            target = t;
-          }
-      }
-  }
-
   override void Tick()
   {
       super.Tick();
-      if (target == null || target.health <= 0) // If no target is set
-      {
-          //Console.Printf("Finding new target");
-          let t = FindClosestTarget("Bob1"); // Replace "PlayerPawn" with your desired class
-          if(t != null)
-          {
-            //Console.Printf("Target: %s", t.GetClassName());
-            target = t;
-          }
-      }
+    //   TargetBobs();
   }
 
   States
@@ -81,14 +42,7 @@ class Enforcer1 : MarathonActor
       // TNT1 A 0 A_CheckLOF("See", CLOFF_JUMPENEMY|CLOFF_JUMPFRIEND|CLOFF_SKIPOBJECT|CLOFF_ALLOWNULL|CLOFF_SETTARGET, 8000, 0, 40, 0, 0, AAPTR_NULL);
       Loop;
     See:
-      TNT1 A 0 {
-        let t = FindClosestTarget("Bob1"); // Replace "PlayerPawn" with your desired class
-        if(t != null)
-        {
-          Console.Printf("Target: %s", t.GetClassName());
-          target = t;
-        }
-      }
+      TNT1 A 0 TargetBobs();
       ENFO ABC 3 A_Chase;
       // TNT1 A 0 A_CheckLOF("See", CLOFF_JUMPENEMY|CLOFF_JUMPFRIEND|CLOFF_SKIPOBJECT|CLOFF_ALLOWNULL|CLOFF_SETTARGET, 8000, 0, 40, 0, 0, AAPTR_NULL);
       Loop;
@@ -126,11 +80,11 @@ class Enforcer1 : MarathonActor
       ENFO G 1 A_CheckFloor("Death4");
       Wait;
     Death4:
-      ENFO H 1 A_Playsound("Splat");
+      ENFO H 1 A_StartSound("Splat");
       ENFO H -1 ACS_Execute(779,0,0,0,0);
       Stop;
     Burn:
-      BURN A 5 Bright A_PlaySound("PFHORBURN");
+      BURN A 5 Bright A_StartSound("PFHORBURN");
       BURN A 1 Bright A_CheckFloor("Burn2");
       Wait;
     Burn2:
@@ -150,7 +104,7 @@ class Enforcer1 : MarathonActor
       Stop;
     Death.LavaFire:
       BURN A 0 Bright A_NoBlocking;
-      BURN A 5 Bright A_Playsound("PFHORBURN");
+      BURN A 5 Bright A_StartSound("PFHORBURN");
       BURN A 1 Bright A_Checkfloor("Death.LavaFire1");
       Wait;
     Death.LavaFire1:
@@ -179,26 +133,3 @@ class Enforcer2 : Enforcer1
     Translation "192:207=[57,228,139]:[2,15,8]", "168:191=[161,0,100]:[51,0,32]", "208:223=[237,215,20]:[54,49,7]";
   }
 }
-
-// extend class Actor
-// {
-// 	void A_TroopAttack()
-// 	{
-// 		let targ = target;
-// 		if (targ)
-// 		{
-// 			if (CheckMeleeRange())
-// 			{
-// 				int damage = random[pr_troopattack](1, 8) * 3;
-// 				A_StartSound ("imp/melee", CHAN_WEAPON);
-// 				int newdam = targ.DamageMobj (self, self, damage, "Melee");
-// 				targ.TraceBleed (newdam > 0 ? newdam : damage, self);
-// 			}
-// 			else
-// 			{
-// 				// launch a missile
-// 				SpawnMissile (targ, "DoomImpBall");
-// 			}
-// 		}
-// 	}
-// }

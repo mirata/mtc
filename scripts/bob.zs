@@ -6,6 +6,7 @@ class Bob1 : MarathonActor
         //$Angled
         //$Category "Marathon Monsters"
         MarathonActor.friendlyHud true;
+        MarathonActor.hurtByLava true;
         MONSTER;
         +FLOORCLIP;
         +FRIENDLY;
@@ -42,13 +43,13 @@ class Bob1 : MarathonActor
             DUDE BBCCDDEE 4 A_Wander;
             DUDE E 0 A_Jump(4,1);
             Loop;
-            DUDE E 0 A_Playsound("BOB33");
+            DUDE E 0 A_StartSound("BOB33");
             Goto Spawn+3;
         See:
             DUDE BBCCDDEE 4 A_Chase;
             DUDE E 0 A_Jump(4,1);
             Loop;
-            DUDE E 0 A_Playsound("BOB33");
+            DUDE E 0 A_StartSound("BOB33");
             goto See;
         Pain:
             DUDE A 3;
@@ -67,7 +68,7 @@ class Bob1 : MarathonActor
             DUDE H 1 A_Checkfloor("Death3");
             Wait;
         Death3:
-            DUDE I 1 A_PlaySound("Splat");
+            DUDE I 1 A_StartSound("Splat");
             DUDE I -1 ACS_Execute(779,0,0,0,0);
             Wait;
         XDeath:
@@ -91,7 +92,7 @@ class Bob1 : MarathonActor
             DUDE N -1 ACS_Execute(779,0,0,0,0);
             Wait;
         Death.Crush:
-            DUDE J 5 A_Playsound("BURN");
+            DUDE J 5 A_StartSound("BURN");
             DUDE J 1 A_Checkfloor("Death.Crush1");
             Wait;
         Death.Crush1:
@@ -111,7 +112,7 @@ class Bob1 : MarathonActor
             DUDE N -1 ACS_Execute(779,0,0,0,0);
             Wait;
         Burn:
-            BURN A 5 Bright A_Playsound("BURN");
+            BURN A 5 Bright A_StartSound("BURN");
             BURN A 1 Bright A_Checkfloor("Burn1");
             Wait;
         Burn1:
@@ -130,24 +131,15 @@ class Bob1 : MarathonActor
             BURN E -1 {
                 let tex = TexMan.GetName(self.FloorPic);
 				Console.Printf("%s", tex);
-                A_SetRenderStyle(1, STYLE_None);
-                // if(CheckActorFloorTexture (0,"1SET19") == 1)
-                // {
-                //     SetActorProperty(0,APROP_Renderstyle,STYLE_None);
-                // }
-                // if(CheckActorFloorTexture (0,"2SET12") == 1)
-                // {
-                //     SetActorProperty(0,APROP_Renderstyle,STYLE_None);
-                // }
-                // if(CheckActorFloorTexture (0,"4SET05") == 1)
-                // {
-                //     SetActorProperty(0,APROP_Renderstyle,STYLE_None);
-                // }
+                if(tex == "1SET19" || tex == "2SET12" || tex == "4SET05")
+                {
+                    A_SetRenderStyle(1, STYLE_None);
+                }
             }
             Stop;
         Death.LavaFire:
             BURN A 0 Bright A_NoBlocking;
-            BURN A 5 Bright A_Playsound("BURN");
+            BURN A 5 Bright A_StartSound("BURN");
             BURN A 1 Bright A_Checkfloor("Death.LavaFire1");
             Wait;
         Death.LavaFire1:
@@ -233,7 +225,7 @@ class AssimilatedBob : MarathonActor
             DUDE BBCCDDEE 4 A_Chase;
             DUDE E 0 A_Jump(4,1);
             Loop;
-            DUDE E 0 A_Playsound("BOB34");
+            DUDE E 0 A_StartSound("BOB34");
             goto See;
         Pain:
             DUDE A 3;
@@ -265,7 +257,7 @@ class AssimilatedBob : MarathonActor
             DUDE N -1 ACS_Execute(779,0,0,0,0);
             wait;
         Burn:
-            BURN A 5 Bright A_Playsound("BURN");
+            BURN A 5 Bright A_StartSound("BURN");
             BURN A 1 Bright A_Checkfloor("Burn1");
             wait;
         Burn1:
@@ -285,7 +277,7 @@ class AssimilatedBob : MarathonActor
             stop;
         Death.LavaFire:
             BURN A 0 Bright A_NoBlocking;
-            BURN A 5 Bright A_Playsound("*burndeath");
+            BURN A 5 Bright A_StartSound("*burndeath");
             BURN A 1 Bright A_Checkfloor("Death.LavaFire1");
             wait;
         Death.LavaFire1:

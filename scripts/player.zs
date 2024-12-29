@@ -71,12 +71,12 @@ class MarathonPlayer : PlayerPawn
             PLAY I 1 A_Checkfloor("Death3");
             Wait;
         Death3:
-            PLAY J 1 A_PlaySound("Splat");
+            PLAY J 1 A_StartSound("Splat");
             PLAY J -1 ACS_Execute(779,0,0,0,0);
             Stop;
         Death.Drowning:
             PLAY G 0 A_NoBlocking;
-            PLAY G 5 A_Playsound("*suffocate");
+            PLAY G 5 A_StartSound("*suffocate");
             PLAY G 1 A_Checkfloor("Death.Drowning1");
             Wait;
         Death.Drowning1:
@@ -93,7 +93,7 @@ class MarathonPlayer : PlayerPawn
             Stop;
         Death.Crush:
             PLAY G 0 A_NoBlocking;
-            PLAY G 5 A_Playsound("*burndeath");
+            PLAY G 5 A_StartSound("*burndeath");
             PLAY G 1 A_Checkfloor("Death.Crush1");
             Wait;
         Death.Crush1:
@@ -134,7 +134,7 @@ class MarathonPlayer : PlayerPawn
             Stop;
         Burn:
             PLAY O 0 bright A_NoBlocking;
-            PLAY O 5 bright A_Playsound("*burndeath");
+            PLAY O 5 bright A_StartSound("*burndeath");
             PLAY O 1 bright A_Checkfloor("Burn1");
             Wait;
         Burn1:
@@ -154,7 +154,7 @@ class MarathonPlayer : PlayerPawn
             stop;
         Death.LavaFire:
             PLAY O 0 bright A_NoBlocking;
-            PLAY O 5 bright A_Playsound("*burndeath");
+            PLAY O 5 bright A_StartSound("*burndeath");
             PLAY O 1 bright A_Checkfloor("Death.LavaFire1");
             Wait;
         Death.LavaFire1:

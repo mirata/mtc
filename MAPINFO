@@ -16,6 +16,12 @@ DoomEdNums
    16033 = "Bob4"
    16040 = "Enforcer1"
    16041 = "Enforcer2"
+   16051 = "Hunter1"
+   16052 = "Hunter2"
+   16053 = "Hunter3"
+   16061 = "Wasp1"
+   16062 = "Wasp2"
+   16063 = "Wasp3"
    17000 = "Juggernaut"
 }
 
@@ -47,7 +53,7 @@ gameinfo
    definventorymaxamount = 25
    PlayerClass = "MarathonPlayer"
    StatusBarClass = "MarathonStatusBar"
-   AddEventHandlers = "JuggernautExplosion", "ProjectileFlyby"
+   AddEventHandlers = "JuggernautExplosion", "DamageOverlay"
 }
 
 Automap

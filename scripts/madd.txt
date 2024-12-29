@@ -55,13 +55,13 @@ actor MADD replaces Arachnotron
     goto See
   Death:
     MADD C 0 bright A_SpawnItem("MADDBoom1")
-    MADD C 3 bright A_Playsound("ASSAULT3")
+    MADD C 3 bright A_StartSound("ASSAULT3")
     MADD DEF 3 bright
     MADD G 0 bright A_SpawnItem("MADDBoom1")
-    MADD G 3 bright A_Playsound("ASSAULT3")
+    MADD G 3 bright A_StartSound("ASSAULT3")
     MADD HI 3 bright
     MADD J 0 bright A_SpawnItem("MADDBoom1")
-    MADD J 3 bright A_Playsound("ASSAULT3")
+    MADD J 3 bright A_StartSound("ASSAULT3")
     MADD K 3 bright A_NoBlocking
     MADD L 0 bright A_SpawnItem("MADDBoom2")
     MADD L 3 bright A_Scream

@@ -3,80 +3,103 @@
 //
 class JuggernautExplosion : EventHandler
 {
-  int timeout;
-  bool show;
-  float intensity;
+    int timeout;
+    bool show;
+    float intensity;
 
-  override void WorldTick()	// PLAY scope
-  {
-    if(show)
+    override void WorldTick()	// PLAY scope
     {
-        timeout++;
-        intensity = 1.0 - (timeout / 80.0);
-        if(timeout > 80)
+        if(show)
         {
-            show = false;
+            timeout++;
+            intensity = 1.0 - (timeout / 80.0);
+            if(timeout > 80)
+            {
+                show = false;
+            }
         }
     }
-  }
 
-  override void WorldThingDestroyed(WorldEvent e)
-  {
-    if (e.Thing.GetClass() == "Juggernaut")
+    override void WorldThingDestroyed(WorldEvent e)
     {
-      show = true;
-      timeout = 0;
+        if (e.Thing.GetClass() == "Juggernaut")
+        {
+        show = true;
+        timeout = 0;
+        }
     }
-  }
 
-  // UI Scope: you cannot alter data here
-  override void renderOverlay(RenderEvent e) 	// UI scope
-  {
-    /// if it has been more then 128 ticks stop drawing image
-    if(!show) { return; }
-    Screen.Dim("#FFF", intensity, -Screen.GetWidth() * 2, -Screen.GetHeight() * 2, Screen.GetWidth() * 5, Screen.GetHeight() * 5); // Draw a white rectangle
-  }
+    // UI Scope: you cannot alter data here
+    override void renderOverlay(RenderEvent e) 	// UI scope
+    {
+        /// if it has been more then 128 ticks stop drawing image
+        if(!show) { return; }
+        Screen.Dim("#FFF", intensity, -Screen.GetWidth() * 2, -Screen.GetHeight() * 2, Screen.GetWidth() * 5, Screen.GetHeight() * 5); // Draw a white rectangle
+    }
 }
 
-class ProjectileFlyby : EventHandler
+class DamageOverlay : EventHandler
 {
-  int timeout;
-  bool show;
-  float intensity;
+    int timeout;
+    bool show;
+    float intensity;
 
-  override void WorldTick()	// PLAY scope
-  {
-    if(show)
+    string colour;
+    float opacity;
+
+    override void WorldTick()	// PLAY scope
     {
-        timeout++;
-        intensity = 1.0 - (timeout / 32.0);
-        if(timeout > 32)
+        if(show)
         {
-            show = false;
+            timeout++;
+            intensity = 1.0 - (timeout / 32.0);
+            if(timeout > 32)
+            {
+                show = false;
+            }
         }
     }
-  }
 
-  override void WorldThingDamaged(WorldEvent e)
-  {
-    if(e.Thing.GetClassName() != "MarathonPlayer")
+    override void WorldThingDamaged(WorldEvent e)
     {
-      return;
-    }
-    let inflictorClass = e.Inflictor.GetClassName();
-    Console.Printf("%s", inflictorClass);
-    // if(e.Inflictor.GetClassName() == "FighterProjectile")
-    {
-      show = true;
-      timeout = 0;
-    }
-  }
+        if(e.Thing.GetClassName() != "MarathonPlayer")
+        {
+            return;
+        }
 
-  // UI Scope: you cannot alter data here
-  override void renderOverlay(RenderEvent e) 	// UI scope
-  {
-    /// if it has been more then 128 ticks stop drawing image
-    if(!show) { return; }
-    Screen.Dim("#00FFFF", intensity * 0.4, -Screen.GetWidth() * 2, -Screen.GetHeight() * 2, Screen.GetWidth() * 5, Screen.GetHeight() * 5); // Draw a white rectangle
-  }
+        let inflictorClass = '';
+        if(e.Inflictor != null)
+        {
+            inflictorClass = e.Inflictor.GetClassName();
+        }
+
+        opacity = 0.5;
+        colour = "#FF0000";
+        
+        Console.Printf("%s", inflictorClass);
+        if(inflictorClass == "FighterProjectile" || inflictorClass == "Fighter1" || inflictorClass == "Fighter2" || inflictorClass == "Fighter3" || inflictorClass == "Fighter4")
+        {
+            colour = "00FFFF";
+        }
+        else if(inflictorClass == "HunterShot")
+        {
+            colour = "#FF00FF";
+        }
+        else if(inflictorClass == "CompilerBall")
+        {
+            colour = "#00FF00";
+        }
+
+        // if(e.Inflictor.GetClassName() == "FighterProjectile")
+        show = true;
+        timeout = 0;
+    }
+
+    // UI Scope: you cannot alter data here
+    override void renderOverlay(RenderEvent e) 	// UI scope
+    {
+        /// if it has been more then 128 ticks stop drawing image
+        if(!show) { return; }
+        Screen.Dim( colour, intensity * opacity, -Screen.GetWidth() * 2, -Screen.GetHeight() * 2, Screen.GetWidth() * 5, Screen.GetHeight() * 5); // Draw a white rectangle
+    }
 }
