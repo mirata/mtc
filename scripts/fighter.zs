@@ -41,7 +41,7 @@ class Fighter1 : MarathonActor
       FIGH E 6 A_FaceTarget;
       FIGH A 0 A_StartSound("PFHORAT1");
       FIGH FG 6 Bright A_FaceTarget;
-      FIGH H 6 Bright A_CustomMeleeattack(random(4,32),"PFHORAT2","NONE","normal",1);
+      FIGH H 6 Bright A_CustomMeleeattack(random(4,32),"PFHORAT2","NONE","Staff",1);
       goto See;
     Death:
       FIGH I 0 A_FaceTarget;
@@ -209,6 +209,7 @@ class FighterProjectile : Actor
     FastSpeed 30;
     Damage 4;
     Projectile;
+    DamageType "Staff";
     SeeSound "PFHORAT1";
     DeathSound "PFHORAT2";
     scale .5;

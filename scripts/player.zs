@@ -12,7 +12,7 @@ class MarathonPlayer : PlayerPawn
         Mass 100;
         PainChance 0;
         scale .5;
-        //YScale 0.5;
+        YScale 0.5;
         Player.ForwardMove .5,.5;
         Player.SideMove .5,.5;
         Player.DisplayName "Cyborg";
@@ -32,7 +32,7 @@ class MarathonPlayer : PlayerPawn
         Player.WeaponSlot 7, "AlienWeapon";
         Player.ColorRange 112, 127;
         Player.MaxHealth 450;
-        Player.ViewHeight 40;
+        Player.ViewHeight 35;
         Player.ViewBob .1;
         Player.AttackZOffset 12;
         damagefactor "suffocate" ,1.0;

@@ -184,7 +184,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -199,7 +199,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -214,7 +214,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -229,7 +229,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -244,7 +244,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -259,7 +259,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -274,7 +274,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -289,7 +289,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -304,7 +304,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -319,7 +319,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -334,7 +334,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -349,7 +349,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -364,7 +364,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -379,7 +379,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -394,7 +394,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -409,7 +409,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -424,7 +424,7 @@ gravity = 75
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -439,7 +439,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -454,7 +454,7 @@ gravity = 75
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -469,7 +469,7 @@ gravity = 75
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -484,7 +484,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -499,7 +499,7 @@ gravity = 75
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -514,7 +514,7 @@ gravity = 75
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -530,7 +530,7 @@ gravity = 75
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -545,7 +545,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -561,7 +561,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -580,7 +580,7 @@ gravity = 125
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -594,7 +594,7 @@ nocrouch
 gravity = 125
 totalinfighting
 keepfullinventory
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -608,7 +608,7 @@ nocrouch
 gravity = 125
 totalinfighting
 keepfullinventory
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -622,7 +622,7 @@ nocrouch
 gravity = 125
 totalinfighting
 keepfullinventory
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -636,7 +636,7 @@ nocrouch
 gravity = 125
 totalinfighting
 keepfullinventory
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -650,7 +650,7 @@ nocrouch
 gravity = 125
 totalinfighting
 keepfullinventory
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -664,7 +664,7 @@ nocrouch
 gravity = 125
 totalinfighting
 keepfullinventory
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -678,7 +678,7 @@ nocrouch
 gravity = 125
 totalinfighting
 keepfullinventory
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -692,7 +692,7 @@ nocrouch
 gravity = 75
 totalinfighting
 keepfullinventory
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -706,7 +706,7 @@ nocrouch
 gravity = 125
 totalinfighting
 keepfullinventory
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -720,7 +720,7 @@ nocrouch
 gravity = 125
 totalinfighting
 keepfullinventory
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }
@@ -735,7 +735,7 @@ gravity = 800
 totalinfighting
 keepfullinventory
 cluster = 50
-//pixelratio = 1
+pixelratio = 1
 AirControl = 1
 EvenLighting
 }

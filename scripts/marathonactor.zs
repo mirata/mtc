@@ -58,7 +58,7 @@ class MarathonActor : Actor
         }
 
         //lava damage
-        if(hurtByLava)
+        if(hurtByLava && pos.z == floorz)
         {
             let tex = TexMan.GetName(self.FloorPic);
             if(tex == "1SET19" || tex == "2SET12" || tex == "4SET05")

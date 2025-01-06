@@ -62,35 +62,57 @@ class DamageOverlay : EventHandler
 
     override void WorldThingDamaged(WorldEvent e)
     {
-        if(e.Thing.GetClassName() != "MarathonPlayer")
-        {
-            return;
-        }
-
         let inflictorClass = '';
+        let actorClass = '';
+        let damageType = e.DamageType;
         if(e.Inflictor != null)
         {
             inflictorClass = e.Inflictor.GetClassName();
         }
+        if(e.DamageSource != null)
+        {
+            actorClass = e.DamageSource.GetClassName();
+        }
 
-        opacity = 0.5;
-        colour = "#FF0000";
+        Console.Printf("Damaged: %s, %s, %s", inflictorClass, actorClass, e.DamageType);
         
-        Console.Printf("%s", inflictorClass);
-        if(inflictorClass == "FighterProjectile" || inflictorClass == "Fighter1" || inflictorClass == "Fighter2" || inflictorClass == "Fighter3" || inflictorClass == "Fighter4")
+        //this is most likely sector damage
+        if(inflictorClass == '' && actorClass == '')
         {
-            colour = "00FFFF";
+            opacity = 0.5;
+            if(damageType == "Fire")
+            {
+                colour = "#FF6600";   
+            }
+            else if(damageType == "Slime")
+            {
+                colour = "#00FF00";
+            }
         }
-        else if(inflictorClass == "HunterShot" || inflictorClass == "SpitBall")
+        else 
         {
-            colour = "#FF00FF";
-        }
-        else if(inflictorClass == "CompilerBall")
-        {
-            colour = "#00FF00";
+            if(e.Thing.GetClassName() != "MarathonPlayer")
+            {
+                return;
+            }
+
+            opacity = 0.5;
+            colour = "#FF0000";
+            
+            if(damageType == "Staff")
+            {
+                colour = "00FFFF";
+            }
+            else if(inflictorClass == "HunterShot" || inflictorClass == "SpitBall")
+            {
+                colour = "#FF00FF";
+            }
+            else if(inflictorClass == "CompilerBall")
+            {
+                colour = "#00FF00";
+            }
         }
 
-        // if(e.Inflictor.GetClassName() == "FighterProjectile")
         show = true;
         timeout = 0;
     }

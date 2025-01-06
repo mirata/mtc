@@ -25,6 +25,25 @@ ACTOR MarathonPuff replaces bulletpuff
     stop
   }
 }
+ACTOR TracerPuff replaces bulletpuff
+{
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOEXTREMEDEATH
+  +FORCEXYBILLBOARD
+  +NOTRIGGER
+  VSpeed .01
+  Mass 5
+  scale .5
+  //YScale 0.5
+  States
+  {
+  Spawn:
+    BLUD A 0
+    PUFF ABCD 4
+    stop
+  }
+}
 ACTOR MeleePuff
 {
   +NOBLOCKMAP
@@ -591,7 +610,7 @@ ACTOR MA75AssaultRifle : Weapon
        ASSU A 0 A_Jumpifinventory("AssaultRifleSequence",2,"Fire3")
        ASSU A 0 A_Jumpifinventory("AssaultRifleSequence",1,"Fire2")
        ASSU A 0 A_Light1
-       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU A 0 A_FireCustomMissile("TracerBullet", random(-3, 3), 0, 0, 0, 0,  random(-1, 2))
        ASSU B 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
        ASSU A 0 A_Light0
        ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
@@ -603,7 +622,7 @@ ACTOR MA75AssaultRifle : Weapon
     Fire2:
        ASSU A 0 A_Jumpifnoammo("dry")
        ASSU A 0 A_Light1
-       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU A 0 A_FireCustomMissile("TracerBullet", random(-3, 3), 0, 0, 0, 0,  random(-1, 2))
        ASSU C 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
        ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
        ASSU A 0 A_Light0
@@ -615,7 +634,7 @@ ACTOR MA75AssaultRifle : Weapon
     Fire3:
        ASSU A 0 A_Jumpifnoammo("dry")
        ASSU A 0 A_Light1
-       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU A 0 A_FireCustomMissile("TracerBullet", random(-3, 3), 0, 0, 0, 0,  random(-1, 2))
        ASSU D 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
        ASSU A 0 A_Light0
        ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
@@ -627,7 +646,7 @@ ACTOR MA75AssaultRifle : Weapon
     Fire4:
        ASSU A 0 A_Jumpifnoammo("dry")
        ASSU A 0 A_Light1
-       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU A 0 A_FireCustomMissile("TracerBullet", random(-3, 3), 0, 0, 0, 0,  random(-1, 2))
        ASSU J 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
        ASSU A 0 A_Light0
        ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
@@ -639,7 +658,7 @@ ACTOR MA75AssaultRifle : Weapon
     Fire5:
        ASSU A 0 A_Jumpifnoammo("dry")
        ASSU A 0 A_Light1
-       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU A 0 A_FireCustomMissile("TracerBullet", random(-3, 3), 0, 0, 0, 0,  random(-1, 2))
        ASSU K 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
        ASSU A 0 A_Light0
        ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
@@ -651,7 +670,7 @@ ACTOR MA75AssaultRifle : Weapon
     Fire6:
        ASSU A 0 A_Jumpifnoammo("dry")
        ASSU A 0 A_Light1
-       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU A 0 A_FireCustomMissile("TracerBullet", random(-3, 3), 0, 0, 0, 0,  random(-1, 2))
        ASSU L 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
        ASSU A 0 A_Light0
        ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
@@ -663,7 +682,7 @@ ACTOR MA75AssaultRifle : Weapon
     Fire7:
        ASSU A 0 A_Jumpifnoammo("dry")
        ASSU A 0 A_Light1
-       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU A 0 A_FireCustomMissile("TracerBullet", random(-3, 3), 0, 0, 0, 0,  random(-1, 2))
        ASSU M 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
        ASSU A 0 A_Light0
        ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
@@ -675,7 +694,7 @@ ACTOR MA75AssaultRifle : Weapon
     Fire8:
        ASSU A 0 A_Jumpifnoammo("dry")
        ASSU A 0 A_Light1
-       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU A 0 A_FireCustomMissile("TracerBullet", random(-3, 3), 0, 0, 0, 0,  random(-1, 2))
        ASSU N 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
        ASSU A 0 A_Light0
        ASSU B 0 bright A_GiveInventory("AssaultRifleSequence",1)
@@ -687,7 +706,7 @@ ACTOR MA75AssaultRifle : Weapon
     Fire9:
        ASSU A 0 A_Jumpifnoammo("dry")
        ASSU A 0 A_Light1
-       ASSU A 0 A_FireCustomMissile("GunLight",0,0,0,0,0)
+       ASSU A 0 A_FireCustomMissile("TracerBullet", random(-3, 3), 0, 0, 0, 0,  random(-1, 2))
        ASSU O 3 bright A_FireBullets(14,14,-1,7,"marathonpuff",1,0)
        ASSU A 0 A_Light0
        ASSU B 0 bright A_TakeInventory("AssaultRifleSequence",8)
@@ -1217,14 +1236,14 @@ actor alienpickup : custominventory replaces bfg9000
   ALEN E -1
   loop
   Pickup:
-    TNT1 A 0 A_JumpIfInventory("ALIENWEAPON",1,2)
-    TNT1 A 0 A_GiveInventory("ALIENWEAPON")
+    TNT1 A 0 A_JumpIfInventory("AlienWeapon",1,2)
+    TNT1 A 0 A_GiveInventory("AlienWeapon")
     Stop
     TNT1 A 0
     Fail
   }
 }
-actor ALIENWEAPON : Weapon
+actor AlienWeapon : Weapon
 {
   Weapon.SelectionOrder 400
   Weapon.AmmoUse 1
@@ -1254,7 +1273,7 @@ actor ALIENWEAPON : Weapon
     Loop
   DeSelect2:
     ALEN AAAAAAAAAAAA 1 A_Lower
-    ALEN A 0 A_TakeInventory("ALIENWEAPON",1)
+    ALEN A 0 A_TakeInventory("AlienWeapon",1)
     Loop
   Fire:
        ALEN A 0 A_Recoil(0.1)
