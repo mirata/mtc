@@ -85,6 +85,9 @@ class MarathonActor : Actor
                 {
                     vel.z = -2.0; // Move down
                 }
+                else{
+                    vel.z = 0;
+                }
 
             // if (target != null)
             // {

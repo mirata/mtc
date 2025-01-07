@@ -112,6 +112,7 @@ class Bob1 : MarathonActor
             DUDE N -1 ACS_Execute(779,0,0,0,0);
             Wait;
         Burn:
+            TNT1 A 0 A_SetTranslation("");
             BURN A 5 Bright A_StartSound("BURN");
             BURN A 1 Bright A_Checkfloor("Burn1");
             Wait;
@@ -138,6 +139,7 @@ class Bob1 : MarathonActor
             }
             Stop;
         Death.LavaFire:
+            TNT1 A 0 A_SetTranslation("");
             BURN A 0 Bright A_NoBlocking;
             BURN A 5 Bright A_StartSound("BURN");
             BURN A 1 Bright A_Checkfloor("Death.LavaFire1");

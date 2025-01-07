@@ -103,7 +103,7 @@ class DamageOverlay : EventHandler
             {
                 colour = "00FFFF";
             }
-            else if(inflictorClass == "HunterShot" || inflictorClass == "SpitBall")
+            else if(inflictorClass == "HunterShot" || inflictorClass == "SpitBall" || inflictorClass == "AlienPuff")
             {
                 colour = "#FF00FF";
             }
