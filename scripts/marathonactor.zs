@@ -109,12 +109,21 @@ class MarathonActor : Actor
             //         vel.z = 0; // Maintain height
             //     }
             // }
+        }     
+    }
+
+    void RemoveOnLava()
+    {
+        let tex = TexMan.GetName(self.FloorPic);
+        // Console.Printf("%s", tex);
+        if(tex == "1SET19" || tex == "2SET12" || tex == "4SET05")
+        {
+            A_SetRenderStyle(1, STYLE_None);
         }
-        
     }
       
     Actor FindClosestTarget(string className)
-    {;
+    {
         PlayerPawn p = Players[consoleplayer].mo;
         
         Actor closest = p;

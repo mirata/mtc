@@ -58,7 +58,7 @@ class Hunter1 : MarathonActor
             Wait;
         Death4:
             HUNT K 1 A_Scream;
-            HUNT K -1 ACS_Execute(779,0,0,0,0);
+            HUNT K -1 RemoveOnLava;
             Stop;
         XDeath:
             HUNT H 5 A_FaceTarget;
@@ -84,7 +84,7 @@ class Hunter1 : MarathonActor
             Wait;
         XDeath6:
             HUNT P 1;
-            HUNT P -1 ACS_Execute(779,0,0,0,0);
+            HUNT P -1 RemoveOnLava;
             Stop;
         Death.Crush:
             HUNT H 5 A_FaceTarget;
@@ -110,7 +110,7 @@ class Hunter1 : MarathonActor
             Wait;
         Death.Crush6:
             HUNT P 1;
-            HUNT P -1 ACS_Execute(779,0,0,0,0);
+            HUNT P -1 RemoveOnLava;
             Stop;
     }
 }
@@ -193,7 +193,7 @@ class Hunter3 : Hunter1
             Wait;
         Death6:
             HUNT P 1;
-            HUNT P -1 ACS_Execute(779,0,0,0,0);
+            HUNT P -1 RemoveOnLava;
             Stop;
     }
 }

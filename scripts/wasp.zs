@@ -60,7 +60,7 @@ class Wasp1 : MarathonActor
         Crash:
             WASP Q 7 A_StartSound("SPLAT");
             WASP R 7;
-            WASP S -1 ACS_Execute(779,0,0,0,0);
+            WASP S -1 RemoveOnLava;
             Stop;
     }
 }

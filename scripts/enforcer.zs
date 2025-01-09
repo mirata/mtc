@@ -72,7 +72,7 @@ class Enforcer1 : MarathonActor
             Wait;
         Death4:
             ENFO H 1 A_StartSound("Splat");
-            ENFO H -1 ACS_Execute(779,0,0,0,0);
+            ENFO H -1 RemoveOnLava;
             Stop;
         Burn:
             TNT1 A 0 A_SetTranslation("");
@@ -92,7 +92,7 @@ class Enforcer1 : MarathonActor
             BURN D 1 Bright A_CheckFloor("Burn5");
             Wait;
         Burn5:
-            BURN E -1 ACS_Execute(779,0,0,0,0);
+            BURN E -1 RemoveOnLava;
             Stop;
         Death.LavaFire:
             TNT1 A 0 A_SetTranslation("");
@@ -113,7 +113,7 @@ class Enforcer1 : MarathonActor
             BURN D 1 Bright A_Checkfloor("Death.LavaFire4");
             Wait;
         Death.LavaFire4:
-            BURN E -1 ACS_Execute(779,0,0,0,0);
+            BURN E -1 RemoveOnLava;
             Stop;
     }
 }

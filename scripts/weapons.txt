@@ -860,7 +860,7 @@ actor marathongrenade replaces grenade
   -DEHEXPLOSION
   -NOGRAVITY
   
-  gravity 1
+  gravity 10
   -DOOMBOUNCE
   +FORCEXYBILLBOARD
   +EXTREMEDEATH
@@ -892,7 +892,7 @@ states
 {
 spawn:
 TNT1 A 3
-SMKE ABCD 1
+SMKE ABCD 1 bright
 stop
 }
 }

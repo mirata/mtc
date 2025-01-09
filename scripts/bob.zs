@@ -69,7 +69,7 @@ class Bob1 : MarathonActor
             Wait;
         Death3:
             DUDE I 1 A_StartSound("Splat");
-            DUDE I -1 ACS_Execute(779,0,0,0,0);
+            DUDE I -1 RemoveOnLava;
             Wait;
         XDeath:
             DUDE J 5 A_Scream;
@@ -89,7 +89,7 @@ class Bob1 : MarathonActor
             Wait;
         XDeath4:
             DUDE N 1 A_XScream;
-            DUDE N -1 ACS_Execute(779,0,0,0,0);
+            DUDE N -1 RemoveOnLava;
             Wait;
         Death.Crush:
             DUDE J 5 A_StartSound("BURN");
@@ -109,7 +109,7 @@ class Bob1 : MarathonActor
             Wait;
         Death.Crush4:
             DUDE N 1 A_XScream;
-            DUDE N -1 ACS_Execute(779,0,0,0,0);
+            DUDE N -1 RemoveOnLava;
             Wait;
         Burn:
             TNT1 A 0 A_SetTranslation("");
@@ -129,14 +129,7 @@ class Bob1 : MarathonActor
             BURN D 1 Bright A_Checkfloor("Burn4");
             Wait;
         Burn4:
-            BURN E -1 {
-                let tex = TexMan.GetName(self.FloorPic);
-				Console.Printf("%s", tex);
-                if(tex == "1SET19" || tex == "2SET12" || tex == "4SET05")
-                {
-                    A_SetRenderStyle(1, STYLE_None);
-                }
-            }
+            BURN E -1 RemoveOnLava;
             Stop;
         Death.LavaFire:
             TNT1 A 0 A_SetTranslation("");
@@ -157,7 +150,7 @@ class Bob1 : MarathonActor
             BURN D 1 Bright A_Checkfloor("Death.LavaFire4");
             Wait;
         Death.LavaFire4:
-            BURN E -1 ACS_Execute(779,0,0,0,0);
+            BURN E -1 RemoveOnLava;
             Stop;
     }
 }
@@ -256,7 +249,7 @@ class AssimilatedBob : MarathonActor
             wait;
         Death4:
             DUDE N 1 A_XScream;
-            DUDE N -1 ACS_Execute(779,0,0,0,0);
+            DUDE N -1 RemoveOnLava;
             wait;
         Burn:
             BURN A 5 Bright A_StartSound("BURN");
@@ -275,7 +268,7 @@ class AssimilatedBob : MarathonActor
             BURN D 1 Bright A_Checkfloor("Burn4");
             wait;
         Burn4:
-            BURN E -1 ACS_Execute(779,0,0,0,0);
+            BURN E -1 RemoveOnLava;
             stop;
         Death.LavaFire:
             BURN A 0 Bright A_NoBlocking;
@@ -295,7 +288,7 @@ class AssimilatedBob : MarathonActor
             BURN D 1 Bright A_Checkfloor("Death.LavaFire4");
             wait;
         Death.LavaFire4:
-            BURN E -1 ACS_Execute(779,0,0,0,0);
+            BURN E -1 RemoveOnLava;
             stop;
     }
 }
