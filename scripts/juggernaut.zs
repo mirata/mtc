@@ -2,6 +2,7 @@ class Juggernaut : MarathonActor
 {
     Default
     {
+        //marathon scale factor 14
         //$Title "Juggernaut"
         //$Angled
         //$Category "Marathon Monsters"
@@ -22,12 +23,13 @@ class Juggernaut : MarathonActor
         mass 100;
         speed 7;
         painchance 0;
+        attacksound "JUGASLT";
         seesound "";
         painsound "";
         deathsound "JUGWARN";
         activesound "";
         bloodcolor "ff ff 33";
-        scale 0.9;
+        scale 0.875;
         //YScale 0.4;
     }
 
@@ -43,24 +45,24 @@ class Juggernaut : MarathonActor
             JUGG A 3 A_Chase;
             Loop;
         Missile:
-            JUGG A 1 A_Jump(32,"Missile2");
+            JUGG A 0 A_Jump(32,"Missile2");
             JUGG A 2 A_FaceTarget;
-            JUGG A 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            JUGG A 2;
-            JUGG A 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            JUGG A 2;
-            JUGG A 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            JUGG A 2;
-            JUGG A 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            JUGG A 2;
-            JUGG A 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            JUGG A 2;
-            JUGG A 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            JUGG A 2;
-            JUGG A 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            JUGG A 2;
-            JUGG A 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            JUGG A 2;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
             goto See;
         Missile2:
             JUGG A 6 A_FaceTarget;
@@ -71,7 +73,7 @@ class Juggernaut : MarathonActor
             JUGG A 0 A_NoGravity;
             JUGG A 0 A_NoBlocking;
             JUGG A 0 A_ChangeVelocity(0, 0, -0.7, CVF_REPLACE);
-            JUGG D 30 A_Scream;
+            JUGG D 30 BRIGHT A_Scream;
             Loop;
         Crash:
             JUGG A 0 A_StartSound("JUGDIE");
@@ -94,12 +96,13 @@ class JuggernautRocket : Actor
         +SEEKERMISSILE;
         -BOUNCEONFLOORS;
         -BOUNCEONWALLS;
+        BounceType "None";
         Gravity 1;
         SeeSound "JUGFIRE";
         DeathSound "ASSAULT3";
         Radius 4;
         Height 8;
-        Speed 10;
+        Speed 15;
         DamageType "Normal";
         scale .75;
         //YScale 0.75;
@@ -137,7 +140,7 @@ class JuggernautRocket : Actor
     States
     {
         Spawn:
-            GREN A 1 Bright
+            JUGM A 1 Bright
             {
                 A_SeekerMissile(2, 4);
                 A_SpawnItem("JuggernautRocketSmoke");
@@ -150,8 +153,8 @@ class JuggernautRocket : Actor
             }
             Loop;
         Death:
-            GREN A 0 A_NoGravity;
-            GREN A 1 Bright A_Explode(64,64);
+            JUGM A 0 A_NoGravity;
+            JUGM A 1 Bright A_Explode(64,64);
             GREN BCDEFG 4 Bright;
             Stop;
     }

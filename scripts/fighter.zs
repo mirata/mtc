@@ -2,6 +2,7 @@ class Fighter1 : MarathonActor
 {
     Default
     {
+        //marathon scale factor 6
         //$Title "Fighter"
         //$Angled
         //$Category "Marathon Monsters"
@@ -24,7 +25,7 @@ class Fighter1 : MarathonActor
         deathsound "PFHORDIE";
         activesound "PFHOR";
         bloodcolor "ff ff 33";
-        scale .4;
+        scale .375;
         //YScale 0.4;
     }
 

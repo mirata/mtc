@@ -2,6 +2,7 @@ class Enforcer1 : MarathonActor
 {
     Default
     {
+        //marathon scale factor 5
         //$Title "Enforcer"
         //$Angled
         //$Category "Marathon Monsters"
@@ -25,7 +26,7 @@ class Enforcer1 : MarathonActor
         deathsound "";
         activesound "ENFWAKE";
         bloodcolor "ff ff 33";
-        scale .3;
+        scale .3125;
         //YScale 0.4;
     }
 

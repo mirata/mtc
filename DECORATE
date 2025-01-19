@@ -103,6 +103,7 @@ ACTOR term9 10008
 
 actor Hulk1 replaces Fatso
 {
+  //marathon scale factor 10
   spawnid 112
   obituary "%o was squashed by a Hulk."
   health 1500
@@ -120,7 +121,7 @@ actor Hulk1 replaces Fatso
   +FLOORCLIP
   Translation "201:207=[0,176,201]:[0,68,77]", "240:246=[0,54,62]:[0,0,0]"
   BloodColor "00 B0 C9"
-  Scale .75
+  Scale .625
   //YScale 0.75
   MeleeRange 64
   DamageFactor "fire", 0.0

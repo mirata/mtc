@@ -860,7 +860,7 @@ actor marathongrenade replaces grenade
   -DEHEXPLOSION
   -NOGRAVITY
   
-  gravity 10
+  gravity 1
   -DOOMBOUNCE
   +FORCEXYBILLBOARD
   +EXTREMEDEATH

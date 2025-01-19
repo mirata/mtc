@@ -2,6 +2,7 @@ class Compiler1 : MarathonActor
 {
     Default
     {
+        //marathon scale factor 5
         //$Title "Compiler"
         //$Angled
         //$Category "Marathon Monsters"
@@ -27,7 +28,7 @@ class Compiler1 : MarathonActor
         activesound "";
         attacksound "";
         damagefactor "fire", 0.0;
-        scale .375; //with proper scale it should probably be 0.375 vertical due to the vertical warp
+        scale .3125; //with proper scale it should probably be 0.375 vertical due to the vertical warp
         //YScale 0.375; 
     }
 

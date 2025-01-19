@@ -2,6 +2,7 @@ class Trooper1 : MarathonActor
 {
     Default
     {
+        //marathon scale factor 6
         //$Title "Trooper"
         //$Angled
         //$Category "Marathon Monsters"
@@ -26,7 +27,7 @@ class Trooper1 : MarathonActor
         activesound "PFHOR";
         bloodcolor "ff ff 33";
         Decal "BulletChip";
-        scale .4;
+        scale .375;
         //YScale 0.4;
     }
 

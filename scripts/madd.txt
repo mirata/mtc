@@ -1,5 +1,6 @@
 actor MADD replaces Arachnotron
 {
+        //marathon scale factor 6
   obituary "%o fell victim to friendly fire."
   health 150
   radius 24
@@ -22,7 +23,7 @@ actor MADD replaces Arachnotron
   +FRIENDLY
   +DONTGIB
   +NOSPLASHALERT
-  scale .5
+  scale .45
   //YScale 0.5
   damagefactor "fire", 0.0
   Decal "BulletChip"

@@ -2,6 +2,7 @@ class Hunter1 : MarathonActor
 {
     Default
     {
+        //marathon scale factor 7
         //$Title "Hunter"
         //$Angled
         //$Category "Marathon Monsters"
@@ -24,7 +25,7 @@ class Hunter1 : MarathonActor
         deathsound "HUNTDEAD";
         activesound "PFHOR";
         damagefactor "fire", 0.0;
-        scale .45;
+        scale .4375;
         //YScale 0.45;
     }
 

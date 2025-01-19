@@ -2,6 +2,7 @@ class Wasp1 : MarathonActor
 {
     Default
     {
+        //marathon scale factor 4
         //$Title "Wasp"
         //$Angled
         //$Category "Marathon Monsters"

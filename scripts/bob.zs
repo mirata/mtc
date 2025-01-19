@@ -2,6 +2,7 @@ class Bob1 : MarathonActor
 {
     Default
     {
+        //marathon scale factor 8
         //$Title "Civilian Crew"
         //$Angled
         //$Category "Marathon Monsters"
@@ -27,89 +28,90 @@ class Bob1 : MarathonActor
         deathsound "PLAYERDIE";
         activesound "";
         scale .5;
+        Translation "64:79=[149,76,46]:[31,19,19]", "112:127=[0,255,0]:[0,20,0]";
         //YScale 0.5;
     }
 
     States
     {
         Spawn:
-            DUDE A 0;
-            DUDE A 5 A_Look2;
+            BOBB A 0;
+            BOBB A 5 A_Look2;
             Loop;
-            DUDE A 8;
+            BOBB A 8;
             Loop;
-            DUDE A 8;
+            BOBB A 8;
             Loop;
-            DUDE BBCCDDEE 4 A_Wander;
-            DUDE E 0 A_Jump(4,1);
+            BOBB BBCCDDEE 4 A_Wander;
+            BOBB E 0 A_Jump(4,1);
             Loop;
-            DUDE E 0 A_StartSound("BOB33");
+            BOBB E 0 A_StartSound("BOB33");
             Goto Spawn+3;
         See:
-            DUDE BBCCDDEE 4 A_Chase;
-            DUDE E 0 A_Jump(4,1);
+            BOBB BBCCDDEE 4 A_Chase;
+            BOBB E 0 A_Jump(4,1);
             Loop;
-            DUDE E 0 A_StartSound("BOB33");
+            BOBB E 0 A_StartSound("BOB33");
             goto See;
         Pain:
-            DUDE A 3;
-            DUDE A 3 A_Pain;
+            BOBB A 3;
+            BOBB A 3 A_Pain;
             goto See;
         Death:
-            DUDE F 5 A_Scream;
-            DUDE F 1 A_Checkfloor("Death1");
+            BOBB F 5 A_Scream;
+            BOBB F 1 A_Checkfloor("Death1");
             Wait;
         Death1:
-            DUDE G 5 A_NoBlocking;
-            DUDE G 1 A_Checkfloor("Death2");
+            BOBB G 5 A_NoBlocking;
+            BOBB G 1 A_Checkfloor("Death2");
             Wait;
         Death2:
-            DUDE H 5;
-            DUDE H 1 A_Checkfloor("Death3");
+            BOBB H 5;
+            BOBB H 1 A_Checkfloor("Death3");
             Wait;
         Death3:
-            DUDE I 1 A_StartSound("Splat");
-            DUDE I -1 RemoveOnLava;
+            BOBB I 1 A_StartSound("Splat");
+            BOBB I -1 RemoveOnLava;
             Wait;
         XDeath:
-            DUDE J 5 A_Scream;
-            DUDE J 1 A_Checkfloor("XDeath1");
+            BOBB J 5 A_Scream;
+            BOBB J 1 A_Checkfloor("XDeath1");
             Wait;
         XDeath1:
-            DUDE K 5 A_NoBlocking;
-            DUDE K 1 A_Checkfloor("XDeath2");
+            BOBB K 5 A_NoBlocking;
+            BOBB K 1 A_Checkfloor("XDeath2");
             Wait;
         XDeath2:
-            DUDE L 5;
-            DUDE L 1 A_Checkfloor("XDeath3");
+            BOBB L 5;
+            BOBB L 1 A_Checkfloor("XDeath3");
             Wait;
         XDeath3:
-            DUDE M 5;
-            DUDE M 1 A_Checkfloor("XDeath4");
+            BOBB M 5;
+            BOBB M 1 A_Checkfloor("XDeath4");
             Wait;
         XDeath4:
-            DUDE N 1 A_XScream;
-            DUDE N -1 RemoveOnLava;
+            BOBB N 1 A_XScream;
+            BOBB N -1 RemoveOnLava;
             Wait;
         Death.Crush:
-            DUDE J 5 A_StartSound("BURN");
-            DUDE J 1 A_Checkfloor("Death.Crush1");
+            BOBB J 5 A_StartSound("BURN");
+            BOBB J 1 A_Checkfloor("Death.Crush1");
             Wait;
         Death.Crush1:
-            DUDE K 5 A_NoBlocking;
-            DUDE K 1 A_Checkfloor("Death.Crush2");
+            BOBB K 5 A_NoBlocking;
+            BOBB K 1 A_Checkfloor("Death.Crush2");
             Wait;
         Death.Crush2:
-            DUDE L 5;
-            DUDE L 1 A_Checkfloor("Death.Crush3");
+            BOBB L 5;
+            BOBB L 1 A_Checkfloor("Death.Crush3");
             Wait;
         Death.Crush3:
-            DUDE M 5;
-            DUDE M 1 A_Checkfloor("Death.Crush4");
+            BOBB M 5;
+            BOBB M 1 A_Checkfloor("Death.Crush4");
             Wait;
         Death.Crush4:
-            DUDE N 1 A_XScream;
-            DUDE N -1 RemoveOnLava;
+            BOBB N 1 A_XScream;
+            BOBB N -1 RemoveOnLava;
             Wait;
         Burn:
             TNT1 A 0 A_SetTranslation("");
@@ -160,7 +162,7 @@ class Bob2 : Bob1
     Default
     {
         //$Title "Civilian Science"
-        Translation "112:127=[0,176,201]:[0,0,0]";
+        Translation "64:79=[149,76,46]:[31,19,19]", "112:127=[0,176,201]:[0,30,34]";
     }
   
 }
@@ -170,7 +172,7 @@ class Bob3 : Bob1
     Default
     {
         //$Title "Civilian Security"
-        Translation "112:127=[246,37,0]:[0,0,0]";
+        Translation "64:79=[149,76,46]:[31,19,19]", "112:127=[246,37,0]:[36,5,0]";
     }
 }
 
@@ -179,7 +181,7 @@ class Bob4 : Bob1
     Default
     {
         //$Title "Civilian Engineering"
-        Translation "112:127=[255,231,22]:[0,0,0]";
+        Translation "64:79=[149,76,46]:[31,19,19]", "112:127=[255,231,22]:[21,19,0]";
     }
 }
 
@@ -208,48 +210,48 @@ class AssimilatedBob : MarathonActor
         scale .5;
         //YScale 0.5;
         BloodColor "Yellow";
-        Translation "176:191=[255,231,22]:[20,18,2]";
+        Translation "64:79=[149,76,46]:[31,19,19]", "112:127=[0,255,0]:[0,20,0]", "176:191=[255,231,22]:[43,38,0]", "32:47=[81,72,0]:[51,46,0]";
     }
 
     States
     {
         Spawn:
-            DUDE A 10 A_Look;
+            BOBB A 10 A_Look;
             Loop;
         See:
-            DUDE BBCCDDEE 4 A_Chase;
-            DUDE E 0 A_Jump(4,1);
+            BOBB BBCCDDEE 4 A_Chase;
+            BOBB E 0 A_Jump(4,1);
             Loop;
-            DUDE E 0 A_StartSound("BOB34");
+            BOBB E 0 A_StartSound("BOB34");
             goto See;
         Pain:
-            DUDE A 3;
-            DUDE A 3 A_Pain;
+            BOBB A 3;
+            BOBB A 3 A_Pain;
             goto See;
         Melee:
-            DUDE A 3 A_FaceTarget;
-            DUDE A 1 A_Die;
+            BOBB A 3 A_FaceTarget;
+            BOBB A 1 A_Die;
             Goto See;
         Death:
-            DUDE J 0 A_SpawnItem("BoBBoom");
-            DUDE J 5 Bright A_Scream;
-            DUDE J 1 Bright A_Checkfloor("Death1");
+            BOBB J 0 A_SpawnItem("BoBBoom");
+            BOBB J 5 Bright A_Scream;
+            BOBB J 1 Bright A_Checkfloor("Death1");
             wait;
         Death1:
-            DUDE K 5 Bright A_NoBlocking;
-            DUDE K 1 Bright A_Checkfloor("Death2");
+            BOBB K 5 Bright A_NoBlocking;
+            BOBB K 1 Bright A_Checkfloor("Death2");
             wait;
         Death2:
-            DUDE L 5 Bright;
-            DUDE L 1 Bright A_Checkfloor("Death3");
+            BOBB L 5 Bright;
+            BOBB L 1 Bright A_Checkfloor("Death3");
             wait;
         Death3:
-            DUDE M 5 Bright;
-            DUDE M 1 Bright A_Checkfloor("Death4");
+            BOBB M 5 Bright;
+            BOBB M 1 Bright A_Checkfloor("Death4");
             wait;
         Death4:
-            DUDE N 1 A_XScream;
-            DUDE N -1 RemoveOnLava;
+            BOBB N 1 A_XScream;
+            BOBB N -1 RemoveOnLava;
             wait;
         Burn:
             BURN A 5 Bright A_StartSound("BURN");
