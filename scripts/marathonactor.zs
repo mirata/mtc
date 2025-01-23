@@ -18,6 +18,9 @@ class MarathonActor : Actor
     bool show;
     int timeout;
 
+    bool disableFloat;
+    int disableTicks;
+
     override void BeginPlay()
     {
         super.BeginPlay();
@@ -25,6 +28,8 @@ class MarathonActor : Actor
         velocity = (0, 0, 0);
         hudOpacity = 0;
         timeout = 0;
+        disableFloat = false;
+        disableTicks = 0;
     }
 
     override void Tick()
@@ -68,48 +73,46 @@ class MarathonActor : Actor
         }
 
         //float height
-        if(bFloat)
+        if(bFloat && !disableFloat)
         {
             double targetHeight = floorz + preferredFloatHeight;
 
-            // Adjust the monster's Z velocity to move toward the target height
-            // if(GetClassName() == "Compiler1")
-            // {
-            //     Console.Printf("%d, %d", pos.x, pos.y);
-            // }
-                if (pos.z < targetHeight - 8) // Allow for a small buffer to prevent jittering
-                {
-                    vel.z += 2.0; // Move up
-                }
-                else if (pos.z > targetHeight + 8)
-                {
-                    vel.z = -2.0; // Move down
-                }
-                else{
-                    vel.z = 0;
-                }
+            if (pos.z < targetHeight - 8) // Allow for a small buffer to prevent jittering
+            {
+                vel.z += 2.0; // Move up
+            }
+            else if (pos.z > targetHeight + 8)
+            {
+                vel.z = -2.0; // Move down
+            }
+            else{
+                vel.z = 0;
+            }
 
-            // if (target != null)
-            // {
-            //     // Get the difference in height between the monster and the player
-            //     double heightDifference = target.pos.z - pos.z;
-            //     double groundOffset = pos.z - floorz;
+            if(target)
+            {
+                FLineTraceData h; //Save LineTrace data to this variable
 
-            //     // If the target is below, dont hover offthe ground. Drop down
-            //     if (heightDifference < 0 && groundOffset > 0)
-            //     {
-            //         vel.z = -2.0; // Adjust upwards velocity
-            //     }
-            //     // else if(heightDifference > 0 && groundOffset == 0)
-            //     // {
-            //     //     vel.z = 2.0; // Adjust downwards velocity
-            //     // }
-            //     else
-            //     {
-            //         vel.z = 0; // Maintain height
-            //     }
-            // }
-        }     
+                LineTrace(AngleTo(target), radius * 2, 0, TRF_THRUACTORS, 0, data:h); //Trace a line aimed at the target
+
+                if(h.HitType == TRACE_HitWall && vel.x == 0 && vel.y == 0)
+                {
+                    //Console.Printf("Disable");
+                    disableFloat = true;
+                }
+            }
+        }   
+
+        if(disableFloat)
+        {
+            disableTicks++;
+            if(vel.x != 0 || vel.y != 0 || disableTicks > 200)
+            {
+                disableFloat = false;
+                disableTicks = 0;
+                //Console.Printf("Enable");
+            }
+        }
     }
 
 

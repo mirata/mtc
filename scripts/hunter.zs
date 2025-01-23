@@ -33,86 +33,86 @@ class Hunter1 : MarathonActor
     States
     {
         Spawn:
-            HINT E 10 A_Look;
+            HUNT E 10 A_Look;
             Loop;
         See:
-            HINT A 0 TargetBobs();
-            HINT AABBCCDD 3 A_Chase;
+            HUNT A 0 TargetBobs();
+            HUNT AABBCCDD 3 A_Chase;
             Loop;
         Missile:
-            HINT F 6 Bright A_FaceTarget;
-            HINT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
-            HINT F 6 Bright A_FaceTarget;
-            HINT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
-            HINT E 3;
+            HUNT F 6 Bright A_FaceTarget;
+            HUNT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
+            HUNT F 6 Bright A_FaceTarget;
+            HUNT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
+            HUNT E 3;
             goto See;
         Death:
-            HINT H 5 A_FaceTarget;
-            HINT H 1 A_CheckFloor("Death2");
+            HUNT H 5 A_FaceTarget;
+            HUNT H 1 A_CheckFloor("Death2");
             Wait;
         Death2:
-            HINT I 5 A_NoBlocking;
-            HINT I 1 A_CheckFloor("Death3");
+            HUNT I 5 A_NoBlocking;
+            HUNT I 1 A_CheckFloor("Death3");
             Wait;
         Death3:
-            HINT J 5;
-            HINT J 1 A_CheckFloor("Death4");
+            HUNT J 5;
+            HUNT J 1 A_CheckFloor("Death4");
             Wait;
         Death4:
-            HINT K 1 A_Scream;
-            HINT K -1 RemoveOnLava;
+            HUNT K 1 A_Scream;
+            HUNT K -1 RemoveOnLava;
             Stop;
         XDeath:
-            HINT H 5 A_FaceTarget;
-            HINT H 1 A_CheckFloor("XDeath2");
+            HUNT H 5 A_FaceTarget;
+            HUNT H 1 A_CheckFloor("XDeath2");
             Wait;
         XDeath2:
-            HINT L 0 Bright A_Explode(64,64);
-            HINT L 0 Bright A_StartSound("HUNTBOOM");
-            HINT L 5 Bright A_NoBlocking;
-            HINT L 1 Bright A_CheckFloor("XDeath3");
+            HUNT L 0 Bright A_Explode(64,64);
+            HUNT L 0 Bright A_StartSound("HUNTBOOM");
+            HUNT L 5 Bright A_NoBlocking;
+            HUNT L 1 Bright A_CheckFloor("XDeath3");
             Wait;
         XDeath3:
-            HINT M 5 Bright;
-            HINT M 1 Bright A_CheckFloor("XDeath4");
+            HUNT M 5 Bright;
+            HUNT M 1 Bright A_CheckFloor("XDeath4");
             Wait;
         XDeath4:
-            HINT N 5 Bright;
-            HINT N 1 Bright A_CheckFloor("XDeath5");
+            HUNT N 5 Bright;
+            HUNT N 1 Bright A_CheckFloor("XDeath5");
             Wait;
         XDeath5:
-            HINT O 5 Bright;
-            HINT O 1 Bright A_CheckFloor("XDeath6");
+            HUNT O 5 Bright;
+            HUNT O 1 Bright A_CheckFloor("XDeath6");
             Wait;
         XDeath6:
-            HINT P 1;
-            HINT P -1 RemoveOnLava;
+            HUNT P 1;
+            HUNT P -1 RemoveOnLava;
             Stop;
         Death.Crush:
-            HINT H 5 A_FaceTarget;
-            HINT H 1 A_CheckFloor("Death.Crush2");
+            HUNT H 5 A_FaceTarget;
+            HUNT H 1 A_CheckFloor("Death.Crush2");
             Wait;
         Death.Crush2:
-            HINT L 0 Bright A_Explode(64,64);
-            HINT L 0 Bright A_StartSound("HUNTBOOM");
-            HINT L 5 Bright A_NoBlocking;
-            HINT L 1 Bright A_CheckFloor("Death.Crush3");
+            HUNT L 0 Bright A_Explode(64,64);
+            HUNT L 0 Bright A_StartSound("HUNTBOOM");
+            HUNT L 5 Bright A_NoBlocking;
+            HUNT L 1 Bright A_CheckFloor("Death.Crush3");
             Wait;
         Death.Crush3:
-            HINT M 5 Bright;
-            HINT M 1 Bright A_CheckFloor("Death.Crush4");
+            HUNT M 5 Bright;
+            HUNT M 1 Bright A_CheckFloor("Death.Crush4");
             Wait;
         Death.Crush4:
-            HINT N 5 Bright;
-            HINT N 1 Bright A_CheckFloor("Death.Crush5");
+            HUNT N 5 Bright;
+            HUNT N 1 Bright A_CheckFloor("Death.Crush5");
             Wait;
         Death.Crush5:
-            HINT O 5 Bright;
-            HINT O 1 Bright A_CheckFloor("Death.Crush6");
+            HUNT O 5 Bright;
+            HUNT O 1 Bright A_CheckFloor("Death.Crush6");
             Wait;
         Death.Crush6:
-            HINT P 1;
-            HINT P -1 RemoveOnLava;
+            HUNT P 1;
+            HUNT P -1 RemoveOnLava;
             Stop;
     }
 }
@@ -129,17 +129,17 @@ class Hunter2 : Hunter1
     States
     {
         Missile:
-            HINT F 6 Bright A_FaceTarget;
-            HINT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
-            HINT F 6 Bright A_FaceTarget;
-            HINT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
-            HINT F 6 Bright A_FaceTarget;
-            HINT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
-            HINT F 6 Bright A_FaceTarget;
-            HINT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
-            HINT F 6 Bright A_FaceTarget;
-            HINT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
-            HINT E 3;
+            HUNT F 6 Bright A_FaceTarget;
+            HUNT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
+            HUNT F 6 Bright A_FaceTarget;
+            HUNT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
+            HUNT F 6 Bright A_FaceTarget;
+            HUNT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
+            HUNT F 6 Bright A_FaceTarget;
+            HUNT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
+            HUNT F 6 Bright A_FaceTarget;
+            HUNT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
+            HUNT E 3;
             goto See;
     }
 }
@@ -167,10 +167,10 @@ class HunterShot : Actor
     States
     {
         Spawn:
-            HINT Q 1 Bright;
+            HUNT Q 1 Bright;
             Loop;
         Death:
-            HINT RSTU 2 Bright;
+            HUNT RSTU 2 Bright;
             Stop;
     }
 }

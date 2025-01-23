@@ -18,7 +18,7 @@ class Fighter1 : MarathonActor
         height 51;
         mass 100;
         speed 7;
-        painchance 0;
+        PainChance 256;
         Translation "112:127=[4,198,101]:[0,32,27]", "199:207=[9,191,206]:[0,98,130]", "240:247=[1,69,88]:[0,0,0]";
         seesound "PFHOR";
         painsound "";
@@ -44,6 +44,9 @@ class Fighter1 : MarathonActor
             FIGH FG 6 Bright A_FaceTarget;
             FIGH H 6 Bright A_CustomMeleeattack(random(4,32),"PFHORAT2","NONE","Staff",1);
             goto See;
+        // Pain:
+        //     FIGH B 10 A_FaceTarget;
+        //     goto See;
         Death:
             FIGH I 0 A_FaceTarget;
             FIGH I 8 A_Scream;
