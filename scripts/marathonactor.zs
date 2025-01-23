@@ -112,6 +112,13 @@ class MarathonActor : Actor
         }     
     }
 
+
+    // override void Die(Actor source, Actor inflictor, int dmgflags)
+    // {
+    //     lastDamageSource = inflictor.GetClassName();
+    //     Super.Die(source, inflictor, dmgflags);
+    // }
+
     void RemoveOnLava()
     {
         let tex = TexMan.GetName(self.FloorPic);

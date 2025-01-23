@@ -455,6 +455,7 @@ actor PoweredFusionBall replaces arachnotronplasma
   DeathSound "FUSION2"
   Obituary "%k gave %o enough juice to power the entire marathon."
   Decal "DoomImpScorch"
+  +EXTREMEDEATH
   States
   {
   Spawn:
