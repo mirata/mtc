@@ -6,12 +6,16 @@ Class MarathonStatusBar : BaseStatusBar
 	HUDFont mIndexFont;
 	HUDFont mAmountFont;
 	InventoryBarState diparms;
+
+	bool vrDisabled;
 	
 
 	override void Init()
 	{
 		Super.Init();
 		SetSize(0, 320, 200);
+
+		vrDisabled = CVar.GetCVar("vr_disabled").GetBool();
 
 		// Create the font used for the fullscreen HUD
 		Font fnt = "INDEXFONT";
@@ -31,6 +35,8 @@ Class MarathonStatusBar : BaseStatusBar
 	{
 		Super.Draw (state, TicFrac);
 
+		//Console.PrintF("VR Disabled: %d", vrDisabled);
+
 		if (state == HUD_StatusBar)
 		{
 			BeginHUD();
@@ -42,7 +48,7 @@ Class MarathonStatusBar : BaseStatusBar
 
 			let scale = (0.6, 0.6);
 			let radarCenter = (106, -94);
-			let horizontalPosition = 0;//110;
+			let horizontalPosition = vrDisabled ? 0 : 110;
 			let verticalPosition = -20;
 
 			let radarOffset = (42, -28);

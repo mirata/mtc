@@ -7,12 +7,10 @@ class MarathonPlayer : PlayerPawn
         +SLIDESONWALLS;
         Speed 1;
         Health 150;
-        Radius 12;
+        Radius 11;
         Height 51;
         Mass 100;
         PainChance 0;
-        scale .5;
-        YScale 0.5;
         Player.ForwardMove .5,.5;
         Player.SideMove .5,.5;
         Player.DisplayName "Cyborg";
@@ -37,6 +35,8 @@ class MarathonPlayer : PlayerPawn
         Player.AttackZOffset 12;
         damagefactor "suffocate" ,1.0;
         PainChance "suffocate", 0;
+        scale 0.35;
+        YScale 0.5;
     }
     States
     {

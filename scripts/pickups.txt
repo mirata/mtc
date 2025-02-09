@@ -94,7 +94,7 @@ ACTOR HyperVision : PowerupGiver replaces infrared
   Powerup.Color "00 00 55", 0.375
   Powerup.Type "LightAmp"
   Inventory.PickupMessage "HYPERVISION"
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -124,7 +124,7 @@ ACTOR OxygenTank : Inventory
 //  Game Doom
 //  SpawnID 222
 //  Inventory.PickupMessage "DEFENSE CENTER REPAIR CHIP"
-//  Scale .5
+//  scale 0.5
 //  States
 //  {
 //  Spawn:
@@ -144,7 +144,7 @@ ACTOR DefenseChip1 : puzzleitem replaces bluecard // if you could have more than
   Inventory.Icon ARTICHIP
   Inventory.PickupMessage "DEFENSE CENTER REPAIR CHIP"
   PuzzleItem.FailMessage "You need to place this in the defense control center."
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -165,7 +165,7 @@ ACTOR DefenseChip2 : puzzleitem replaces redcard // same fucking item...
   Inventory.Icon ARTICHIP
   Inventory.PickupMessage "DEFENSE CENTER REPAIR CHIP"
   PuzzleItem.FailMessage "You need to place this in the defense control center."
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -186,7 +186,7 @@ ACTOR DefenseChip3 : puzzleitem replaces yellowcard // over and over and over ag
   Inventory.Icon ARTICHIP
   Inventory.PickupMessage "DEFENSE CENTER REPAIR CHIP"
   PuzzleItem.FailMessage "You need to place this in the defense control center."
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -218,7 +218,7 @@ ACTOR Invulnerability : PowerupGiver replaces invulnerabilitysphere
   Powerup.Color "FF FF FF", 0.25
   Powerup.Type "MarathonInvulnerable"
   Inventory.PickupMessage "INVULNERABILITY"
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {

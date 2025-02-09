@@ -28,7 +28,7 @@ class Compiler1 : MarathonActor
         activesound "";
         attacksound "";
         damagefactor "fire", 0.0;
-        scale .3125; //with proper scale it should probably be 0.375 vertical due to the vertical warp
+        scale 0.3125; //with proper scale it should probably be 0.375 vertical due to the vertical warp
         //YScale 0.375; 
     }
 
@@ -160,7 +160,7 @@ class CompilerBall : Actor
         SeeSound "COMPATK1";
         DeathSound "COMPATK2";
         Decal "PlasmaScorchLower";
-        scale .5;
+        scale 0.5;
         //YScale 0.5;
     }
 
@@ -207,7 +207,7 @@ class CompilerBallTrail : Actor
     {
         +NOGRAVITY;
         +FORCEXYBILLBOARD;
-        scale .5;
+        scale 0.5;
         //YScale 0.5;
     }
     States

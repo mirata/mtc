@@ -510,15 +510,6 @@ object Hunter2
     frame HUNTN { light MarathonGrenade2 }
     frame HUNTO { light MarathonGrenade1 }
 }
-object Hunter3
-{
-    frame HUNTF { light Hunter11 }
-    frame HUNTG { light Hunter12 }
-    frame HUNTL { light MarathonGrenade4 }
-    frame HUNTM { light MarathonGrenade3 }
-    frame HUNTN { light MarathonGrenade2 }
-    frame HUNTO { light MarathonGrenade1 }
-}
 pointlight Hunter11
 {
     color 0.0 1.0 0.2

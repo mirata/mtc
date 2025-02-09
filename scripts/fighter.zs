@@ -25,7 +25,7 @@ class Fighter1 : MarathonActor
         deathsound "PFHORDIE";
         activesound "PFHOR";
         bloodcolor "ff ff 33";
-        scale .375;
+        scale 0.375;
         //YScale 0.4;
     }
 
@@ -220,7 +220,7 @@ class FighterProjectile : Actor
         DamageType "Staff";
         SeeSound "PFHORAT1";
         DeathSound "PFHORAT2";
-        scale .5;
+        scale 0.5;
         //YScale 0.5;
         +FORCEXYBILLBOARD;
         Decal "BaronScorch";

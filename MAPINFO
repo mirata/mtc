@@ -21,6 +21,8 @@ DoomEdNums
    16061 = "Wasp1"
    16062 = "Wasp2"
    16063 = "Wasp3"
+   16071 = "Hulk1"
+   16072 = "Hulk2"
    17000 = "Juggernaut"
 }
 
@@ -161,582 +163,582 @@ skill nightmare
 
 map testmap "Test map"
 {
-sky1 = "SKY", 0.0
-sky2 = "BETASKY", 0.0
-next = "map01"
-gravity = 125
+   sky1 = "SKY", 0.0
+   sky2 = "BETASKY", 0.0
+   next = "map01"
+   gravity = 125
 }
 map titlemap "Marathon"
 {
-sky1 = "SKY", 0.0
-next = "map01"
-gravity = 125
+   sky1 = "SKY", 0.0
+   next = "map01"
+   gravity = 125
 }
 map map01 "Arrival"
 {
-sky1 = "SKY", 0.0
-music = "LANDING"
-next = "map02"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "LANDING"
+   next = "map02"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map02 "Bigger Guns Nearby"
 {
-sky1 = "SKY", 0.0
-music = "LEELA"
-next = "map03"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "LEELA"
+   next = "map03"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map03 "Never Burn Money"
 {
-sky1 = "SKY", 0.0
-music = "FATMAN"
-next = "map04"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "FATMAN"
+   next = "map04"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map04 "Defend THIS!"
 {
-sky1 = "SKY", 0.0
-music = "FLIPPANT"
-next = "map05"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "FLIPPANT"
+   next = "map05"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map05 "Couch Fishing"
 {
-sky1 = "SKY", 0.0
-music = "SWIRLS"
-next = "map06"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "SWIRLS"
+   next = "map06"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map06 "The Rose"
 {
-sky1 = "SKY", 0.0
-music = "ALIENSAG"
-next = "map07"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "ALIENSAG"
+   next = "map07"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map07 "Smells like Napalm, Tastes like Chicken!"
 {
-sky1 = "SKY", 0.0
-music = "CHOMBER"
-next = "map08"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "CHOMBER"
+   next = "map08"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map08 "Cool Fusion"
 {
-sky1 = "SKY", 0.0
-music = "FLOWERS"
-next = "map09"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "FLOWERS"
+   next = "map09"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map09 "G4 Sunbathing"
 {
-sky1 = "SKY", 0.0
-music = "LANDING"
-next = "map10"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "LANDING"
+   next = "map10"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map10 "Blaspheme Quarantine"
 {
-sky1 = "SKY", 0.0
-music = "GUARDIAN"
-next = "map11"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "GUARDIAN"
+   next = "map11"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map11 "Bob-B-Q"
 {
-sky1 = "SKY", 0.0
-music = "WHATABOB"
-next = "map12"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "WHATABOB"
+   next = "map12"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map12 "Shake Before Using"
 {
-sky1 = "SKY", 0.0
-music = "FREEDOM"
-next = "map13"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "FREEDOM"
+   next = "map13"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map13 "Fire! Fire! Fire! Fire! Fire!"
 {
-sky1 = "SKY", 0.0
-music = "LEELA"
-next = "map14"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "LEELA"
+   next = "map14"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map14 "Colony Ship For Sale, Cheap!"
 {
-sky1 = "SKY", 0.0
-music = "SWIRLS"
-next = "map15"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "SWIRLS"
+   next = "map15"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map15 "Habe Quiddam"
 {
-sky1 = "SKY", 0.0
-music = "RUSHING"
-next = "map16"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "RUSHING"
+   next = "map16"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map16 "Neither High Nor Low"
 {
-sky1 = "SKY", 0.0
-music = "FLIPPANT"
-next = "map17"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "FLIPPANT"
+   next = "map17"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map17 "Pfhor Your Eyes Only..."
 {
-sky1 = "SKY", 0.0
-music = "NEWPACI1"
-next = "map18"
-nojump
-nocrouch
-gravity = 75
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "NEWPACI1"
+   next = "map18"
+   nojump
+   nocrouch
+   gravity = 75
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map18 "No Artificial Colors"
 {
-sky1 = "SKY", 0.0
-music = "ALIENSAG"
-next = "map19"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "ALIENSAG"
+   next = "map19"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map19 "Unpfhorgiven"
 {
-sky1 = "SKY", 0.0
-music = "NEWPACI2"
-next = "map20"
-nojump
-nocrouch
-gravity = 75
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "NEWPACI2"
+   next = "map20"
+   nojump
+   nocrouch
+   gravity = 75
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map20 "Two times two equals..."
 {
-sky1 = "SKY", 0.0
-music = "RAPTURE"
-next = "map21"
-nojump
-nocrouch
-gravity = 75
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "RAPTURE"
+   next = "map21"
+   nojump
+   nocrouch
+   gravity = 75
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map21 "Beware of low-flying defense drones..."
 {
-sky1 = "SKY", 0.0
-music = "LEELA"
-next = "map22"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "LEELA"
+   next = "map22"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map22 "Eupfhoria"
 {
-sky1 = "SKY", 0.0
-music = "RAPTURE"
-next = "map23"
-nojump
-nocrouch
-gravity = 75
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "RAPTURE"
+   next = "map23"
+   nojump
+   nocrouch
+   gravity = 75
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map23 "Pfhoraphobia"
 {
-sky1 = "SKY", 0.0
-music = "NEWPACI2"
-next = "map24"
-nojump
-nocrouch
-gravity = 75
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "NEWPACI2"
+   next = "map24"
+   nojump
+   nocrouch
+   gravity = 75
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map24 "Ain't got time pfhor this..."
 {
-sky1 = "SKY", 0.0
-music = "NEWPACI1"
-next = "map25"
-secretnext = "map38"
-nojump
-nocrouch
-gravity = 75
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "NEWPACI1"
+   next = "map25"
+   secretnext = "map38"
+   nojump
+   nocrouch
+   gravity = 75
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map25 "Welcome to the revolution..."
 {
-sky1 = "SKY", 0.0
-music = "LEELA"
-next = "map26"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "LEELA"
+   next = "map26"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map26 "Try Again"
 {
-sky1 = "SKY", 0.0
-music = "LANDING"
-next = "map27"
-secretnext = "map39"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "LANDING"
+   next = "map27"
+   secretnext = "map39"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map27 "Ingue Ferroque"
 {
-sky1 = "SKY", 0.0
-music = "SPLASH"
-next = endgame
-{
-    pic = "ENDING"
-    music = "D_END", 0
-}
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "SPLASH"
+   next = endgame
+   {
+      pic = "ENDING"
+      music = "D_END", 0
+   }
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map28 "Mars Needs Women"
 {
-sky1 = "SKY", 0.0
-music = "LANDING"
-next = "map29"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "LANDING"
+   next = "map29"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map29 "Carnage Palace DEEEE-luxe!"
 {
-sky1 = "SKY", 0.0
-music = "RUSHING"
-next = "map30"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "RUSHING"
+   next = "map30"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map30 "5-D Space"
 {
-sky1 = "SKY", 0.0
-music = "ALIENSAG"
-next = "map31"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "ALIENSAG"
+   next = "map31"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map31 "Arena"
 {
-sky1 = "SKY", 0.0
-music = "FREEDOM"
-next = "map32"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "FREEDOM"
+   next = "map32"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map32 "E equals MC WHAT?"
 {
-sky1 = "SKY", 0.0
-music = "FLIPPANT"
-next = "map33"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "FLIPPANT"
+   next = "map33"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map33 "Showered With Grenades"
 {
-sky1 = "SKY", 0.0
-music = "SWIRLS"
-next = "map34"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "SWIRLS"
+   next = "map34"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map34 "Spiral Insanity"
 {
-sky1 = "SKY", 0.0
-music = "LEELA"
-next = "map35"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-pixelratio = 1
-AirControl = 1
-EvenLighting
-}
+   sky1 = "SKY", 0.0
+   music = "LEELA"
+   next = "map35"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
+   }
 map map35 "Waldo World Arena"
 {
-sky1 = "SKY", 0.0
-music = "CHOMBER"
-next = "map36"
-nojump
-nocrouch
-gravity = 75
-totalinfighting
-keepfullinventory
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "CHOMBER"
+   next = "map36"
+   nojump
+   nocrouch
+   gravity = 75
+   totalinfighting
+   keepfullinventory
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map36 "What goes up, must come down"
 {
-sky1 = "SKY", 0.0
-music = "FATMAN"
-next = "map37"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "FATMAN"
+   next = "map37"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map37 "You Don't Need to see my I.D."
 {
-sky1 = "SKY", 0.0
-music = "FLOWERS"
-next = "map28"
-nojump
-nocrouch
-gravity = 125
-totalinfighting
-keepfullinventory
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "SKY", 0.0
+   music = "FLOWERS"
+   next = "map28"
+   nojump
+   nocrouch
+   gravity = 125
+   totalinfighting
+   keepfullinventory
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 map map38 "Grendel Lives..."
 {
-sky1 = "BETASKY", 0.0
-music = ""
-next = "map27"
-nojump
-nocrouch
-gravity = 800
-totalinfighting
-keepfullinventory
-cluster = 50
-pixelratio = 1
-AirControl = 1
-EvenLighting
+   sky1 = "BETASKY", 0.0
+   music = ""
+   next = "map27"
+   nojump
+   nocrouch
+   gravity = 800
+   totalinfighting
+   keepfullinventory
+   cluster = 50
+   pixelratio = 1
+   AirControl = 1
+   EvenLighting
 }
 cluster 50
 {

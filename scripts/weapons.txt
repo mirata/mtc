@@ -7,7 +7,7 @@ ACTOR MarathonPuff replaces bulletpuff
   +NOTRIGGER
   VSpeed .01
   Mass 5
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -34,7 +34,7 @@ ACTOR TracerPuff replaces bulletpuff
   +NOTRIGGER
   VSpeed .01
   Mass 5
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -52,7 +52,7 @@ ACTOR MeleePuff
   +FORCEXYBILLBOARD
   VSpeed .01
   Mass 5
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -74,7 +74,7 @@ ACTOR MarathonBlood : Blood Replaces Blood
   +NOTELEPORT
   +ALLOWPARTICLES
   +FORCEXYBILLBOARD
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -152,7 +152,7 @@ ACTOR MagnumPickup : CustomInventory replaces pistol
 	Radius 16
 	Height 16
 	Inventory.PickupMessage ".44 magnum mega class"
-        scale .5
+        scale 0.5
   //YScale 0.5
 	States
 	{
@@ -185,7 +185,7 @@ ACTOR MagnumPickup : CustomInventory replaces pistol
 	Radius 16
 	Height 16
 	Inventory.PickupMessage ".44 magnum mega class"
-        scale .5
+        scale 0.5
 	States
 	{
 	Spawn:
@@ -213,7 +213,7 @@ ACTOR MagnumsPickup : CustomInventory replaces Shotgun
 	Radius 16
 	Height 16
 	Inventory.PickupMessage "2 .44 magnum mega classes"
-        scale .5
+        scale 0.5
   //YScale 0.5
 	States
 	{
@@ -242,7 +242,7 @@ ACTOR Magnumammo : Ammo replaces clip
   Ammo.BackpackAmount 1
   Ammo.BackpackMaxAmount 50
   Inventory.Icon "MAGNI0"
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -312,7 +312,7 @@ ACTOR Magnumcheck : Inventory
 actor FusionPistolPickup : CustomInventory replaces plasmarifle
 {
   Inventory.PickupMessage "Zeus-Class Fusion Pistol"
-  scale .5
+  scale 0.5
   //YScale 0.5
   Translation "199:207=[2,169,183]:[1,68,80]", "240:247=[0,87,102]:[0,0,0]"
   States
@@ -340,7 +340,7 @@ actor FusionPistol : Weapon
   Weapon.AmmoType2 "FusionAmmo"
   //Weapon.WeaponScaleY 1
   Inventory.PickupMessage "Zeus-Class Fusion Pistol"
-  scale .5
+  scale 0.5
   //YScale 0.5
   +Ammo_optional
   +Alt_Ammo_optional
@@ -417,7 +417,7 @@ actor FusionBall replaces plasmaball
   Height 8
   Speed 15
   Damage 6
-  scale .375
+  scale 0.375
   //YScale 0.375
   Projectile
   -ACTIVATEIMPACT
@@ -445,7 +445,7 @@ actor PoweredFusionBall replaces arachnotronplasma
   Height 8
   Speed 20
   Damage 11
-  scale .625
+  scale 0.625
   //YScale 0.625
   Projectile
   DamageType "Fusion"
@@ -470,7 +470,7 @@ ACTOR PoweredFusionBallAfterTrail
 {
   +NOBLOCKMAP
   +NOGRAVITY
-  scale .625
+  scale 0.625
   //YScale 0.625
   States
   {
@@ -489,7 +489,7 @@ ACTOR Fusionammo : Ammo replaces cell
   Ammo.BackpackMaxAmount 25
   Translation "73:79=[149,149,34]:[53,53,19]", "160:167=[233,222,20]:[156,149,14]"
   Inventory.Icon "FUSIF0"
-  scale .5
+  scale 0.5
   States
   {
   Spawn:
@@ -529,7 +529,7 @@ ACTOR FusionCharge : Inventory
 //actor MA75 : custominventory replaces chaingun
 //{
 //  Inventory.Pickupmessage "MA-75 Assault Rifle"
-//  scale .5
+//  scale 0.5
 //  inventory.pickupsound "misc/w_pkup"
 //  states
 //  {
@@ -545,7 +545,7 @@ ACTOR FusionCharge : Inventory
 actor MA75AssaultRiflePickup : CustomInventory replaces chaingun
 {
   Inventory.PickupMessage "MA-75 Assault Rifle"
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -580,7 +580,7 @@ ACTOR MA75AssaultRifle : Weapon
     +NOAUTOAIM
     weapon.yadjust 13
     //weapon.sisterweapon "MA75GrenadeLauncher"
-    scale .5
+    scale 0.5
     Weapon.PreferredSkin "PlayerRifle"
     Decal "BulletChip"
     States
@@ -793,7 +793,7 @@ ACTOR assaultammo : Ammo replaces clipbox
   Ammo.BackpackAmount 1
   Ammo.BackpackMaxAmount 15
   Inventory.Icon "ASSUH0"
-  scale .5
+  scale 0.5
   //YScale 0.5
   +NOCLIP
   spawnID 100
@@ -832,7 +832,7 @@ ACTOR grenadeammo : Ammo replaces rocketammo
   Ammo.BackpackAmount 1
   Ammo.BackpackMaxAmount 8
   Inventory.Icon "ASSUI0"
-  scale .5
+  scale 0.5
   States
   {
   Spawn:
@@ -867,7 +867,7 @@ actor marathongrenade replaces grenade
   +EXTREMEDEATH
   -ROCKETTRAIL
   damagetype normal
-  scale .75
+  scale 0.75
   //YScale 0.75
   damage 15
   Decal "Scorch"
@@ -887,7 +887,7 @@ actor marathongrenadesmoke
 {
 +NOGRAVITY
 +FORCEXYBILLBOARD
-scale .5
+scale 0.5
   //YScale 0.5
 states
 {
@@ -901,7 +901,7 @@ actor X17SSMLauncherPickup : CustomInventory replaces RocketLauncher
 {
   Inventory.PickupMessage "SPNKR-X17 SSM Launcher"
   Inventory.PickupSound "misc/w_pkup"
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -929,7 +929,7 @@ actor X17SSMLauncher : Weapon
   Inventory.PickupMessage "SPNKR-X17 SSM Launcher"
   +WEAPON.DONTBOB
   Obituary "%0 ate %k's SSM Missile."
-  scale .5
+  scale 0.5
   //YScale 0.5
   +Ammo_Optional
   +Alt_Ammo_optional
@@ -1029,7 +1029,7 @@ ACTOR rocketammo2 : Ammo replaces rocketbox
   Ammo.BackpackAmount 1
   Ammo.BackpackMaxAmount 4
   Inventory.Icon "SPNKL0"
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -1060,7 +1060,7 @@ actor marathonrocket : rocket replaces rocket
   +ACTIVATEIMPACT
   +ACTIVATEPCROSS
   damagetype normal
-  scale .75
+  scale 0.75
   //YScale 0.75
   damage 55
   Decal "BigScorch"
@@ -1080,7 +1080,7 @@ actor marathonrocketsmoke
 {
 +NOGRAVITY
 +FORCEXYBILLBOARD
-scale .75
+scale 0.75
   //YScale 0.75
 states
 {
@@ -1095,7 +1095,7 @@ actor TOZTFlamethrowerPickup : CustomInventory replaces supershotgun
 {
   Inventory.PickupMessage "TOZT-7 backpack napalm unit"
   Inventory.PickupSound "misc/w_pkup"
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -1122,7 +1122,7 @@ actor TOZTFlamethrower : Weapon
   +WEAPON.NOAUTOFIRE
   Inventory.PickupMessage "TOZT-7 backpack napalm unit"
   Obituary "%k is serving fried %o."
-  scale .5
+  scale 0.5
   //YScale 0.5
   +Ammo_Optional
   +Alt_Ammo_optional
@@ -1180,7 +1180,7 @@ ACTOR flameammo : Ammo replaces cellpack
   Ammo.BackpackAmount 1
   Ammo.BackpackMaxAmount 3
   Inventory.Icon "TOZTD0"
-  scale .5
+  scale 0.5
   //YScale 0.5
   States
   {
@@ -1210,7 +1210,7 @@ actor marathonFlameBall : DoomImpball replaces doomImpBall
   damagetype fire
   renderstyle normal
   alpha 1
-  scale .75
+  scale 0.75
   //YScale 0.75
   damage 1
   speed 24
@@ -1228,7 +1228,7 @@ actor marathonFlameBall : DoomImpball replaces doomImpBall
 actor alienpickup : custominventory replaces bfg9000
 {
   Inventory.PickupMessage "65y';;l=-543.<<UNKNOWN WEAPON CLASS>>sy$^e> e))o) 0XFDED"
-  scale .5
+  scale 0.5
   //YScale 0.5
   inventory.pickupsound "misc/w_pkup"
   states
@@ -1252,7 +1252,7 @@ actor AlienWeapon : Weapon
   Weapon.AmmoType "AlienClip"
   //Weapon.WeaponScaleY 1
   +WEAPON.NOAUTOFIRE
-  scale .5
+  scale 0.5
   //YScale 0.5
   attacksound "aliengun"
   +NOAUTOAIM
@@ -1335,7 +1335,7 @@ ACTOR alienclip : Ammo
 }
 Actor AlienPuff : MarathonPuff
 {
-  scale .375
+  scale 0.375
   //YScale 0.375
   +PUFFONACTORS
   +FORCEXYBILLBOARD

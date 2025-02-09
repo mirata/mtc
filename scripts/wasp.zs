@@ -29,7 +29,7 @@ class Wasp1 : MarathonActor
         ActiveSound "WASPFLAP";
         Obituary "%o was poisoned by a wasp's venom.";
         HitObituary "%o was stung by a wasp.";
-        scale .25;
+        scale 0.25;
         //YScale 0.25;
     }
   
@@ -81,7 +81,7 @@ class SpitBall : Actor
         Damage 2;
         SeeSound "WASPSPIT";
         DeathSound "WASPHIT";
-        scale .5;
+        scale 0.5;
         //YScale 0.5;
     }
 

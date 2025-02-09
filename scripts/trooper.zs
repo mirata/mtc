@@ -27,7 +27,7 @@ class Trooper1 : MarathonActor
         activesound "PFHOR";
         bloodcolor "ff ff 33";
         Decal "BulletChip";
-        scale .375;
+        scale 0.375;
         //YScale 0.4;
     }
 
@@ -220,7 +220,7 @@ class TrooperGrenade : Actor
     deathsound "ASSAULT3";
     Decal "Scorch";
     damagetype "None";
-    scale .75;
+    scale 0.75;
     //YScale 0.75;
     damage 4;
   }

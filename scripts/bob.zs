@@ -27,7 +27,7 @@ class Bob1 : MarathonActor
         painsound "PAIN";
         deathsound "PLAYERDIE";
         activesound "";
-        scale .5;
+        scale 0.5;
         Translation "64:79=[149,76,46]:[31,19,19]", "112:127=[0,255,0]:[0,20,0]";
         //YScale 0.5;
     }
@@ -207,7 +207,7 @@ class AssimilatedBob : MarathonActor
         painsound "";
         deathsound "SPNKR2";
         activesound "";
-        scale .5;
+        scale 0.5;
         //YScale 0.5;
         BloodColor "Yellow";
         Translation "64:79=[149,76,46]:[31,19,19]", "112:127=[0,255,0]:[0,20,0]", "176:191=[255,231,22]:[43,38,0]", "32:47=[81,72,0]:[51,46,0]";

@@ -23,7 +23,7 @@ actor MADD replaces Arachnotron
   +FRIENDLY
   +DONTGIB
   +NOSPLASHALERT
-  scale .45
+  scale 0.45
   //YScale 0.5
   damagefactor "fire", 0.0
   Decal "BulletChip"
