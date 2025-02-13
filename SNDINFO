@@ -4,24 +4,15 @@ HEAL HEAL
 PHEAL PHEAL
 MSWON MSWON
 MSWOFF MSWOFF
-$attenuation MSWON 2
-$attenuation MSWOFF 2
 PSWON PSWON
 PSWOFF PSWOFF
-$attenuation PSWON 2
-$attenuation PSWOFF 2
 MLFGO MLFGO
 MLFSTOP MLFSTOP
-$attenuation MLFGO 2
-$attenuation MLFSTOP 2
 PLFGO PLFGO
 PLFSTOP PLFSTOP
 MDRUP MDRUP
 MDRDOWN MDRDOWN
 MDRSTK MDRSTK
-$attenuation MDRUP 2
-$attenuation MDRDOWN 2
-$attenuation MDRSTK 2
 PDRUP PDRUP
 PDRDOWN PDRDOWN
 PUZZ PUZZ
@@ -224,3 +215,16 @@ JUGDIE JUGDIE
 JUGASLT JUGASLT 
 ENFWAKE ENFWAKE
 GRNFBY GRNFBY
+
+$attenuation MSWON 2
+$attenuation MSWOFF 2
+$attenuation PSWON 2
+$attenuation PSWOFF 2
+$attenuation MLFGO 2
+$attenuation MLFSTOP 2
+$attenuation MDRUP 2
+$attenuation MDRDOWN 2
+$attenuation MDRSTK 2
+$attenuation PFHOR1 2
+$attenuation PFHOR2 2
+$attenuation PFHOR3 2

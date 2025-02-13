@@ -3,7 +3,7 @@ class Bob1 : MarathonActor
     Default
     {
         //marathon scale factor 8
-        //$Title "Civilian Crew"
+        //$Title "Bob Crew"
         //$Angled
         //$Category "Marathon Monsters"
         MarathonActor.friendlyHud true;
@@ -161,7 +161,7 @@ class Bob2 : Bob1
 {
     Default
     {
-        //$Title "Civilian Science"
+        //$Title "Bob Science"
         Translation "64:79=[149,76,46]:[31,19,19]", "112:127=[0,176,201]:[0,30,34]";
     }
   
@@ -171,7 +171,7 @@ class Bob3 : Bob1
 {
     Default
     {
-        //$Title "Civilian Security"
+        //$Title "Bob Security"
         Translation "64:79=[149,76,46]:[31,19,19]", "112:127=[246,37,0]:[36,5,0]";
     }
 }
@@ -180,7 +180,7 @@ class Bob4 : Bob1
 {
     Default
     {
-        //$Title "Civilian Engineering"
+        //$Title "Bob Engineering"
         Translation "64:79=[149,76,46]:[31,19,19]", "112:127=[255,231,22]:[21,19,0]";
     }
 }
@@ -189,7 +189,7 @@ class AssimilatedBob : MarathonActor
 {
     Default
     {
-        //$Title "Assimilated Civilian"
+        //$Title "Assimilated Bob"
         MarathonActor.friendlyHud true;
         MONSTER;
         +FLOORCLIP;

@@ -24,6 +24,29 @@ DoomEdNums
    16071 = "Hulk1"
    16072 = "Hulk2"
    17000 = "Juggernaut"
+   30000 = "UprightWaste"
+   30001 = "SidewaysWaste"
+   30002 = "UprightCylinder"
+   30003 = "SidewaysCylinder"
+   30004 = "Paper"
+   /* 30005 = "TornPaper" */
+   /* 30006 = "MultiplePaper" */
+   30007 = "SatelliteDish"
+   30008 = "EscapePod"
+   30009 = "BioCrate"
+   30010 = "PfhorMotherShip"
+   30011 = "HangingBobGutted"
+   30012 = "PfhorEgg"
+   30013 = "InactiveHunter"
+   30014 = "BobExperiment"
+   30015 = "OrbWithLights"
+   30016 = "BlackOrb"
+   30017 = "TheMarathon"
+   30018 = "PfhorCargoShip"
+   30019 = "DeadBob1"
+   30020 = "DeadBob2"
+   30021 = "DeadBob3"
+   30022 = "DeadBob4"
 }
 
 gameinfo
