@@ -67,3 +67,8 @@ end
 	play   MLFGO
 	stopsound	NONE
 end
+:MarathonPlatformStop
+	platform 0
+	play   MLFSTOP
+	stopsound	NONE
+end
