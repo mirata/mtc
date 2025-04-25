@@ -113,6 +113,24 @@ class MarathonActor : Actor
                 //Console.Printf("Enable");
             }
         }
+
+        // if(GetClassName() == "Fighter1"){
+        //     ThinkerIterator it = ThinkerIterator.Create("PlatformThinker");
+        //     PlatformThinker p = null;
+        //     while (p = PlatformThinker(it.next()))
+        //     {
+        //         if(p.tagId == 6){
+        //         let pos = PosRelative(p.sector);
+        //         let x = pos.x - p.sector.centerspot.x;
+        //         let y = pos.y - p.sector.centerspot.y;
+        //         let dist = sqrt(x * x + y * y);
+        //         if(dist < 64){
+        //             p.Activate();
+        //         }
+        //         Console.Printf("PlatformThinker %d", dist);
+        //         }
+        //     }
+        // }
     }
 
 

@@ -15,7 +15,12 @@ Class MarathonStatusBar : BaseStatusBar
 		Super.Init();
 		SetSize(0, 320, 200);
 
-		vrDisabled = CVar.GetCVar("vr_disabled").GetBool();
+		vrDisabled = false;
+		CVar disabled = CVar.GetCVar("vr_disabled");
+		if(disabled != null)
+		{
+			vrDisabled = disabled.GetBool();
+		}
 
 		// Create the font used for the fullscreen HUD
 		Font fnt = "INDEXFONT";

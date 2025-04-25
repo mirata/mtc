@@ -63,12 +63,22 @@ end
 	play   NONE
 end
 :MarathonPlatformStart
-	platform 3
 	play   MLFGO
 	stopsound	NONE
 end
 :MarathonPlatformStop
-	platform 0
 	play   MLFSTOP
+	stopsound	NONE
+end
+:MarathonDoorOpen
+	play   MDRUP
+	stopsound	NONE
+end
+:MarathonDoorClose
+	play   MDRDOWN
+	stopsound	NONE
+end
+:MarathonDoorStuck
+	play   MDRSTK
 	stopsound	NONE
 end
