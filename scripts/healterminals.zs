@@ -1,0 +1,145 @@
+class HealThinker : Thinker {
+    
+    PlayerPawn player;
+    int tagId;
+    string type;
+    int factor;
+
+    bool isActive;
+
+    HealThinker Init(
+        int tagId, 
+        string type,
+        int factor) {
+        self.tagId = tagId;
+        self.type = type;
+        self.factor = factor;
+
+        self.isActive = false;
+
+        for (int i = 0; i < Players.size(); i++) {
+            self.player = PlayerPawn(Players[i].mo);
+            if (self.player != null) {
+                break; // Take the first valid player
+            }
+        }
+        
+        return self;
+    }
+
+    void Activate() {
+        if(self.isActive) {
+            return;
+        }
+        Level.MakeAutoSave();
+        Switches.Toggle(self.tagId, true);
+        
+        self.isActive = true;
+    }
+
+    void Deactivate() {
+        if(!self.isActive) {
+            return;
+        }
+        Switches.Toggle(self.tagId, false);
+        
+        // Console.Printf("Deactivate %d", tagId);
+        self.isActive = false;
+    }
+
+    void Toggle() {
+        if(!self.isActive) {
+            Activate();
+        } else {
+            Deactivate();
+        }
+    }
+
+    
+    override void Tick() {
+        if(self.isActive){
+            if(self.type == "Health") {
+                int countPerTick = 2;
+                int max = 150 * self.factor;
+                if(max - player.health < countPerTick){
+                    player.health = max;
+                    Deactivate();
+                } else {
+                    player.health += countPerTick;
+                }
+                return;
+            }
+            if(self.type == "Oxygen") {
+                int oxygenCount = player.CountInv("OxygenTank");
+                Console.Printf("Oxygen count: %d", oxygenCount);
+
+                int countPerTick = 2;
+                int max = 420;
+
+                if(max - oxygenCount < countPerTick) {
+                player.GiveInventory("OxygenTank", max - oxygenCount);
+                    Deactivate();
+                } else {
+                    player.GiveInventory("OxygenTank", countPerTick);
+                }
+                return;
+            }
+        }
+    }
+}
+
+class HealTerminal play {
+    static void Init(
+        int tagId, 
+        string type,
+        int factor) {
+        HealThinker p = GetInstance(tagId);
+        if(p == null) {
+            p = new ("HealThinker").Init(
+                tagId, 
+                type,
+                factor);
+        }
+    }
+
+    static void Activate(int tagId) {
+        HealThinker p = GetInstance(tagId);
+        if(p != null) {
+            p.Activate();
+        } else {
+            Console.Printf("HealTerminal tag %d does not exist", tagId);
+        }
+    }
+    static void Deactivate(int tagId) {
+        HealThinker p = GetInstance(tagId);
+        if(p != null) {
+            p.Deactivate();
+        } else {
+            Console.Printf("HealTerminal tag %d does not exist", tagId);
+        }
+    }
+
+    static void Toggle(int tagId) {
+        HealThinker p = GetInstance(tagId);
+        if(p != null) {
+            p.Toggle();
+        } else {
+            Console.Printf("HealTerminal tag %d does not exist", tagId);
+        }
+    }
+
+    static HealThinker GetInstance(int tagId) {
+        ThinkerIterator it = ThinkerIterator.Create("HealThinker");
+        HealThinker p = null;
+
+        while (p = HealThinker(it.next()))
+        {
+            if(p.tagId == tagId) {
+                //Console.Printf("Found existing thinker for tag %d", tagId);
+                return p;
+            }
+        }
+        //Console.Printf("HealTerminal tag %d does not exist", tagId);
+        return null;
+    }
+}

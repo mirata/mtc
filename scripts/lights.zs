@@ -1,10 +1,12 @@
 class LightThinker : Thinker {
     int tagId;
+    int controlPanelTagId;
 
     bool isActive;
     int state; //0 = active1, 1 = active2, 2 = inactive1, 3 = inactive2, 4 = activating, 5 = deactivating
     int ticks;
-    float originalIntensity;
+    float startTransitionIntensity;
+    float currentIntensity;
 
     string active1Fn;
     int active1Period;
@@ -46,6 +48,7 @@ class LightThinker : Thinker {
 
     LightThinker Init(
     int tagId, 
+    int controlPanelTagId,
     bool isActive, 
     string active1Fn,
     int active1Period,
@@ -78,6 +81,7 @@ class LightThinker : Thinker {
     int deactivatingIntensity,
     int deactivatingIntensityDelta) {
         self.tagId = tagId;
+        self.controlPanelTagId = controlPanelTagId;
         self.isActive = isActive;
 
         self.active1Fn = active1Fn;
@@ -110,7 +114,9 @@ class LightThinker : Thinker {
         self.deactivatingIntensity = deactivatingIntensity;
         self.deactivatingIntensityDelta = deactivatingIntensityDelta;
 
-        self.state =  isActive ? 0 : 2;
+        self.state =  isActive ? 1 : 3; //transition to active2 or inactive2
+        self.startTransitionIntensity = isActive ? active1Intensity : inactive1Intensity;
+        self.currentIntensity = self.startTransitionIntensity;
         self.ticks = 0;
 
         SectorTagIterator sti = level.CreateSectorTagIterator(tagId);
@@ -128,9 +134,10 @@ class LightThinker : Thinker {
         if(self.state == 0 || self.state == 1 || self.state == 4) {
             return;
         }
+        Switches.Toggle(self.controlPanelTagId, true);
         
-        Console.Printf("Activate %d", tagId);
-        self.originalIntensity = self.sectors[0].GetLightLevel();
+        // Console.Printf("Activate %d", tagId);
+        self.startTransitionIntensity = self.currentIntensity;
         self.state = 4;
         self.ticks = 0;
     }
@@ -140,51 +147,118 @@ class LightThinker : Thinker {
             return;
         }
         
-        Console.Printf("Deactivate %d", tagId);
-        self.originalIntensity = self.sectors[0].GetLightLevel();
+        Switches.Toggle(self.controlPanelTagId, false);
+        // Console.Printf("Deactivate %d", tagId);
+        self.startTransitionIntensity = self.currentIntensity;
         self.state = 5;
         self.ticks = 0;
     }
 
     void Toggle() {
-
-    }
-
-    override void Tick() {
-        
-        if(self.state == 4) {
-        
-            float intensity = lightFn(self.originalIntensity, self.active1Fn, self.active1Period, self.active1Intensity, self.active1IntensityDelta, self.ticks);
-            if(self.ticks < self.active1Period) {
-                for(int i = 0; i < self.sectors.Size(); i++) {
-                    self.sectors[i].SetLightLevel(int(intensity));
-                }
-            }
-            self.ticks++;
+        if(self.state == 0 || self.state == 1 || self.state == 4) {
+            Deactivate();
+        } else if(self.state == 2 || self.state == 3 || self.state == 5) {
+            Activate();
         }
     }
 
-    float lightFn(int originalIntensity, string fn, int period, int intensity, int intensityDelta, int ticks) {
+    override void Tick() {
+        string fn;
+        int period;
+        int intensity;
+        int intensityDelta;
+
+        if(self.state == 0) {
+            fn = self.active1Fn;
+            period = self.active1Period + Random(-self.active1PeriodDelta, self.active1PeriodDelta);
+            intensity = self.active1Intensity;
+            intensityDelta = self.active1IntensityDelta;
+        } else if(self.state == 1) {
+            fn = self.active2Fn;
+            period = self.active2Period + Random(-self.active2PeriodDelta, self.active2PeriodDelta);
+            intensity = self.active2Intensity;
+            intensityDelta = self.active2IntensityDelta;
+        } else if(self.state == 2) {
+            fn = self.inactive1Fn;
+            period = self.inactive1Period + Random(-self.inactive1PeriodDelta, self.inactive1PeriodDelta);
+            intensity = self.inactive1Intensity;
+            intensityDelta = self.inactive1IntensityDelta;
+        } else if(self.state == 3) {
+            fn = self.inactive2Fn;
+            period = self.inactive2Period + Random(-self.inactive2PeriodDelta, self.inactive2PeriodDelta);
+            intensity = self.inactive2Intensity;
+            intensityDelta = self.inactive2IntensityDelta;
+        } else if(self.state == 4) {
+            fn = self.activatingFn;
+            period = self.activatingPeriod + Random(-self.activatingPeriodDelta, self.activatingPeriodDelta);
+            intensity = self.activatingIntensity;
+            intensityDelta = self.activatingIntensityDelta;
+        } else if(self.state == 5) {
+            fn = self.deactivatingFn;
+            period = self.deactivatingPeriod + Random(-self.deactivatingPeriodDelta, self.deactivatingPeriodDelta);
+            intensity = self.deactivatingIntensity;
+            intensityDelta = self.deactivatingIntensityDelta;
+        }
+
+        self.currentIntensity = lightFn(self.startTransitionIntensity, fn, period, intensity, intensityDelta, self.ticks);
+        for(int i = 0; i < self.sectors.Size(); i++) {
+            self.sectors[i].SetLightLevel(int(currentIntensity));
+        }
+        if(self.ticks >= period) {
+            self.ticks = 0;
+            self.startTransitionIntensity = intensity;
+            if(self.state == 4) {
+                // Console.Printf("Active 1");
+                self.state = 0;
+            } else if(self.state == 5) {
+                // Console.Printf("Inactive 1");
+                self.state = 2;
+            } else if(self.state == 0) {
+                // Console.Printf("Active 2");
+                self.state = 1;
+            } else if(self.state == 1) {
+                // Console.Printf("Active 1");
+                self.state = 0;
+            } else if(self.state == 2) {
+                // Console.Printf("Inactive 2");
+                self.state = 3;
+            } else if(self.state == 3) {
+                // Console.Printf("Inactive 1");
+                self.state = 2;
+            }
+        }
+        self.ticks++;
+    }
+
+
+    //i think this is the wrong way around?  immediately go to active2?
+
+    float lightFn(float startTransitionIntensity, string fn, int period, int intensity, int intensityDelta, int ticks) {
         float frac;
         float v;
         switch(GetNumeric(fn))
         {
             case 0:
+                //Console.Printf("Constant %d", intensity);
                 return intensity;
             case 1:
-                frac = float(intensity - originalIntensity) / period;
-                v = originalIntensity + (frac * ticks);
+                frac = (float(intensity) - startTransitionIntensity) / period;
+                v = startTransitionIntensity + (frac * ticks );
+                // Console.Printf("Linear %f",v);
                 
                 break;
             case 2:
-                frac = float(intensity - originalIntensity) / period;
-                v = originalIntensity + (frac * ticks);
+                //sin wave between 0 and 1
+                float val = Sin(float(ticks) / period * 180 - 90) / 2 + 0.5; 
+                frac = (float(intensity) - startTransitionIntensity) * val;
+                v = startTransitionIntensity + frac;
+                // Console.Printf("Smooth %f", v);
                 break;
             case 3:
                 int d = Random(-intensityDelta, intensityDelta);
-                frac = float(intensity - originalIntensity) / period;
-                v = originalIntensity + (frac * ticks) + d;
-                Console.Printf("Flicker %d", d);
+                frac = float(intensity - startTransitionIntensity) / period;
+                v = startTransitionIntensity + (frac * ticks ) + d;
+                // Console.Printf("Flicker %f", v);
                 break;
             default:
                 break;
@@ -219,6 +293,7 @@ class LightThinker : Thinker {
 class Light play {
     static void Init(
         int tagId, 
+        int controlPanelTagId,
         bool isActive,
         string active1Fn,
         int active1Period,
@@ -254,6 +329,7 @@ class Light play {
         if(p == null) {
             p = new ("LightThinker").Init(
                 tagId, 
+                controlPanelTagId,
                 isActive,
                 active1Fn,
                 active1Period,

@@ -82,3 +82,26 @@ end
 	play   MDRSTK
 	stopsound	NONE
 end
+:MarathonSwitchOn
+	play   MSWON
+	stopsound	NONE
+end
+:MarathonSwitchOff
+	play   MSWOFF
+	stopsound	NONE
+end
+
+:Puzzle
+	play   PUZZ
+	stopsound	NONE
+end
+
+:TeleportOut
+	play   TPORTOUT
+	stopsound	NONE
+end
+
+:TeleportIn
+	play   TPORTIN
+	stopsound	NONE
+end

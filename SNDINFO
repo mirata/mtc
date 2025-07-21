@@ -20,6 +20,8 @@ TERM TERM
 AIRFILL AIRFILL
 SAVE SAVE
 BEEP BEEP
+TPORTOUT TPORTOUT
+TPORTIN TPORTIN
 splat splat
 misc/chat 			TERM
 menu/activate			TERM	// Activate a new menu
@@ -164,10 +166,12 @@ toast toast
 $limit toast 10
 aliengun aliengun
 AUTOFIRE AUTOFIRE
-$random PFHOR { PFHOR1 PFHOR2 PFHOR3 }
+    
 PFHOR1 PFHOR1
 PFHOR2 PFHOR2
 PFHOR3 PFHOR3
+$random PFHOR { PFHOR1 PFHOR2 PFHOR3 }
+    
 $random PFHORDIE { PFHORD1 PFHORD2 }
 PFHORD1 PFHORD1
 PFHORD2 PFHORD2
@@ -216,15 +220,15 @@ JUGASLT JUGASLT
 ENFWAKE ENFWAKE
 GRNFBY GRNFBY
 
-$attenuation MSWON 2
-$attenuation MSWOFF 2
-$attenuation PSWON 2
-$attenuation PSWOFF 2
-$attenuation MLFGO 2
-$attenuation MLFSTOP 2
-$attenuation MDRUP 2
-$attenuation MDRDOWN 2
-$attenuation MDRSTK 2
-$attenuation PFHOR1 2
-$attenuation PFHOR2 2
-$attenuation PFHOR3 2
+$attenuation MSWON 3
+$attenuation MSWOFF 3
+$attenuation PSWON 3
+$attenuation PSWOFF 3
+$attenuation MLFGO 3
+$attenuation MLFSTOP 3
+$attenuation MDRUP 3
+$attenuation MDRDOWN 3
+$attenuation MDRSTK 3
+$attenuation PFHOR1 3
+$attenuation PFHOR2 3
+$attenuation PFHOR3 3

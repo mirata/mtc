@@ -1,5 +1,6 @@
 class PlatformThinker : Thinker {
     int tagId;
+    int controlPanelTagId;
     double minHeight;
     double maxHeight;
     double speed;
@@ -19,26 +20,37 @@ class PlatformThinker : Thinker {
     bool controlByPlayer;
     bool controlByMonsters;
 
+    bool activatesAdjacentPlatformsWhenActivating;
+    bool activatesAdjacentPlatformsWhenDeactivating;
+    bool activatesAdjacentPlatformsAtEachLevel;
+    bool deactivatesAdjacentPlatformsWhenActivating;
+    bool deactivatesAdjacentPlatformsWhenDeactivating;
+
     bool isExtended;
     bool isExtending;
     bool isActive;
     bool initialExtended;
+    bool beenActivated;
 
     bool previousActive;
     bool previousExtending;
     bool isDelaying;
     int delayTicks;
     bool hitLimit;
+    double lastCombinedDelta;
 
     int minFloor;
     int maxFloor;
     int minCeiling;
     int maxCeiling;
 
+    array <Line> controlPanelLines;
+
     array <int> adjacentPlatformTags;
 
     PlatformThinker Init(
         int tagId, 
+        int controlPanelTagId,
         double minHeight, 
         double maxHeight, 
         double speed, 
@@ -58,6 +70,7 @@ class PlatformThinker : Thinker {
         bool controlByPlayer,
         bool controlByMonsters) {
         self.tagId = tagId;
+        self.controlPanelTagId = controlPanelTagId;
         SectorTagIterator sti = level.CreateSectorTagIterator(tagId);
         int i;
 
@@ -65,6 +78,15 @@ class PlatformThinker : Thinker {
         {
             self.sector = level.sectors[i];
         }
+
+        if(controlPanelTagId >= 0) {         
+            LineIdIterator li = Level.CreateLineIdIterator(controlPanelTagId);
+            while((i = li.Next()) >= 0)
+            {
+                self.controlPanelLines.push(level.lines[i]);
+            }
+        }
+
         self.minHeight = minHeight;
         self.maxHeight = maxHeight;
         self.speed = speed;
@@ -92,6 +114,7 @@ class PlatformThinker : Thinker {
         self.isDelaying = false;
         self.delayTicks = 0;
         self.hitLimit = false;
+        self.lastCombinedDelta = 0;
 
         self.minFloor = self.minHeight;
         self.maxFloor = self.maxHeight;
@@ -104,12 +127,12 @@ class PlatformThinker : Thinker {
         }
         if(self.isExtended) {
             if(self.fromFloor){
-                Console.Printf("Move Floor %d", maxFloor);
+                // Console.Printf("Move Floor %d", maxFloor);
                 self.sector.MoveFloor(self.maxFloor + sector.floorplane.d, -self.maxFloor, 0, 1, false); 
             }
         
             if(self.fromCeiling){
-                Console.Printf("Move Ceiling %d", minCeiling);
+                // Console.Printf("Move Ceiling %d", minCeiling);
                 self.sector.MoveCeiling(sector.ceilingplane.d - self.minCeiling, self.minCeiling, 0, -1, false); 
             }
         }
@@ -117,23 +140,56 @@ class PlatformThinker : Thinker {
         return self;
     }
 
-    void SetAdjacentPlatform(int tagId) {
-        adjacentPlatformTags.Push(tagId);
+    void AddUniqueInt(Array<int> arr, int value)
+    {
+        for (int i = 0; i < arr.size(); i++)
+        {
+            if (arr[i] == value)
+                return; // Already in array, do nothing
+        }
+        arr.push(value); // Not found, add it
+    }
+    
+    void GetAdjacentPlatformTags() {
+        int i;
+        PlatformThinker adjacent = null;
+        for(i = 0; i < self.sector.lines.Size(); i++) {
+            let line = self.sector.lines[i];
+            if(line.frontsector != null && line.frontsector.Index() != self.sector.Index()) {
+                let platform = Platform.GetInstanceBySector(line.frontsector);
+                if(platform != null) {
+                    AddUniqueInt(self.adjacentPlatformTags, platform.tagId);
+                }
+            }
+            if(line.backsector != null && line.backsector.Index() != self.sector.Index()) {
+                let platform = Platform.GetInstanceBySector(line.backsector);
+                if(platform != null) {
+                    AddUniqueInt(self.adjacentPlatformTags, platform.tagId);
+                }
+            }
+        }
     }
 
     void SetAdjacentPlatformRules(
         bool activatesAdjacentPlatformsWhenActivating,
         bool activatesAdjacentPlatformsWhenDeactivating,
-        bool activatesAdjacantPlatformsAtEachLevel,
+        bool activatesAdjacentPlatformsAtEachLevel,
         bool deactivatesAdjacentPlatformsWhenActivating,
         bool deactivatesAdjacentPlatformsWhenDeactivating) {
-            
-        }
+        self.activatesAdjacentPlatformsWhenActivating = activatesAdjacentPlatformsWhenActivating;
+        self.activatesAdjacentPlatformsWhenDeactivating = activatesAdjacentPlatformsWhenDeactivating;
+        self.activatesAdjacentPlatformsAtEachLevel = activatesAdjacentPlatformsAtEachLevel;
+        self.deactivatesAdjacentPlatformsWhenActivating = deactivatesAdjacentPlatformsWhenActivating;
+        self.deactivatesAdjacentPlatformsWhenDeactivating = deactivatesAdjacentPlatformsWhenDeactivating;
+        GetAdjacentPlatformTags();
+    }
 
     void Activate() {
-        if(self.isActive) {
+        if(self.isActive || (self.activatesOnlyOnce && self.beenActivated)) {
             return;
         }
+        // Console.Printf("Activate %d", tagId);
+        Switches.Toggle(self.controlPanelTagId, true);
         
         if(self.activatesLight >= 0) {
             Light.Activate(self.activatesLight);
@@ -142,22 +198,20 @@ class PlatformThinker : Thinker {
             Light.Deactivate(self.deactivatesLight);
         }
         self.isActive = true;
+        self.beenActivated = true;
     }
 
     void Deactivate() {
         if(!self.isActive) {
             return;
         }
+        Switches.Toggle(self.controlPanelTagId, false);
         
-        //Console.Printf("Deactivate %d", tagId);
+        // Console.Printf("Deactivate %d", tagId);
         self.isActive = false;
     }
 
     void Toggle() {
-        if(self.isDoor && !self.controlByPlayer) {
-            sector.StartSoundSequence(0, "MarathonDoorStuck", 0);
-            return;
-        }
         //Console.Printf("Toggle %d", tagId);
         self.isDelaying = false;
         self.delayTicks = 0;
@@ -177,7 +231,16 @@ class PlatformThinker : Thinker {
         }
     }
 
-    void ToggleMonster() {
+    void ToggleTouch() {
+        
+        if(self.isDoor && !self.controlByPlayer) {
+            sector.StartSoundSequence(0, "MarathonDoorStuck", 0);
+            return;
+        }
+        Toggle();
+    }
+
+    void ToggleTouchMonster() {
         
         if(!self.controlByMonsters) {
             return;
@@ -189,7 +252,24 @@ class PlatformThinker : Thinker {
         }
     }
 
+    void ActivateAdjacentPlatforms() {
+        for (int i = 0; i < adjacentPlatformTags.Size(); i++) 
+        {
+            Console.Printf("Activating %d", adjacentPlatformTags[i]);
+            Platform.Activate(adjacentPlatformTags[i]);
+        }
+    }
+
+    void DeactivateAdjacentPlatforms() {
+        for (int i = 0; i < adjacentPlatformTags.Size(); i++) 
+        {
+            Platform.Deactivate(adjacentPlatformTags[i]);
+        }
+    }
+
     override void Tick() {
+        double originalFloorHeight = sector.floorplane.d;
+        double originalCeilingHeight = sector.ceilingplane.d;
         if(self.isActive) {
             //sector.SetLightLevel(0);
             double floorHeight = sector.floorplane.d;
@@ -208,10 +288,13 @@ class PlatformThinker : Thinker {
             }
             if(!self.isDelaying){
                 if(self.fromFloor){
-                    if(isExtending){           
+                    if(isExtending){  
+                        // Console.Printf("Extending");         
                         self.sector.MoveFloor(self.speed, -self.maxFloor, 0, 1, false); 
                     }
                     else{    
+                        
+                        // Console.Printf("Contracting");         
                         self.sector.MoveFloor(self.speed, -self.minFloor, 0, -1, false); 
                     }
                     floorHeight = sector.floorplane.d;
@@ -227,11 +310,9 @@ class PlatformThinker : Thinker {
                     ceilingHeight = sector.ceilingplane.d;
                 }
 
-                //Console.Printf("From Floor: %i, From Ceiling: %i", self.maxHeight, ceilingHeight);
 
                 if((self.fromFloor && ((self.isExtending && -floorHeight >= self.maxFloor) || (!self.isExtending && -floorHeight <= self.minFloor)))  ||
                     (self.fromCeiling && ((self.isExtending && ceilingHeight <= self.minCeiling) || (!self.isExtending && ceilingHeight >= self.maxCeiling))) ) {
-
                         self.hitLimit = true;
                         self.isExtended = self.isExtending;
                         if((self.deactivatesAtInitialLevel && self.isExtended == self.initialExtended) || self.deactivatesAtEachLevel) {
@@ -247,51 +328,93 @@ class PlatformThinker : Thinker {
             // Console.Printf("Heights %d %d", floorHeight, ceilingHeight);
         }
 
+
+        double floorDelta = originalFloorHeight - sector.floorplane.d;
+        double ceilingDelta =  originalCeilingHeight - sector.ceilingplane.d;
+        double combinedDelta = floorDelta + ceilingDelta;
+
+        if(combinedDelta == 0 && lastCombinedDelta != 0) {
+            if(!self.isDoor) {
+                sector.StartSoundSequence(0, "MarathonPlatformStop", 0);
+            }
+
+            if(self.activatesAdjacentPlatformsWhenDeactivating) {
+                ActivateAdjacentPlatforms();
+            }
+            if(self.deactivatesAdjacentPlatformsWhenDeactivating) {
+                DeactivateAdjacentPlatforms();
+            }
+        }
+        if((combinedDelta != 0 && lastCombinedDelta == 0) || combinedDelta > 0 && lastCombinedDelta < 0 || combinedDelta < 0 && lastCombinedDelta > 0) {
+            if(self.isDoor) {               
+                if(combinedDelta > 0) {
+                    Console.Printf("Extend!");
+                    if(self.isDoor) {
+                        sector.StartSoundSequence(0, "MarathonDoorClose", 0);
+                    }
+                } else {
+                    Console.Printf("Retract!");
+                    if(self.isDoor) {
+                        sector.StartSoundSequence(0, "MarathonDoorOpen", 0);
+                    }
+                }
+            } else{
+                sector.StartSoundSequence(0, "MarathonPlatformStart", 0);
+            }
+
+            if(self.activatesAdjacentPlatformsWhenActivating) {
+                ActivateAdjacentPlatforms();
+            }
+            if(self.deactivatesAdjacentPlatformsWhenActivating) {
+                DeactivateAdjacentPlatforms();
+            }
+        }
+        // if(combinedDelta > 0 && lastCombinedDelta < 0 || combinedDelta < 0 && lastCombinedDelta > 0) {
+        //     Console.Printf("Reverse!");
+        // }
+        self.lastCombinedDelta = combinedDelta;
         //sounds 
 
         if(self.hitLimit) {
             self.isDelaying = true;
             self.hitLimit = false;
             if(!self.isDoor){
-                Console.Printf("Hitlimit %d", tagId);
-                sector.StartSoundSequence(0, "MarathonPlatformStop", 0);
+                // Console.Printf("Hitlimit %d", tagId);
+                // sector.StartSoundSequence(0, "MarathonPlatformStop", 0);
             }
             
-            for (int i = 0; i < adjacentPlatformTags.Size(); i++) 
-            {
-                Platform.Activate(adjacentPlatformTags[i]);
-            }
         }
         else if(self.isActive && !self.previousActive) {
+            
             //activating
             if(self.isDoor){
                 if(self.isExtending){
-                    sector.StartSoundSequence(0, "MarathonDoorClose", 0);
+                    // sector.StartSoundSequence(0, "MarathonDoorClose", 0);
                 } else {
-                    sector.StartSoundSequence(0, "MarathonDoorOpen", 0);
+                    // sector.StartSoundSequence(0, "MarathonDoorOpen", 0);
                 }
             } else {
-                sector.StartSoundSequence(0, "MarathonPlatformStart", 0);
+                // sector.StartSoundSequence(0, "MarathonPlatformStart", 0);
             }
         } 
         else if(!self.isActive && self.previousActive) {
             //deactivating
             if(!self.isDoor) {
-                Console.Printf("Deactivating %d", tagId);
-                sector.StartSoundSequence(0, "MarathonPlatformStop", 0);
+                // Console.Printf("Deactivating %d", tagId);
+                // sector.StartSoundSequence(0, "MarathonPlatformStop", 0);
             }
         }
         else if(self.isActive){
             //reversing directions
             if(self.isDoor && self.isExtending && !self.previousExtending) {                        
-                sector.StartSoundSequence(0, "MarathonDoorClose", 0);
+                // sector.StartSoundSequence(0, "MarathonDoorClose", 0);
             }
             else if(self.isDoor && !self.isExtending && self.previousExtending) {                        
-                sector.StartSoundSequence(0, "MarathonDoorOpen", 0);
+                // sector.StartSoundSequence(0, "MarathonDoorOpen", 0);
             }
             else if(!self.isDoor && ((!self.isExtending && self.previousExtending) || (self.isExtending && !self.previousExtending))) {    
-                Console.Printf("Reverse %d", tagId);                    
-                sector.StartSoundSequence(0, "MarathonPlatformStart", 0);
+                // Console.Printf("Reverse %d", tagId);                    
+                // sector.StartSoundSequence(0, "MarathonPlatformStart", 0);
             }
         }
         self.previousActive = self.isActive;
@@ -302,6 +425,7 @@ class PlatformThinker : Thinker {
 class Platform play {
     static void Init(
         int tagId, 
+        int controlPanelTagId,
         double minHeight, 
         double maxHeight, 
         double speed, 
@@ -324,6 +448,7 @@ class Platform play {
         if(p == null) {
             p = new ("PlatformThinker").Init(
                 tagId, 
+                controlPanelTagId,
                 minHeight, 
                 maxHeight, 
                 speed, 
@@ -345,20 +470,11 @@ class Platform play {
         }
     }
 
-    static void SetAdjacentPlatform(int tagId, int otherTagId) {
-        PlatformThinker p = GetInstance(tagId);
-        if(p != null) {
-            p.SetAdjacentPlatform(otherTagId);
-        } else {
-            Console.Printf("Platform tag %d does not exist", tagId);
-        }
-    }
-
     static void SetAdjacentPlatformRules(
         int tagId, 
         bool activatesAdjacentPlatformsWhenActivating,
         bool activatesAdjacentPlatformsWhenDeactivating,
-        bool activatesAdjacantPlatformsAtEachLevel,
+        bool activatesAdjacentPlatformsAtEachLevel,
         bool deactivatesAdjacentPlatformsWhenActivating,
         bool deactivatesAdjacentPlatformsWhenDeactivating) {
         PlatformThinker p = GetInstance(tagId);
@@ -366,7 +482,7 @@ class Platform play {
             p.SetAdjacentPlatformRules(
                 activatesAdjacentPlatformsWhenActivating,
                 activatesAdjacentPlatformsWhenDeactivating,
-                activatesAdjacantPlatformsAtEachLevel,
+                activatesAdjacentPlatformsAtEachLevel,
                 deactivatesAdjacentPlatformsWhenActivating,
                 deactivatesAdjacentPlatformsWhenDeactivating);
         } else {
@@ -390,15 +506,25 @@ class Platform play {
             Console.Printf("Platform tag %d does not exist", tagId);
         }
     }
-    static void Toggle(int tagId, string monsterClass) {
-        // Console.Printf("Monster %s", monsterClass);
+
+    static void Toggle(int tagId) {
+        PlatformThinker p = GetInstance(tagId);
+        if(p != null) {
+            p.Toggle();
+        } else {
+            Console.Printf("Platform tag %d does not exist", tagId);
+        }
+    }
+
+    static void ToggleTouch(int tagId, string monsterClass) {
+        Console.Printf("Monster %s", monsterClass);
         PlatformThinker p = GetInstance(tagId);
         let isPlayer = monsterClass == "MarathonPlayer";
         if(p != null) {
             if(isPlayer) {
-                p.Toggle();
+                p.ToggleTouch();
             } else {
-                p.ToggleMonster();
+                p.ToggleTouchMonster();
             }
         } else {
             Console.Printf("Platform tag %d does not exist", tagId);
@@ -413,6 +539,23 @@ class Platform play {
         while (p = PlatformThinker(it.next()))
         {
             if(p.tagId == tagId) {
+                //Console.Printf("Found existing thinker for tag %d", tagId);
+                return p;
+            }
+        }
+        //Console.Printf("Platform tag %d does not exist", tagId);
+        return null;
+    }
+
+    
+
+    static PlatformThinker GetInstanceBySector(Sector sector) {
+        ThinkerIterator it = ThinkerIterator.Create("PlatformThinker");
+        PlatformThinker p = null;
+
+        while (p = PlatformThinker(it.next()))
+        {
+            if(p.sector == sector) {
                 //Console.Printf("Found existing thinker for tag %d", tagId);
                 return p;
             }
