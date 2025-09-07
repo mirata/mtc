@@ -37,6 +37,7 @@ class Hulk1 : MarathonActor
             HULK A 10 A_Look;
             Loop;
         See:
+            HULK A 0 TargetPlayerAllies();
             HULK BBCCDDEE 4 A_Chase;
             Loop;
         Melee:

@@ -7,6 +7,8 @@ class HealThinker : Thinker {
 
     bool isActive;
 
+    Vector3 activatePos;
+
     HealThinker Init(
         int tagId, 
         string type,
@@ -28,12 +30,34 @@ class HealThinker : Thinker {
     }
 
     void Activate() {
+        Console.Printf("Activating HealThinker: %d", tagId);
         if(self.isActive) {
             return;
         }
-        Level.MakeAutoSave();
-        Switches.Toggle(self.tagId, true);
         
+        if(self.type == "Save") {
+            player.A_StartSound("SAVE", CHAN_BODY, CHANF_DEFAULT, 1);
+            Level.MakeAutoSave();
+            return;
+        }
+
+        if(self.type == "Health") {
+            int max = 100 * self.factor;
+            if(player.health >= max) {
+                return;
+            }
+
+            player.A_StartSound("HEAL", CHAN_BODY, CHANF_LOOPING , 1);
+        } else {
+            int oxygenCount = player.CountInv("OxygenTank");
+            if(oxygenCount >= 1000) {
+                return;
+            }
+            player.A_StartSound("AIRFILL", CHAN_BODY, CHANF_LOOPING , 1);
+        }
+        
+        self.activatePos = self.player.pos;
+        Switches.Toggle(self.tagId, true);
         self.isActive = true;
     }
 
@@ -42,6 +66,7 @@ class HealThinker : Thinker {
             return;
         }
         Switches.Toggle(self.tagId, false);
+        player.A_StopSound(CHAN_BODY);
         
         // Console.Printf("Deactivate %d", tagId);
         self.isActive = false;
@@ -58,14 +83,22 @@ class HealThinker : Thinker {
     
     override void Tick() {
         if(self.isActive){
+
+            let pos = self.player.pos;
+            Vector3 dist = (pos.x - activatePos.x, pos.y - activatePos.y, pos.z - activatePos.z);
+            if(dist.Length() > 10.0) {
+                Deactivate();
+                return;
+            };
+
             if(self.type == "Health") {
                 int countPerTick = 2;
-                int max = 150 * self.factor;
+                int max = 100 * self.factor;
                 if(max - player.health < countPerTick){
-                    player.health = max;
+                    player.A_SetHealth(max);
                     Deactivate();
                 } else {
-                    player.health += countPerTick;
+                    player.A_SetHealth(player.health + countPerTick);
                 }
                 return;
             }
@@ -74,7 +107,7 @@ class HealThinker : Thinker {
                 Console.Printf("Oxygen count: %d", oxygenCount);
 
                 int countPerTick = 2;
-                int max = 420;
+                int max = 1000;
 
                 if(max - oxygenCount < countPerTick) {
                 player.GiveInventory("OxygenTank", max - oxygenCount);

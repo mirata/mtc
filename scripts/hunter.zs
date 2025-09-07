@@ -36,7 +36,7 @@ class Hunter1 : MarathonActor
             HUNT E 10 A_Look;
             Loop;
         See:
-            HUNT A 0 TargetBobs();
+            HUNT A 0 TargetPlayerAllies();
             HUNT AABBCCDD 3 A_Chase;
             Loop;
         Missile:

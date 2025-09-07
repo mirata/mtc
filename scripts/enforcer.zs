@@ -33,7 +33,7 @@ class Enforcer1 : MarathonActor
     override void Tick()
     {
         super.Tick();
-        //   TargetBobs();
+        //   TargetPlayerAllies();
     }
 
     States
@@ -43,7 +43,7 @@ class Enforcer1 : MarathonActor
             // TNT1 A 0 A_CheckLOF("See", CLOFF_JUMPENEMY|CLOFF_JUMPFRIEND|CLOFF_SKIPOBJECT|CLOFF_ALLOWNULL|CLOFF_SETTARGET, 8000, 0, 40, 0, 0, AAPTR_NULL);
             Loop;
         See:
-            TNT1 A 0 TargetBobs();
+            TNT1 A 0 TargetPlayerAllies();
             ENFO ABC 3 A_Chase;
             // TNT1 A 0 A_CheckLOF("See", CLOFF_JUMPENEMY|CLOFF_JUMPFRIEND|CLOFF_SKIPOBJECT|CLOFF_ALLOWNULL|CLOFF_SETTARGET, 8000, 0, 40, 0, 0, AAPTR_NULL);
             Loop;

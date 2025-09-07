@@ -1,19 +1,19 @@
 class Switches play {
     static void Toggle(int tagId, bool active){
-        Console.Printf("Toggle %d", tagId);
+        // Console.Printf("Toggle %d", tagId);
         if(tagId >= 0) {  
             int i;
-            array <Line> controlPanelLines;  
-                 
+            array <int> controlPanelLineIndexes;  
+
             LineIdIterator li = Level.CreateLineIdIterator(tagId);
             while((i = li.Next()) >= 0)
             {
-                controlPanelLines.push(level.lines[i]);
+                controlPanelLineIndexes.push(i);
             }
                 
-            for (int i = 0; i < controlPanelLines.size(); i++)
+            for (int i = 0; i < controlPanelLineIndexes.size(); i++)
             {
-                Line line = controlPanelLines[i];
+                Line line = level.lines[controlPanelLineIndexes[i]];
                 Side side = line.sidedef[Line.front];
 
                 // 🔍 Get the current mid texture name

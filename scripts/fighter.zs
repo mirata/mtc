@@ -35,7 +35,7 @@ class Fighter1 : MarathonActor
             FIGH E 10 A_Look;
             Loop;
         See:
-            FIGH A 0 TargetBobs();
+            FIGH A 0 TargetPlayerAllies();
             FIGH ABCD 3 A_Chase;
             Loop;
         Melee:

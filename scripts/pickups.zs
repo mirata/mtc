@@ -1,0 +1,253 @@
+// ACTOR onexhealth : Health
+// {
+//   +COUNTITEM
+//   +INVENTORY.AUTOACTIVATE
+//   +INVENTORY.ALWAYSPICKUP
+//   Inventory.Amount 150
+//   Inventory.MaxAmount 150
+//   Inventory.PickupMessage " "
+//   Inventory.PickupSound "NONE"
+//   States
+//   {
+//   Spawn:
+//     TNT1 A -1
+//     Loop
+//   }
+// }
+// ACTOR twoxhealth : health
+// {
+//   +COUNTITEM
+//   +INVENTORY.AUTOACTIVATE
+//   +INVENTORY.ALWAYSPICKUP
+//   Inventory.Amount 1
+//   Inventory.MaxAmount 300
+//   Inventory.PickupMessage " "
+//   Inventory.PickupSound "NONE"
+//   States
+//   {
+//   Spawn:
+//     TNT1 A -1
+//     Loop
+//   }
+// }
+// ACTOR threexhealth : health
+// {
+//   +COUNTITEM
+//   +INVENTORY.AUTOACTIVATE
+//   +INVENTORY.ALWAYSPICKUP
+//   Inventory.Amount 1
+//   Inventory.MaxAmount 450
+//   Inventory.PickupMessage " "
+//   Inventory.PickupSound "NONE"
+//   States
+//   {
+//   Spawn:
+//     TNT1 A -1
+//     Loop
+//   }
+// }
+// ACTOR OxyPowerup : PowerupGiver
+// {
+//   Height 46
+//   +INVENTORY.AUTOACTIVATE
+//   +INVENTORY.ALWAYSPICKUP
+//   Inventory.MaxAmount 0
+//   Inventory.PickupMessage " "
+//   Powerup.Type "IronFeet"
+//   Powerup.Color "white", 0.0
+//   Powerup.Duration -420
+//   Inventory.pickupSound "NONE"
+//   States
+//   {
+//   Spawn:
+//     TNT1 A -1 Bright
+//     Stop
+//   }
+// }
+
+// class MarathonTeleportOut : TeleportFog
+// {
+//     Default{
+//     }
+//     States
+//     {
+//       Spawn:
+//         TFOG DCBA 10 bright;
+//         Stop;
+//     }
+// }
+// class MarathonTeleportIn : TeleportFog
+// {
+//     Default{
+//     }
+//     States
+//     {
+//       Spawn:
+//         TFOG ABCD 10 bright;
+//         Stop;
+//     }
+// }
+
+class MarathonTeleport : Actor
+{
+    Default{
+    }
+    States
+    {
+      Spawn:
+        Stop;
+    }
+}
+// ACTOR itemfog2 : itemfog replaces itemfog
+// {
+//   States
+//   {
+//     Spawn:
+//       IFOG ABCD 3 bright
+//       stop
+//   }
+// }
+
+// ACTOR HyperVision : PowerupGiver replaces infrared
+// {
+//   +COUNTITEM
+//   +INVENTORY.AUTOACTIVATE
+//   +INVENTORY.ALWAYSPICKUP
+//   Inventory.MaxAmount 0
+//   Powerup.Duration 4200
+//   Powerup.Color "00 00 55", 0.375
+//   Powerup.Type "LightAmp"
+//   Inventory.PickupMessage "HYPERVISION"
+//   scale 0.5
+//   //YScale 0.5
+//   States
+//   {
+//     Spawn:
+//     HYPO A -1 Bright
+//     Loop
+//   }
+// }
+
+// ACTOR OxygenTank : Inventory
+// {
+//   Inventory.PickupMessage "Durandal does not tolerate cheaters...."
+//   Inventory.Amount 0
+//   Inventory.MaxAmount 420
+//   Inventory.Icon "TNT1A0"
+//   -INVENTORY.INVBAR
+//   States
+//   {
+//   Spawn:
+//     TNT1 A 1
+//     Stop
+//   }
+// }
+
+// //ACTOR DefenseChipGiver : FakeInventory replaces bluecard // note to self.... FakeInventory is the most useless feature of skulltag :/
+// //{
+// //  Game Doom
+// //  SpawnID 222
+// //  Inventory.PickupMessage "DEFENSE CENTER REPAIR CHIP"
+// //  scale 0.5
+// //  States
+// //  {
+// //  Spawn:
+// //    CHIP A -1
+// //    Stop
+// //  }
+// //}
+
+// ACTOR DefenseChip1 : puzzleitem replaces bluecard // if you could have more than 1 of the same puzzle item in cooperative, i wouldn't have to do this "3 of the same item" crap
+// {
+//   Game Doom
+//   SpawnID 222
+//   radius 10
+//   height 20
+//   Inventory.maxamount 3
+//   PuzzleItem.Number 1
+//   Inventory.Icon ARTICHIP
+//   Inventory.PickupMessage "DEFENSE CENTER REPAIR CHIP"
+//   PuzzleItem.FailMessage "You need to place this in the defense control center."
+//   scale 0.5
+//   //YScale 0.5
+//   States
+//   {
+//   Spawn:
+//     CHIP A -1
+//     Stop
+//   }
+// }
+
+// ACTOR DefenseChip2 : puzzleitem replaces redcard // same fucking item...
+// {
+//   Game Doom
+//   SpawnID 223
+//   radius 10
+//   height 20
+//   Inventory.maxamount 3
+//   PuzzleItem.Number 2
+//   Inventory.Icon ARTICHIP
+//   Inventory.PickupMessage "DEFENSE CENTER REPAIR CHIP"
+//   PuzzleItem.FailMessage "You need to place this in the defense control center."
+//   scale 0.5
+//   //YScale 0.5
+//   States
+//   {
+//   Spawn:
+//     CHIP A -1
+//     Stop
+//   }
+// }
+
+// ACTOR DefenseChip3 : puzzleitem replaces yellowcard // over and over and over again
+// {
+//   Game Doom
+//   SpawnID 224
+//   radius 10
+//   height 20
+//   Inventory.maxamount 3
+//   PuzzleItem.Number 3
+//   Inventory.Icon ARTICHIP
+//   Inventory.PickupMessage "DEFENSE CENTER REPAIR CHIP"
+//   PuzzleItem.FailMessage "You need to place this in the defense control center."
+//   scale 0.5
+//   //YScale 0.5
+//   States
+//   {
+//   Spawn:
+//     CHIP A -1
+//     Stop
+//   }
+// }
+
+// actor PowerMarathonInvulnerable : PowerProtection
+// {
+// 	damagefactor "normal", 0.0
+// 	damagefactor "crush", 1.0
+// 	damagefactor "lavafire", 0.0
+// 	damagefactor "fire", 0.0
+// 	damagefactor "slime", 0.0
+// 	damagefactor "Drowning", 1.0
+// 	damagefactor "fusion", 1.0
+// 	damagefactor "Railgun", 0.25
+// }
+
+// ACTOR Invulnerability : PowerupGiver replaces invulnerabilitysphere
+// {
+//   +COUNTITEM
+//   +INVENTORY.AUTOACTIVATE
+//   +INVENTORY.ALWAYSPICKUP
+//   Inventory.MaxAmount 0
+//   Powerup.Duration 2100
+//   Powerup.Color "FF FF FF", 0.25
+//   Powerup.Type "MarathonInvulnerable"
+//   Inventory.PickupMessage "INVULNERABILITY"
+//   scale 0.5
+//   //YScale 0.5
+//   States
+//   {
+//     Spawn:
+//     INVU A -1 Bright
+//     Loop
+//   }
+// }

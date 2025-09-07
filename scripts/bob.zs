@@ -1,4 +1,4 @@
-class Bob1 : MarathonActor
+class Bob1 : MarathonAlly
 {
     Default
     {
@@ -6,7 +6,6 @@ class Bob1 : MarathonActor
         //$Title "Bob Crew"
         //$Angled
         //$Category "Marathon Monsters"
-        MarathonActor.friendlyHud true;
         MarathonActor.hurtByLava true;
         MONSTER;
         +FLOORCLIP;

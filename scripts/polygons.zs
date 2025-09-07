@@ -3,12 +3,13 @@ class PolygonThinker : Thinker {
     string type;
     int targetId;
 
-    int lastTargetId;
+    int lastSectorNum;
 
     Sector sector;
     Vector3 teleportPosition;
     PlayerPawn player;
     PlayerInfo playerInfo;
+    bool isTeleportStart;
     bool isTeleporting;
     int teleportTicks;
     float playerFOV;
@@ -21,8 +22,9 @@ class PolygonThinker : Thinker {
         self.tagId = tagId;
         self.type = type;
         self.targetId = targetId;
-        self.lastTargetId = -1;
+        self.lastSectorNum = -1;
         self.teleportTicks = 0;
+        self.isTeleportStart = false;
         self.isTeleporting = false;
         self.teleportDuration = 30;
         SectorTagIterator sti = level.CreateSectorTagIterator(tagId);
@@ -41,29 +43,31 @@ class PolygonThinker : Thinker {
                 break; // Take the first valid player
             }
         }
-
         
-        sti = level.CreateSectorTagIterator(18);
+        if(targetId > 0) {
+            sti = level.CreateSectorTagIterator(targetId);
 
-        if((i = sti.Next()) >= 0)
-        {
-            let sector = level.sectors[i];
-            self.teleportPosition = (sector.centerspot.x, sector.centerspot.y, sector.floorplane.d);
+            if((i = sti.Next()) >= 0)
+            {
+                self.teleportPosition = (level.sectors[i].centerspot.x, level.sectors[i].centerspot.y, level.sectors[i].floorplane.d);
+            }
         }
 
         return self;
     }
 
     override void Tick() {
-        let sector = player.CurSector;
-        let currentTagId = -1;
-        if(sector != null) {
-            for(let i=0;i<sector.CountTags();i++) {
-                currentTagId = sector.GetTag(i);
-                if(currentTagId == self.tagId && currentTagId != self.lastTargetId) {
-                    if(!self.isTeleporting) {
-                        self.isTeleporting = true;
-                    }
+        let currentSectorNum = -1;
+        if(player.CurSector != null) {
+            currentSectorNum = player.CurSector.sectornum;
+            if(self.sector != null && currentSectorNum == self.sector.sectornum) {
+                if(currentSectorNum != self.lastSectorNum) {
+                
+                    if(self.type == "Teleport") {
+                        if(!self.isTeleportStart) {
+                            self.isTeleportStart = true;
+                        }
+                    } 
                     if(self.type == "PlatformActivate") {
                         Console.Printf("Activating platform %d", self.targetId);
                         Platform.Activate(self.targetId);
@@ -82,11 +86,19 @@ class PolygonThinker : Thinker {
                         Console.Printf("Deactivating light %d", self.targetId);
                         Light.Deactivate(self.targetId);
                     }
-                    break;
                 }
+            } else{
+                self.isTeleportStart = false;
             }
         }
-        self.lastTargetId = currentTagId;
+
+        if(self.isTeleportStart && player.vel.Length() < 1.0) {
+            Actor.Spawn("MarathonTeleport", self.player.pos, ALLOW_REPLACE);
+            self.isTeleporting = true;
+            self.isTeleportStart = false;
+        }
+
+        self.lastSectorNum = currentSectorNum;
 
         if(self.isTeleporting) {
             if(self.teleportTicks == 0) {
@@ -100,8 +112,9 @@ class PolygonThinker : Thinker {
             float val = Sin(float(self.teleportTicks) / self.teleportDuration * 180);
             self.playerInfo.DesiredFOV = ((160.0 - self.PlayerFOV) * val) + self.PlayerFOV;
             if(self.teleportTicks == self.teleportDuration / 2) {
-                Console.Printf("Teleporting player");
+                // Console.Printf("Teleporting player");
                 self.player.Teleport(self.teleportPosition, self.player.Angle, TF_USEACTORFOG | TF_KEEPANGLE  | TF_KEEPVELOCITY);
+                // Actor.Spawn("MarathonTeleportIn", self.teleportPosition, ALLOW_REPLACE);
             }
             
             if(self.teleportTicks >= self.teleportDuration) {

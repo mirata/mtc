@@ -65,15 +65,6 @@ ACTOR OxyPowerup : PowerupGiver
   }
 }
 
-ACTOR teleportfog2 : teleportfog replaces teleportfog
-{
-  States
-  {
-    Spawn:
-      TFOG ABCD 3 bright
-      stop
-  }
-}
 ACTOR itemfog2 : itemfog replaces itemfog
 {
   States
@@ -108,7 +99,7 @@ ACTOR OxygenTank : Inventory
 {
   Inventory.PickupMessage "Durandal does not tolerate cheaters...."
   Inventory.Amount 0
-  Inventory.MaxAmount 420
+  Inventory.MaxAmount 1000
   Inventory.Icon "TNT1A0"
   -INVENTORY.INVBAR
   States

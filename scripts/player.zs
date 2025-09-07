@@ -6,7 +6,7 @@ class MarathonPlayer : PlayerPawn
         +NOSKIN;
         +SLIDESONWALLS;
         Speed 1;
-        Health 150;
+        Health 100;
         Radius 11;
         Height 51;
         Mass 100;
@@ -20,7 +20,7 @@ class MarathonPlayer : PlayerPawn
         Player.StartItem "MagnumClip2", 8;
         Player.StartItem "MagnumAmmo", 3;
         Player.StartItem "MagnumCheck", 1;
-        Player.StartItem "OxygenTank", 420;
+        Player.StartItem "OxygenTank", 1000;
         Player.WeaponSlot 1, "Punch";
         Player.WeaponSlot 2, "Magnum", "Magnums";
         Player.WeaponSlot 3, "FusionPistol";

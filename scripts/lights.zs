@@ -44,7 +44,7 @@ class LightThinker : Thinker {
     int deactivatingIntensity;
     int deactivatingIntensityDelta;
 
-    array <Sector> sectors;
+    array <int> sectorIndexes;
 
     LightThinker Init(
     int tagId, 
@@ -124,7 +124,7 @@ class LightThinker : Thinker {
 
         while((i = sti.Next()) >= 0)
         {
-            self.sectors.Push(level.sectors[i]);
+            self.sectorIndexes.Push(i);
         }
 
         return self;
@@ -201,28 +201,28 @@ class LightThinker : Thinker {
         }
 
         self.currentIntensity = lightFn(self.startTransitionIntensity, fn, period, intensity, intensityDelta, self.ticks);
-        for(int i = 0; i < self.sectors.Size(); i++) {
-            self.sectors[i].SetLightLevel(int(currentIntensity));
+        for(int i = 0; i < self.sectorIndexes.Size(); i++) {
+            level.sectors[self.sectorIndexes[i]].SetLightLevel(int(currentIntensity));
         }
         if(self.ticks >= period) {
             self.ticks = 0;
             self.startTransitionIntensity = intensity;
-            if(self.state == 4) {
+            if(self.state == 4 && self.active1Period > 0) {
                 // Console.Printf("Active 1");
                 self.state = 0;
-            } else if(self.state == 5) {
+            } else if(self.state == 5 && self.inactive1Period > 0) {
                 // Console.Printf("Inactive 1");
                 self.state = 2;
-            } else if(self.state == 0) {
+            } else if(self.state == 0 && self.active2Period > 0) {
                 // Console.Printf("Active 2");
                 self.state = 1;
-            } else if(self.state == 1) {
+            } else if(self.state == 1 && self.active1Period > 0) {
                 // Console.Printf("Active 1");
                 self.state = 0;
-            } else if(self.state == 2) {
+            } else if(self.state == 2 && self.inactive2Period > 0) {
                 // Console.Printf("Inactive 2");
                 self.state = 3;
-            } else if(self.state == 3) {
+            } else if(self.state == 3 && self.inactive1Period > 0) {
                 // Console.Printf("Inactive 1");
                 self.state = 2;
             }

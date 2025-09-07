@@ -1,16 +1,23 @@
 class PlatformThinker : Thinker {
     int tagId;
     int controlPanelTagId;
+    string type;
     double minHeight;
     double maxHeight;
     double speed;
     int delay;
+    int activatorTagId;
 
+    PlayerPawn player;
     Sector sector;
     bool isDoor;
     bool fromFloor;
     bool fromCeiling;
     bool floorToCeiling;
+    bool contractsSlower;
+    bool cannotBeExternallyDeactivated;
+    bool causesDamage;
+    bool reversesDirectionWhenObstructed;
     bool activatesOnlyOnce;
     bool deactivatesAtEachLevel;
     bool deactivatesAtInitialLevel;
@@ -25,6 +32,7 @@ class PlatformThinker : Thinker {
     bool activatesAdjacentPlatformsAtEachLevel;
     bool deactivatesAdjacentPlatformsWhenActivating;
     bool deactivatesAdjacentPlatformsWhenDeactivating;
+    bool doesNotActivateParent;
 
     bool isExtended;
     bool isExtending;
@@ -38,19 +46,19 @@ class PlatformThinker : Thinker {
     int delayTicks;
     bool hitLimit;
     double lastCombinedDelta;
+    bool obstructReverse;
 
     int minFloor;
     int maxFloor;
     int minCeiling;
     int maxCeiling;
 
-    array <Line> controlPanelLines;
-
     array <int> adjacentPlatformTags;
 
     PlatformThinker Init(
         int tagId, 
         int controlPanelTagId,
+        string type,
         double minHeight, 
         double maxHeight, 
         double speed, 
@@ -61,6 +69,10 @@ class PlatformThinker : Thinker {
         bool floorToCeiling,
         bool isExtended,
         bool isActive,
+        bool contractsSlower,
+        bool cannotBeExternallyDeactivated,
+        bool causesDamage,
+        bool reversesDirectionWhenObstructed,
         bool activatesOnlyOnce,
         bool deactivatesAtEachLevel,
         bool deactivatesAtInitialLevel,
@@ -78,15 +90,19 @@ class PlatformThinker : Thinker {
         {
             self.sector = level.sectors[i];
         }
+        if(self.sector == null) {
+            Console.Printf("PlatformThinker: Sector with tag %d not found", tagId);
+            return null;
+        }
 
-        if(controlPanelTagId >= 0) {         
-            LineIdIterator li = Level.CreateLineIdIterator(controlPanelTagId);
-            while((i = li.Next()) >= 0)
-            {
-                self.controlPanelLines.push(level.lines[i]);
+        for (int i = 0; i < Players.size(); i++) {
+            self.player = PlayerPawn(Players[i].mo);
+            if (self.player != null) {
+                break; // Take the first valid player
             }
         }
 
+        self.type = type;
         self.minHeight = minHeight;
         self.maxHeight = maxHeight;
         self.speed = speed;
@@ -98,6 +114,10 @@ class PlatformThinker : Thinker {
         self.floorToCeiling = floorToCeiling;
         self.isExtended = isExtended;
         self.isActive = isActive;
+        self.contractsSlower = contractsSlower;
+        self.cannotBeExternallyDeactivated = cannotBeExternallyDeactivated;
+        self.causesDamage = causesDamage;
+        self.reversesDirectionWhenObstructed = reversesDirectionWhenObstructed;
         self.activatesOnlyOnce = activatesOnlyOnce;
         self.deactivatesAtEachLevel = deactivatesAtEachLevel;
         self.deactivatesAtInitialLevel = deactivatesAtInitialLevel;
@@ -115,6 +135,7 @@ class PlatformThinker : Thinker {
         self.delayTicks = 0;
         self.hitLimit = false;
         self.lastCombinedDelta = 0;
+        self.obstructReverse = false;
 
         self.minFloor = self.minHeight;
         self.maxFloor = self.maxHeight;
@@ -137,17 +158,11 @@ class PlatformThinker : Thinker {
             }
         }
 
-        return self;
-    }
-
-    void AddUniqueInt(Array<int> arr, int value)
-    {
-        for (int i = 0; i < arr.size(); i++)
-        {
-            if (arr[i] == value)
-                return; // Already in array, do nothing
+        if(!isDoor && controlByPlayer) {
+            Polygon.Init(tagId, "PlatformActivate", tagId);
         }
-        arr.push(value); // Not found, add it
+
+        return self;
     }
     
     void GetAdjacentPlatformTags() {
@@ -158,13 +173,13 @@ class PlatformThinker : Thinker {
             if(line.frontsector != null && line.frontsector.Index() != self.sector.Index()) {
                 let platform = Platform.GetInstanceBySector(line.frontsector);
                 if(platform != null) {
-                    AddUniqueInt(self.adjacentPlatformTags, platform.tagId);
+                    Utils.AddUniqueInt(self.adjacentPlatformTags, platform.tagId);
                 }
             }
             if(line.backsector != null && line.backsector.Index() != self.sector.Index()) {
                 let platform = Platform.GetInstanceBySector(line.backsector);
                 if(platform != null) {
-                    AddUniqueInt(self.adjacentPlatformTags, platform.tagId);
+                    Utils.AddUniqueInt(self.adjacentPlatformTags, platform.tagId);
                 }
             }
         }
@@ -175,19 +190,33 @@ class PlatformThinker : Thinker {
         bool activatesAdjacentPlatformsWhenDeactivating,
         bool activatesAdjacentPlatformsAtEachLevel,
         bool deactivatesAdjacentPlatformsWhenActivating,
-        bool deactivatesAdjacentPlatformsWhenDeactivating) {
+        bool deactivatesAdjacentPlatformsWhenDeactivating,
+        bool doesNotActivateParent) {
         self.activatesAdjacentPlatformsWhenActivating = activatesAdjacentPlatformsWhenActivating;
         self.activatesAdjacentPlatformsWhenDeactivating = activatesAdjacentPlatformsWhenDeactivating;
         self.activatesAdjacentPlatformsAtEachLevel = activatesAdjacentPlatformsAtEachLevel;
         self.deactivatesAdjacentPlatformsWhenActivating = deactivatesAdjacentPlatformsWhenActivating;
         self.deactivatesAdjacentPlatformsWhenDeactivating = deactivatesAdjacentPlatformsWhenDeactivating;
+        self.doesNotActivateParent = doesNotActivateParent;
         GetAdjacentPlatformTags();
     }
 
-    void Activate() {
+    void ActivateFrom(int activatorTagId) {
         if(self.isActive || (self.activatesOnlyOnce && self.beenActivated)) {
             return;
         }
+        self.activatorTagId = activatorTagId;
+
+        // if(self.tagId == 145){
+            
+        //                     for (int i = 0; i < Players.size(); i++) {
+        //                     let player = PlayerPawn(Players[i].mo);
+
+                            
+        //                     player.DamageMobj(player, player, 22, "Crush");
+        //                     break;
+        //                     }
+        // }
         // Console.Printf("Activate %d", tagId);
         Switches.Toggle(self.controlPanelTagId, true);
         
@@ -199,6 +228,12 @@ class PlatformThinker : Thinker {
         }
         self.isActive = true;
         self.beenActivated = true;
+        self.isDelaying = false;
+        self.delayTicks = 0;
+    }
+
+    void Activate() {
+        ActivateFrom(-1);
     }
 
     void Deactivate() {
@@ -209,6 +244,8 @@ class PlatformThinker : Thinker {
         
         // Console.Printf("Deactivate %d", tagId);
         self.isActive = false;
+        self.isDelaying = false;
+        self.delayTicks = 0;
     }
 
     void Toggle() {
@@ -221,6 +258,9 @@ class PlatformThinker : Thinker {
             if(self.isDoor){ 
             }
         } else {
+            if(self.cannotBeExternallyDeactivated) {
+                return;
+            }
             if(self.isDoor)
             {
                 self.isExtending = !self.isExtending;
@@ -255,8 +295,12 @@ class PlatformThinker : Thinker {
     void ActivateAdjacentPlatforms() {
         for (int i = 0; i < adjacentPlatformTags.Size(); i++) 
         {
+            if(self.doesNotActivateParent && adjacentPlatformTags[i] == self.activatorTagId) {
+                Console.Printf("Not activating %d", adjacentPlatformTags[i]);
+                continue;
+            }
             Console.Printf("Activating %d", adjacentPlatformTags[i]);
-            Platform.Activate(adjacentPlatformTags[i]);
+            Platform.ActivateFrom(adjacentPlatformTags[i], self.tagId);
         }
     }
 
@@ -270,10 +314,11 @@ class PlatformThinker : Thinker {
     override void Tick() {
         double originalFloorHeight = sector.floorplane.d;
         double originalCeilingHeight = sector.ceilingplane.d;
+
         if(self.isActive) {
-            //sector.SetLightLevel(0);
             double floorHeight = sector.floorplane.d;
             double ceilingHeight = sector.ceilingplane.d;
+
             if(self.isDelaying) {
                 if(self.delayTicks < self.delay) {
                     self.delayTicks++;
@@ -286,17 +331,17 @@ class PlatformThinker : Thinker {
                 }
                 // Console.Printf("Delay %d", self.delayTicks);
             }
+
             if(!self.isDelaying){
                 if(self.fromFloor){
-                    if(isExtending){  
-                        // Console.Printf("Extending");         
+                    if(self.isExtending) {  
+                        //Console.Printf("Extending");         
                         self.sector.MoveFloor(self.speed, -self.maxFloor, 0, 1, false); 
                     }
                     else{    
-                        
-                        // Console.Printf("Contracting");         
+                        //Console.Printf("Contracting");         
                         self.sector.MoveFloor(self.speed, -self.minFloor, 0, -1, false); 
-                    }
+                     }
                     floorHeight = sector.floorplane.d;
                 }
                 if(self.fromCeiling){
@@ -310,18 +355,46 @@ class PlatformThinker : Thinker {
                     ceilingHeight = sector.ceilingplane.d;
                 }
 
+                if(Utils.OverlapsSector(player, sector)) {
+                    // Conlsole.Printf("Player overlaps sector");
+                    let space = ceilingHeight + floorHeight - player.Height;
+                    if(space <= 0) {
+                        if(self.causesDamage){
+                            if(self.reversesDirectionWhenObstructed) {
+                                player.A_StartSound("CRUNCH", CHAN_BODY, CHANF_DEFAULT, 1);
+                                player.DamageMobj(player, player, 22, "Crush");
+                            } else {
+                                player.DamageMobj(player, player, 999, "Crush");
+                            }
+                        }
+                        
+                        if(self.reversesDirectionWhenObstructed) {
+                            Console.Printf("Obstruction!: %f", space);
+                            self.obstructReverse = true;
+                            Console.Printf("Reversing direction due to obstruction");
+                            self.isExtending = !self.isExtending;
+                        }
+                    }
+                }
 
                 if((self.fromFloor && ((self.isExtending && -floorHeight >= self.maxFloor) || (!self.isExtending && -floorHeight <= self.minFloor)))  ||
                     (self.fromCeiling && ((self.isExtending && ceilingHeight <= self.minCeiling) || (!self.isExtending && ceilingHeight >= self.maxCeiling))) ) {
                         self.hitLimit = true;
                         self.isExtended = self.isExtending;
                         if((self.deactivatesAtInitialLevel && self.isExtended == self.initialExtended) || self.deactivatesAtEachLevel) {
-                            self.isActive = false;
+                            Deactivate();
+                            
+                            if(self.activatesAdjacentPlatformsWhenDeactivating) {
+                                ActivateAdjacentPlatforms();
+                            }
+                            if(self.deactivatesAdjacentPlatformsWhenDeactivating) {
+                                DeactivateAdjacentPlatforms();
+                            }
                             self.isExtending = !self.isExtending;
                         }
                         //Console.Printf("Yo");
 
-                    // Deactivate();
+                    // 
                 }
             }
             
@@ -335,31 +408,29 @@ class PlatformThinker : Thinker {
 
         if(combinedDelta == 0 && lastCombinedDelta != 0) {
             if(!self.isDoor) {
-                sector.StartSoundSequence(0, "MarathonPlatformStop", 0);
+                if(self.type == "HeavySphtPlatform" || self.type == "NoisySphtPlatform") {
+                    sector.StartSoundSequence(0, "MarathonPlatformStop", 0);
+                }
             }
 
-            if(self.activatesAdjacentPlatformsWhenDeactivating) {
-                ActivateAdjacentPlatforms();
-            }
-            if(self.deactivatesAdjacentPlatformsWhenDeactivating) {
-                DeactivateAdjacentPlatforms();
-            }
         }
         if((combinedDelta != 0 && lastCombinedDelta == 0) || combinedDelta > 0 && lastCombinedDelta < 0 || combinedDelta < 0 && lastCombinedDelta > 0) {
             if(self.isDoor) {               
-                if(combinedDelta > 0) {
+                if(self.obstructReverse) {
+                    self.obstructReverse = false;
+                    Console.Printf("Obstruct!");
+                    sector.StartSoundSequence(0, "MarathonDoorStuck", 0);
+                } else if(combinedDelta > 0) {
                     Console.Printf("Extend!");
-                    if(self.isDoor) {
-                        sector.StartSoundSequence(0, "MarathonDoorClose", 0);
-                    }
+                    sector.StartSoundSequence(0, "MarathonDoorClose", 0);
                 } else {
                     Console.Printf("Retract!");
-                    if(self.isDoor) {
-                        sector.StartSoundSequence(0, "MarathonDoorOpen", 0);
-                    }
+                    sector.StartSoundSequence(0, "MarathonDoorOpen", 0);
                 }
             } else{
-                sector.StartSoundSequence(0, "MarathonPlatformStart", 0);
+                if(self.type == "HeavySphtPlatform" || self.type == "NoisySphtPlatform") {
+                    sector.StartSoundSequence(0, "MarathonPlatformStart", 0);
+                }
             }
 
             if(self.activatesAdjacentPlatformsWhenActivating) {
@@ -378,44 +449,7 @@ class PlatformThinker : Thinker {
         if(self.hitLimit) {
             self.isDelaying = true;
             self.hitLimit = false;
-            if(!self.isDoor){
-                // Console.Printf("Hitlimit %d", tagId);
-                // sector.StartSoundSequence(0, "MarathonPlatformStop", 0);
-            }
             
-        }
-        else if(self.isActive && !self.previousActive) {
-            
-            //activating
-            if(self.isDoor){
-                if(self.isExtending){
-                    // sector.StartSoundSequence(0, "MarathonDoorClose", 0);
-                } else {
-                    // sector.StartSoundSequence(0, "MarathonDoorOpen", 0);
-                }
-            } else {
-                // sector.StartSoundSequence(0, "MarathonPlatformStart", 0);
-            }
-        } 
-        else if(!self.isActive && self.previousActive) {
-            //deactivating
-            if(!self.isDoor) {
-                // Console.Printf("Deactivating %d", tagId);
-                // sector.StartSoundSequence(0, "MarathonPlatformStop", 0);
-            }
-        }
-        else if(self.isActive){
-            //reversing directions
-            if(self.isDoor && self.isExtending && !self.previousExtending) {                        
-                // sector.StartSoundSequence(0, "MarathonDoorClose", 0);
-            }
-            else if(self.isDoor && !self.isExtending && self.previousExtending) {                        
-                // sector.StartSoundSequence(0, "MarathonDoorOpen", 0);
-            }
-            else if(!self.isDoor && ((!self.isExtending && self.previousExtending) || (self.isExtending && !self.previousExtending))) {    
-                // Console.Printf("Reverse %d", tagId);                    
-                // sector.StartSoundSequence(0, "MarathonPlatformStart", 0);
-            }
         }
         self.previousActive = self.isActive;
         self.previousExtending = self.isExtending;
@@ -426,6 +460,7 @@ class Platform play {
     static void Init(
         int tagId, 
         int controlPanelTagId,
+        string type,
         double minHeight, 
         double maxHeight, 
         double speed, 
@@ -436,6 +471,10 @@ class Platform play {
         bool floorToCeiling,
         bool isExtended,
         bool isActive,
+        bool contractsSlower,
+        bool cannotBeExternallyDeactivated,
+        bool causesDamage,
+        bool reversesDirectionWhenObstructed,
         bool activatesOnlyOnce,
         bool deactivatesAtEachLevel,
         bool deactivatesAtInitialLevel,
@@ -449,6 +488,7 @@ class Platform play {
             p = new ("PlatformThinker").Init(
                 tagId, 
                 controlPanelTagId,
+                type,
                 minHeight, 
                 maxHeight, 
                 speed, 
@@ -459,6 +499,10 @@ class Platform play {
                 floorToCeiling,
                 isExtended,
                 isActive,
+                contractsSlower,
+                cannotBeExternallyDeactivated,
+                causesDamage,
+                reversesDirectionWhenObstructed,
                 activatesOnlyOnce,
                 deactivatesAtEachLevel,
                 deactivatesAtInitialLevel,
@@ -476,7 +520,8 @@ class Platform play {
         bool activatesAdjacentPlatformsWhenDeactivating,
         bool activatesAdjacentPlatformsAtEachLevel,
         bool deactivatesAdjacentPlatformsWhenActivating,
-        bool deactivatesAdjacentPlatformsWhenDeactivating) {
+        bool deactivatesAdjacentPlatformsWhenDeactivating,
+        bool doesNotActivateParent) {
         PlatformThinker p = GetInstance(tagId);
         if(p != null) {
             p.SetAdjacentPlatformRules(
@@ -484,7 +529,8 @@ class Platform play {
                 activatesAdjacentPlatformsWhenDeactivating,
                 activatesAdjacentPlatformsAtEachLevel,
                 deactivatesAdjacentPlatformsWhenActivating,
-                deactivatesAdjacentPlatformsWhenDeactivating);
+                deactivatesAdjacentPlatformsWhenDeactivating,
+                doesNotActivateParent);
         } else {
             Console.Printf("Platform tag %d does not exist", tagId);
         }
@@ -498,6 +544,16 @@ class Platform play {
             Console.Printf("Platform tag %d does not exist", tagId);
         }
     }
+
+    static void ActivateFrom(int tagId, int activatorTagId) {
+        PlatformThinker p = GetInstance(tagId);
+        if(p != null) {
+            p.ActivateFrom(activatorTagId);
+        } else {
+            Console.Printf("Platform tag %d does not exist", tagId);
+        }
+    }
+
     static void Deactivate(int tagId) {
         PlatformThinker p = GetInstance(tagId);
         if(p != null) {

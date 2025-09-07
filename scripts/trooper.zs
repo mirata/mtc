@@ -58,7 +58,7 @@ class Trooper1 : MarathonActor
             TROP E 10 A_Look;
             loop;
         See:
-            TROP A 0 TargetBobs();
+            TROP A 0 TargetPlayerAllies();
             TROP ABCD 3 A_Chase;
             loop;
         Missile:

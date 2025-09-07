@@ -53,8 +53,8 @@ Class MarathonStatusBar : BaseStatusBar
 
 			let scale = (0.6, 0.6);
 			let radarCenter = (106, -94);
-			let horizontalPosition = vrDisabled ? 0 : 110;
-			let verticalPosition = -20;
+			let horizontalPosition = vrDisabled ? 0 : 150;
+			let verticalPosition = vrDisabled ? -20 : 40;
 
 			let radarOffset = (42, -28);
 			let healthOffset = (202, -43);
@@ -147,28 +147,28 @@ Class MarathonStatusBar : BaseStatusBar
 				DrawImage("MA75AM", (horizontalPosition + ((ammoOffset.x + (i * 6)) * scale.x), verticalPosition + (ammoOffset.y * scale.y)), DI_SCREEN_RIGHT_BOTTOM | DI_ITEM_RIGHT_BOTTOM, 1, (-1, -1), scale);
 			}*/
 
-			if(CPlayer.mo.health > 300)
+			if(CPlayer.mo.health > 200)
 			{
-				double healthPercent = (CPlayer.mo.health - 300.0) / 150.0;
+				double healthPercent = (CPlayer.mo.health - 200.0) / 100.0;
             	DrawImage("HEALTH2", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x, scale.y));
             	DrawImage("HEALTH3", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x * healthPercent, scale.y));
 			}
-			else if(CPlayer.mo.health > 150)
+			else if(CPlayer.mo.health > 100)
 			{
-				double healthPercent = (CPlayer.mo.health - 150.0) / 150.0;
+				double healthPercent = (CPlayer.mo.health - 100.0) / 100.0;
             	DrawImage("HEALTH1", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x, scale.y));
             	DrawImage("HEALTH2", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x * healthPercent, scale.y));
 			}
 			else
 			{
-				double healthPercent = CPlayer.mo.health / 150.0;
+				double healthPercent = CPlayer.mo.health / 100.0;
             	DrawImage("HEALTH1", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x * healthPercent, scale.y));
 			}
 
             DrawImage("BAR", (-horizontalPosition + (healthOffset.x * scale.x), verticalPosition + (healthOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale, STYLE_Add);
 
 			let oxygen = GetAmount("OxygenTank");
-			let oxygenPercent = double(oxygen) / 420;
+			let oxygenPercent = double(oxygen) / 1000;
             DrawImage("OXYGEN", (-horizontalPosition + (oxygenOffset.x * scale.x), verticalPosition + (oxygenOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), (scale.x * oxygenPercent, scale.y));
             DrawImage("BAR", (-horizontalPosition + (oxygenOffset.x * scale.x), verticalPosition + (oxygenOffset.y * scale.y)), DI_SCREEN_LEFT_BOTTOM | DI_ITEM_LEFT_BOTTOM, 1, (-1, -1), scale, STYLE_Add);
 

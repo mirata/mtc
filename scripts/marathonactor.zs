@@ -172,14 +172,22 @@ class MarathonActor : Actor
         return closest;
     }
 
-    void TargetBobs()
+    void TargetPlayerAllies()
     {
-        let t = FindClosestTarget("Bob1");
+        let t = FindClosestTarget("MarathonAlly");
         //Console.Printf("Targeting %s", t.GetClassName());
         if(t != null)
         {
             A_ClearTarget();
             target = t;
         }
+    }
+}
+
+class MarathonAlly : MarathonActor
+{
+    Default
+    {
+        MarathonActor.friendlyHud true;
     }
 }

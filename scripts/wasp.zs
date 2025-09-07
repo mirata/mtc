@@ -40,7 +40,7 @@ class Wasp1 : MarathonActor
             WASP ABCB 6 A_Look;
             Loop;
         See:
-            WASP A 0 TargetBobs();
+            WASP A 0 TargetPlayerAllies();
             WASP A 0 A_StartSound("WASPFLAP");
             WASP AABBCCBB 3 A_Chase;
             Loop;

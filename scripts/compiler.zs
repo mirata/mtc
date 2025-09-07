@@ -38,7 +38,7 @@ class Compiler1 : MarathonActor
 			COMP A 3 A_Look;
 			Loop;
 		See:
-            COMP A 0 TargetBobs();
+            COMP A 0 TargetPlayerAllies();
 			COMP AAABBB 3 A_Chase;
 			Loop;
 		Missile:
