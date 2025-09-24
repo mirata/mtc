@@ -1,4 +1,4 @@
-class HealThinker : Thinker {
+class HealTerminalThinker : Thinker {
     
     PlayerPawn player;
     int tagId;
@@ -9,7 +9,7 @@ class HealThinker : Thinker {
 
     Vector3 activatePos;
 
-    HealThinker Init(
+    HealTerminalThinker Init(
         int tagId, 
         string type,
         int factor) {
@@ -30,7 +30,7 @@ class HealThinker : Thinker {
     }
 
     void Activate() {
-        Console.Printf("Activating HealThinker: %d", tagId);
+        Console.Printf("Activating HealTerminalThinker: %d", tagId);
         if(self.isActive) {
             return;
         }
@@ -72,7 +72,7 @@ class HealThinker : Thinker {
         self.isActive = false;
     }
 
-    void Toggle() {
+    void Interact() {
         if(!self.isActive) {
             Activate();
         } else {
@@ -126,46 +126,29 @@ class HealTerminal play {
         int tagId, 
         string type,
         int factor) {
-        HealThinker p = GetInstance(tagId);
+        HealTerminalThinker p = GetInstance(tagId);
         if(p == null) {
-            p = new ("HealThinker").Init(
+            p = new ("HealTerminalThinker").Init(
                 tagId, 
                 type,
                 factor);
         }
     }
 
-    static void Activate(int tagId) {
-        HealThinker p = GetInstance(tagId);
+    static void Interact(int tagId) {
+        HealTerminalThinker p = GetInstance(tagId);
         if(p != null) {
-            p.Activate();
-        } else {
-            Console.Printf("HealTerminal tag %d does not exist", tagId);
-        }
-    }
-    static void Deactivate(int tagId) {
-        HealThinker p = GetInstance(tagId);
-        if(p != null) {
-            p.Deactivate();
+            p.Interact();
         } else {
             Console.Printf("HealTerminal tag %d does not exist", tagId);
         }
     }
 
-    static void Toggle(int tagId) {
-        HealThinker p = GetInstance(tagId);
-        if(p != null) {
-            p.Toggle();
-        } else {
-            Console.Printf("HealTerminal tag %d does not exist", tagId);
-        }
-    }
+    static HealTerminalThinker GetInstance(int tagId) {
+        ThinkerIterator it = ThinkerIterator.Create("HealTerminalThinker");
+        HealTerminalThinker p = null;
 
-    static HealThinker GetInstance(int tagId) {
-        ThinkerIterator it = ThinkerIterator.Create("HealThinker");
-        HealThinker p = null;
-
-        while (p = HealThinker(it.next()))
+        while (p = HealTerminalThinker(it.next()))
         {
             if(p.tagId == tagId) {
                 //Console.Printf("Found existing thinker for tag %d", tagId);

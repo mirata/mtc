@@ -5,15 +5,13 @@ class PolygonThinker : Thinker {
 
     int lastSectorNum;
 
-    Sector sector;
+    array <int> sectorIndexes;
     Vector3 teleportPosition;
     PlayerPawn player;
     PlayerInfo playerInfo;
     bool isTeleportStart;
     bool isTeleporting;
     int teleportTicks;
-    float playerFOV;
-    int teleportDuration;
 
     PolygonThinker Init(
         int tagId,
@@ -26,20 +24,19 @@ class PolygonThinker : Thinker {
         self.teleportTicks = 0;
         self.isTeleportStart = false;
         self.isTeleporting = false;
-        self.teleportDuration = 30;
         SectorTagIterator sti = level.CreateSectorTagIterator(tagId);
         int i;
 
-        if((i = sti.Next()) >= 0)
+        while((i = sti.Next()) >= 0)
         {
-            self.sector = level.sectors[i];
+            self.sectorIndexes.Push(i);
         }
+
 
         for (int i = 0; i < Players.size(); i++) {
             self.player = PlayerPawn(Players[i].mo);
             if (self.player != null) {
                 self.playerInfo = Players[i];
-                self.playerFOV = self.playerInfo.DesiredFov;
                 break; // Take the first valid player
             }
         }
@@ -60,64 +57,55 @@ class PolygonThinker : Thinker {
         let currentSectorNum = -1;
         if(player.CurSector != null) {
             currentSectorNum = player.CurSector.sectornum;
-            if(self.sector != null && currentSectorNum == self.sector.sectornum) {
-                if(currentSectorNum != self.lastSectorNum) {
-                
-                    if(self.type == "Teleport") {
-                        if(!self.isTeleportStart) {
-                            self.isTeleportStart = true;
+            for(int i = 0; i < self.sectorIndexes.Size(); i++) {
+                if(currentSectorNum == level.sectors[self.sectorIndexes[i]].sectornum) {
+                    if(currentSectorNum != self.lastSectorNum) {
+                    
+                        if(self.type == "Teleport") {
+                            if(!self.isTeleportStart) {
+                                self.isTeleportStart = true;
+                            }
+                        } 
+                        if(self.type == "PlatformActivate") {
+                            Console.Printf("Activating platform %d", self.targetId);
+                            Platform.Activate(self.targetId);
+                        } 
+                        else if(self.type == "PlatformDeactivate") {
+                            Console.Printf("Deactivating platform %d", self.targetId);
+                            Platform.Deactivate(self.targetId);
+                        } 
+                        else if(self.type == "LightActivate") {
+                            //self.playerInfo.DesiredFov = 180.0;
+                            Console.Printf("Activating light %d", self.targetId);
+                            Light.Activate(self.targetId);
+                        } 
+                        else if(self.type == "LightDeactivate") {
+                            //self.playerInfo.DesiredFov = self.playerFOV;
+                            Console.Printf("Deactivating light %d", self.targetId);
+                            Light.Deactivate(self.targetId);
                         }
-                    } 
-                    if(self.type == "PlatformActivate") {
-                        Console.Printf("Activating platform %d", self.targetId);
-                        Platform.Activate(self.targetId);
-                    } 
-                    else if(self.type == "PlatformDeactivate") {
-                        Console.Printf("Deactivating platform %d", self.targetId);
-                        Platform.Deactivate(self.targetId);
-                    } 
-                    else if(self.type == "LightActivate") {
-                        //self.playerInfo.DesiredFov = 180.0;
-                        Console.Printf("Activating light %d", self.targetId);
-                        Light.Activate(self.targetId);
-                    } 
-                    else if(self.type == "LightDeactivate") {
-                        //self.playerInfo.DesiredFov = self.playerFOV;
-                        Console.Printf("Deactivating light %d", self.targetId);
-                        Light.Deactivate(self.targetId);
+                        else if(self.type == "VisibleMonsterTrigger") {
+                            //self.playerInfo.DesiredFov = self.playerFOV;
+                            Console.Printf("Waking monsters");
+                            player.A_AlertMonsters();
+                        }
                     }
+                } else{
+                    self.isTeleportStart = false;
                 }
-            } else{
-                self.isTeleportStart = false;
             }
         }
 
-        if(self.isTeleportStart && player.vel.Length() < 1.0) {
-            Actor.Spawn("MarathonTeleport", self.player.pos, ALLOW_REPLACE);
+        if(!self.isTeleporting && self.isTeleportStart && player.vel.Length() < 1.0) {
+            Teleport.TeleportTo(self.targetId);            
             self.isTeleporting = true;
             self.isTeleportStart = false;
         }
 
         self.lastSectorNum = currentSectorNum;
 
-        if(self.isTeleporting) {
-            if(self.teleportTicks == 0) {
-                self.player.StartSoundSequence("TeleportOut", 0);
-            }
-            
-            if(self.teleportTicks == (self.teleportDuration / 2)) {
-                self.player.StartSoundSequence("TeleportIn", 0);
-            }
-            self.teleportTicks++;
-            float val = Sin(float(self.teleportTicks) / self.teleportDuration * 180);
-            self.playerInfo.DesiredFOV = ((160.0 - self.PlayerFOV) * val) + self.PlayerFOV;
-            if(self.teleportTicks == self.teleportDuration / 2) {
-                // Console.Printf("Teleporting player");
-                self.player.Teleport(self.teleportPosition, self.player.Angle, TF_USEACTORFOG | TF_KEEPANGLE  | TF_KEEPVELOCITY);
-                // Actor.Spawn("MarathonTeleportIn", self.teleportPosition, ALLOW_REPLACE);
-            }
-            
-            if(self.teleportTicks >= self.teleportDuration) {
+        if(self.isTeleporting) {            
+            if(self.teleportTicks >= 30) {
                 self.isTeleporting = false;
                 self.teleportTicks = 0;
             }
@@ -146,23 +134,6 @@ class Polygon play {
         while (p = PolygonThinker(it.next()))
         {
             if(p.tagId == tagId) {
-                //Console.Printf("Found existing thinker for tag %d", tagId);
-                return p;
-            }
-        }
-        //Console.Printf("Polygon tag %d does not exist", tagId);
-        return null;
-    }
-
-    
-
-    static PolygonThinker GetInstanceBySector(Sector sector) {
-        ThinkerIterator it = ThinkerIterator.Create("PolygonThinker");
-        PolygonThinker p = null;
-
-        while (p = PolygonThinker(it.next()))
-        {
-            if(p.sector == sector) {
                 //Console.Printf("Found existing thinker for tag %d", tagId);
                 return p;
             }

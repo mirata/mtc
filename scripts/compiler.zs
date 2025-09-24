@@ -94,7 +94,7 @@ class Compiler3 : Compiler1
         MarathonActor.invisibleHud true;
         Translation "Shadow";
         RenderStyle "STYLE_Translucent";
-        alpha 0.25;
+        alpha 0.35;
         obituary "%o thought he saw a compiler.";
     }
     States
@@ -124,7 +124,7 @@ class Compiler4 : Compiler2
         MarathonActor.invisibleHud true;
         Translation "Shadow";
         RenderStyle "STYLE_Translucent";
-        alpha 0.25;
+        alpha 0.35;
         obituary "%o thought he saw a compiler.";
     }
     States

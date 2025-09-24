@@ -88,7 +88,18 @@
 //     }
 // }
 
-class MarathonTeleport : Actor
+class MarathonTeleportOut : Actor
+{
+    Default{
+    }
+    States
+    {
+      Spawn:
+        Stop;
+    }
+}
+
+class MarathonTeleportIn : Actor
 {
     Default{
     }

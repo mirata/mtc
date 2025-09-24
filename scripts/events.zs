@@ -130,28 +130,70 @@ class TeleportOverlay : EventHandler
 {
     int ticks;
     bool show;
+    bool fadeIn;
     float intensity;
+    PlayerInfo playerInfo;
+    PlayerPawn player;
+    float playerFOV;
 
-    override void WorldTick()	// PLAY scope
-    {
-        if(show)
-        {
-            ticks++;
-            //intensity should ramp from 0 to 1.0 at 15 ticks, then back down to 0.0 at 30 ticks
-            intensity = ticks < 15 ? (ticks / 15.0) : (1.0 - ((ticks - 15) / 15.0));
-            if(ticks > 30)
-            {
-                show = false;
+    override void WorldLoaded(WorldEvent e) {
+        show = false;
+        ticks = 0;
+        fadeIn = true;
+        intensity = 0.0;
+
+        for (int i = 0; i < Players.size(); i++) {
+            self.playerInfo = Players[i];
+            self.playerFOV = self.playerInfo.DesiredFov;
+            self.player = PlayerPawn(Players[i].mo);
+            if (self.player != null) {
+                break; // Take the first valid player
             }
         }
+
+        Teleport.TeleportIn();
     }
 
     override void WorldThingSpawned(WorldEvent e)
     {
-        if (e.Thing.GetClass() == "MarathonTeleport")
+        if (e.Thing.GetClass() == "MarathonTeleportOut")
         {
+            self.player.StartSoundSequence("TeleportOut", 0);
             show = true;
+            fadeIn = true;
             ticks = 0;
+        }
+        else if (e.Thing.GetClass() == "MarathonTeleportIn")
+        {
+            self.player.StartSoundSequence("TeleportIn", 0);
+            show = true;
+            fadeIn = false;
+            ticks = 0;
+        }
+    }
+
+    override void WorldTick()	// PLAY scope
+    {
+        let teleportDuration = 15;
+        if(show)
+        {
+            ticks++;
+            //intensity should ramp from 0 to 1.0 at 15 ticks, then back down to 0.0 at 30 ticks
+            intensity = (ticks / float(teleportDuration));
+            if(intensity > 1.0) { intensity = 1.0; }
+            if(intensity < 0.0) { intensity = 0.0; }
+            if(!fadeIn) {
+                intensity = 1.0 - intensity;
+            }
+            // Console.Printf("Teleport intensity: %f", intensity);
+            int pos = ticks;
+            float val = Sin(intensity * 90);
+            self.playerInfo.DesiredFOV = ((160.0 - self.PlayerFOV) * val) + self.PlayerFOV;
+
+            if(ticks > (teleportDuration + 35))
+            {
+                show = false;
+            }
         }
     }
 

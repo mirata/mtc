@@ -105,3 +105,13 @@ end
 	play   TPORTIN
 	stopsound	NONE
 end
+
+:MarathonTerminal
+	play   TERM
+	stopsound	NONE
+end
+
+:MarathonBeep
+	play   BEEP
+	stopsound	NONE
+end

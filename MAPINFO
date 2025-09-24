@@ -70,7 +70,6 @@ gameinfo
 	border = DoomBorder
 	telefogheight = 0
 	defkickback = 100
-	skyflatname = "F_SKY1"
 	defaultbloodcolor = "68 00 00"
 	defaultbloodparticlecolor = "ff 00 00"	
 	drawreadthis = true
@@ -78,6 +77,7 @@ gameinfo
    dimcolor = "00 00 00"
    dimamount = 0.5
    definventorymaxamount = 25
+   noautosave = true
    PlayerClass = "MarathonPlayer"
    StatusBarClass = "MarathonStatusBar"
    AddEventHandlers = "JuggernautExplosion", "DamageOverlay", "TeleportOverlay", "VacuumHandler"
@@ -709,7 +709,7 @@ map map34 "Spiral Insanity"
    pixelratio = 1
    AirControl = 1
    EvenLighting
-   }
+}
 map map35 "Waldo World Arena"
 {
    sky1 = "SKY", 0.0

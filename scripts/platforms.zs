@@ -53,6 +53,7 @@ class PlatformThinker : Thinker {
     int minCeiling;
     int maxCeiling;
 
+    array <int> sectorIndexes;
     array <int> adjacentPlatformTags;
 
     PlatformThinker Init(
@@ -86,10 +87,14 @@ class PlatformThinker : Thinker {
         SectorTagIterator sti = level.CreateSectorTagIterator(tagId);
         int i;
 
-        if((i = sti.Next()) >= 0)
+        while((i = sti.Next()) >= 0)
         {
-            self.sector = level.sectors[i];
+            self.sectorIndexes.Push(i);
+            if(self.sector == null) {
+                self.sector = level.sectors[i];
+            }
         }
+
         if(self.sector == null) {
             Console.Printf("PlatformThinker: Sector with tag %d not found", tagId);
             return null;
@@ -149,12 +154,17 @@ class PlatformThinker : Thinker {
         if(self.isExtended) {
             if(self.fromFloor){
                 // Console.Printf("Move Floor %d", maxFloor);
-                self.sector.MoveFloor(self.maxFloor + sector.floorplane.d, -self.maxFloor, 0, 1, false); 
+                for(int i = 0; i < self.sectorIndexes.Size(); i++) {
+                    level.sectors[self.sectorIndexes[i]].MoveFloor(self.maxFloor + sector.floorplane.d, -self.maxFloor, 0, 1, false); 
+                }
             }
         
             if(self.fromCeiling){
                 // Console.Printf("Move Ceiling %d", minCeiling);
-                self.sector.MoveCeiling(sector.ceilingplane.d - self.minCeiling, self.minCeiling, 0, -1, false); 
+                for(int i = 0; i < self.sectorIndexes.Size(); i++) {
+                    let cur = sector.ceilingplane.d;
+                    level.sectors[self.sectorIndexes[i]].MoveCeiling(sector.ceilingplane.d - self.minCeiling, self.minCeiling, 0, -1, false); 
+                }
             }
         }
 
@@ -335,24 +345,46 @@ class PlatformThinker : Thinker {
             if(!self.isDelaying){
                 if(self.fromFloor){
                     if(self.isExtending) {  
-                        //Console.Printf("Extending");         
-                        self.sector.MoveFloor(self.speed, -self.maxFloor, 0, 1, false); 
+                        //Console.Printf("Extending"); 
+                        for(int i = 0; i < self.sectorIndexes.Size(); i++) {        
+                            level.sectors[self.sectorIndexes[i]].MoveFloor(self.speed, -self.maxFloor, 0, 1, false); 
+                        }
                     }
                     else{    
                         //Console.Printf("Contracting");         
-                        self.sector.MoveFloor(self.speed, -self.minFloor, 0, -1, false); 
+                        for(int i = 0; i < self.sectorIndexes.Size(); i++) {
+                            level.sectors[self.sectorIndexes[i]].MoveFloor(self.speed, -self.minFloor, 0, -1, false); 
+                        }
                      }
                     floorHeight = sector.floorplane.d;
                 }
                 if(self.fromCeiling){
+                    let cur = sector.ceilingplane.d;
                     if(isExtending){           
-                        self.sector.MoveCeiling(self.speed, self.minCeiling, 0, -1, false); 
+                        for(int i = 0; i < self.sectorIndexes.Size(); i++) {
+                            level.sectors[self.sectorIndexes[i]].MoveCeiling(self.speed, self.minCeiling, 0, -1, false); 
+                        }
                     }
                     else{    
                         //Console.Printf("Opening");
-                        self.sector.MoveCeiling(self.speed, self.maxCeiling, 0, 1, false); 
+                        for(int i = 0; i < self.sectorIndexes.Size(); i++) {
+                            level.sectors[self.sectorIndexes[i]].MoveCeiling(self.speed, self.maxCeiling, 0, 1, false); 
+                        }
                     }
                     ceilingHeight = sector.ceilingplane.d;
+                    
+                    for(int i = 0; i < self.sectorIndexes.Size(); i++) {
+                        let s = level.sectors[self.sectorIndexes[i]];
+                        for(int j = 0; j < s.lines.Size(); j++) {
+                            let line = s.lines[j];
+                                
+                            Side side = line.sidedef[1];
+                            
+                            let off = side.GetTextureYOffset(Side.mid);
+                            off += (cur - s.ceilingplane.d);
+                            side.SetTextureYOffset(Side.mid, off);
+                        }
+                    }
                 }
 
                 if(Utils.OverlapsSector(player, sector)) {
