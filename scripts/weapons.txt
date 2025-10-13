@@ -259,6 +259,8 @@ ACTOR Magnumclip : Ammo
   Ammo.BackpackAmount 0
   Ammo.BackpackMaxAmount 8
   Inventory.Icon "MAGNH0"
+  radius 20
+  height 20
   States
   {
   Spawn:
@@ -490,6 +492,8 @@ ACTOR Fusionammo : Ammo replaces cell
   Translation "73:79=[149,149,34]:[53,53,19]", "160:167=[233,222,20]:[156,149,14]"
   Inventory.Icon "FUSIF0"
   scale 0.5
+  radius 20
+  height 20
   States
   {
   Spawn:
@@ -797,7 +801,7 @@ ACTOR assaultammo : Ammo replaces clipbox
   //YScale 0.5
   +NOCLIP
   spawnID 100
-  radius 10
+  radius 20
   height 20
   States
   {
@@ -833,6 +837,8 @@ ACTOR grenadeammo : Ammo replaces rocketammo
   Ammo.BackpackMaxAmount 8
   Inventory.Icon "ASSUI0"
   scale 0.5
+  radius 20
+  height 20
   States
   {
   Spawn:

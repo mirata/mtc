@@ -1,4 +1,4 @@
-height 76;
+/* height 76;
 monospacefonts true, "0";
 
 statusbar normal
@@ -214,4 +214,4 @@ statusbar fullscreen, 0.4
 	{
 		drawnumber 2147483647, HUDFONT_DOOM, untranslated, frags, 315, 4;
 	}
-}
+} */

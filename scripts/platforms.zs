@@ -7,6 +7,7 @@ class PlatformThinker : Thinker {
     double speed;
     int delay;
     int activatorTagId;
+    bool isRepairPlatform;
 
     PlayerPawn player;
     Sector sector;
@@ -48,10 +49,10 @@ class PlatformThinker : Thinker {
     double lastCombinedDelta;
     bool obstructReverse;
 
-    int minFloor;
-    int maxFloor;
-    int minCeiling;
-    int maxCeiling;
+    double minFloor;
+    double maxFloor;
+    double minCeiling;
+    double maxCeiling;
 
     array <int> sectorIndexes;
     array <int> adjacentPlatformTags;
@@ -108,8 +109,11 @@ class PlatformThinker : Thinker {
         }
 
         self.type = type;
-        self.minHeight = minHeight;
-        self.maxHeight = maxHeight;
+
+        //we do this to allow an invisible amount of space between sectors - this allows sound propagation!
+        self.minHeight = float(minHeight) + float(0.000000001);
+        self.maxHeight = float(maxHeight) - float(0.000000001);
+
         self.speed = speed;
         self.delay = delay;
         self.isDoor = isDoor;
@@ -211,6 +215,10 @@ class PlatformThinker : Thinker {
         GetAdjacentPlatformTags();
     }
 
+    void SetRepairPlatform() {
+        self.isRepairPlatform = true;
+    }
+
     void ActivateFrom(int activatorTagId) {
         if(self.isActive || (self.activatesOnlyOnce && self.beenActivated)) {
             return;
@@ -228,6 +236,10 @@ class PlatformThinker : Thinker {
         //                     }
         // }
         // Console.Printf("Activate %d", tagId);
+        if(self.isRepairPlatform) {
+            LevelManager.Get().repairPlatformCount++;
+        }
+
         Switches.Toggle(self.controlPanelTagId, true);
         
         if(self.activatesLight >= 0) {
@@ -353,7 +365,7 @@ class PlatformThinker : Thinker {
                     else{    
                         //Console.Printf("Contracting");         
                         for(int i = 0; i < self.sectorIndexes.Size(); i++) {
-                            level.sectors[self.sectorIndexes[i]].MoveFloor(self.speed, -self.minFloor, 0, -1, false); 
+                            level.sectors[self.sectorIndexes[i]].MoveFloor(self.contractsSlower ? self.speed / 6 : self.speed, -self.minFloor, 0, -1, false); 
                         }
                      }
                     floorHeight = sector.floorplane.d;
@@ -368,7 +380,7 @@ class PlatformThinker : Thinker {
                     else{    
                         //Console.Printf("Opening");
                         for(int i = 0; i < self.sectorIndexes.Size(); i++) {
-                            level.sectors[self.sectorIndexes[i]].MoveCeiling(self.speed, self.maxCeiling, 0, 1, false); 
+                            level.sectors[self.sectorIndexes[i]].MoveCeiling(self.contractsSlower ? self.speed / 6 : self.speed, self.maxCeiling, 0, 1, false); 
                         }
                     }
                     ceilingHeight = sector.ceilingplane.d;
@@ -378,11 +390,18 @@ class PlatformThinker : Thinker {
                         for(int j = 0; j < s.lines.Size(); j++) {
                             let line = s.lines[j];
                                 
-                            Side side = line.sidedef[1];
-                            
-                            let off = side.GetTextureYOffset(Side.mid);
-                            off += (cur - s.ceilingplane.d);
-                            side.SetTextureYOffset(Side.mid, off);
+                            Side side0 = line.sidedef[0];
+                            if(side0 != null) {
+                                let off = side0.GetTextureYOffset(Side.mid);
+                                off += (cur - s.ceilingplane.d);
+                                side0.SetTextureYOffset(Side.mid, off);
+                            }
+                            Side side1 = line.sidedef[1];
+                            if(side1 != null) {
+                                let off = side1.GetTextureYOffset(Side.mid);
+                                off += (cur - s.ceilingplane.d);
+                                side1.SetTextureYOffset(Side.mid, off);
+                            }
                         }
                     }
                 }
@@ -563,6 +582,18 @@ class Platform play {
                 deactivatesAdjacentPlatformsWhenActivating,
                 deactivatesAdjacentPlatformsWhenDeactivating,
                 doesNotActivateParent);
+        } else {
+            Console.Printf("Platform tag %d does not exist", tagId);
+        }
+    }
+
+    static void SetRepairPlatform(
+        int tagId) {
+        PlatformThinker p = GetInstance(tagId);
+        if(p != null) {
+            
+            LevelManager.Get().repairPlatformTotal++;
+            p.SetRepairPlatform();
         } else {
             Console.Printf("Platform tag %d does not exist", tagId);
         }

@@ -13,8 +13,8 @@ class Hulk1 : MarathonActor
         +DONTGIB;
         obituary "%o was squashed by a Hulk.";
         health 1500;
-        radius 48;
-        height 84;
+        radius 28;
+        height 56;
         mass 1000;
         speed 8;
         painchance 80;

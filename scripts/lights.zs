@@ -170,32 +170,32 @@ class LightThinker : Thinker {
 
         if(self.state == 0) {
             fn = self.active1Fn;
-            period = self.active1Period + Random(-self.active1PeriodDelta, self.active1PeriodDelta);
+            period = self.active1Period + FRandom(-self.active1PeriodDelta, self.active1PeriodDelta);
             intensity = self.active1Intensity;
             intensityDelta = self.active1IntensityDelta;
         } else if(self.state == 1) {
             fn = self.active2Fn;
-            period = self.active2Period + Random(-self.active2PeriodDelta, self.active2PeriodDelta);
+            period = self.active2Period + FRandom(-self.active2PeriodDelta, self.active2PeriodDelta);
             intensity = self.active2Intensity;
             intensityDelta = self.active2IntensityDelta;
         } else if(self.state == 2) {
             fn = self.inactive1Fn;
-            period = self.inactive1Period + Random(-self.inactive1PeriodDelta, self.inactive1PeriodDelta);
+            period = self.inactive1Period + FRandom(-self.inactive1PeriodDelta, self.inactive1PeriodDelta);
             intensity = self.inactive1Intensity;
             intensityDelta = self.inactive1IntensityDelta;
         } else if(self.state == 3) {
             fn = self.inactive2Fn;
-            period = self.inactive2Period + Random(-self.inactive2PeriodDelta, self.inactive2PeriodDelta);
+            period = self.inactive2Period + FRandom(-self.inactive2PeriodDelta, self.inactive2PeriodDelta);
             intensity = self.inactive2Intensity;
             intensityDelta = self.inactive2IntensityDelta;
         } else if(self.state == 4) {
             fn = self.activatingFn;
-            period = self.activatingPeriod + Random(-self.activatingPeriodDelta, self.activatingPeriodDelta);
+            period = self.activatingPeriod + FRandom(-self.activatingPeriodDelta, self.activatingPeriodDelta);
             intensity = self.activatingIntensity;
             intensityDelta = self.activatingIntensityDelta;
         } else if(self.state == 5) {
             fn = self.deactivatingFn;
-            period = self.deactivatingPeriod + Random(-self.deactivatingPeriodDelta, self.deactivatingPeriodDelta);
+            period = self.deactivatingPeriod + FRandom(-self.deactivatingPeriodDelta, self.deactivatingPeriodDelta);
             intensity = self.deactivatingIntensity;
             intensityDelta = self.deactivatingIntensityDelta;
         }
@@ -255,7 +255,7 @@ class LightThinker : Thinker {
                 // Console.Printf("Smooth %f", v);
                 break;
             case 3:
-                int d = Random(-intensityDelta, intensityDelta);
+                int d = FRandom(-intensityDelta, intensityDelta);
                 frac = float(intensity - startTransitionIntensity) / period;
                 v = startTransitionIntensity + (frac * ticks ) + d;
                 // Console.Printf("Flicker %f", v);

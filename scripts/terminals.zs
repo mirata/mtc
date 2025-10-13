@@ -71,6 +71,7 @@ class TerminalThinker : Thinker {
     void Interact() {
         // LevelManager.SetFinished();
         if(self.teleportOnClose > 0){
+            Deactivate(true);
             return;
         }
 
@@ -93,7 +94,7 @@ class TerminalThinker : Thinker {
             if(definition.finishedCount > 0) {
                 // LevelManager.SetFinished();
             }
-            Deactivate();
+            Deactivate(true);
             return;
         }
 
@@ -124,20 +125,20 @@ class TerminalThinker : Thinker {
     
     string getTerminalCharacter()
     {
-        if(LevelManager.IsFinished() && definition.finishedCount > 0) {
-            return "F";
-        } else if(LevelManager.IsFailure() && definition.failureCount > 0) {
+        if(LevelManager.IsFailure() && definition.failureCount > 0) {
             return "X";
+        } else if(LevelManager.IsFinished() && definition.finishedCount > 0) {
+            return "F";
         } else {
             return "U";
         }
     }
 
-    void Deactivate() {
+    void Deactivate(bool playSound) {
         if(!self.isActive) {
             return;
         }
-        SetTexture(currentTexName, "");
+        SetTexture(currentTexName, playSound ? "MarathonBeep" : "");
         
         // Console.Printf("Deactivate %d", tagId);
         self.isActive = false;
@@ -162,7 +163,7 @@ class TerminalThinker : Thinker {
             let pos = self.player.pos;
             Vector3 dist = (pos.x - activatePos.x, pos.y - activatePos.y, pos.z - activatePos.z);
             if(dist.Length() > 40.0) {
-                Deactivate();
+                Deactivate(false);
                 return;
             };
 
@@ -171,7 +172,7 @@ class TerminalThinker : Thinker {
                 if(self.ticks > 35) {
                     self.isLeaving = false;
                     self.ticks = 0;
-                    Deactivate();
+                    Deactivate(false);
                     return;
                 }
             }
@@ -180,14 +181,7 @@ class TerminalThinker : Thinker {
         if(self.teleportOnClose > 0 && !self.isActive) {
             self.teleportTicks++;
             if(self.teleportTicks >= 15) {
-                let teleportLevel = self.teleportOnClose + 1;
-                let mapName = "MAP";
-                if(teleportLevel < 10) {
-                    mapName = mapName .. "0";
-                }
-                mapName = mapName .. teleportLevel;
-
-                Teleport.TeleportOut(mapName);
+                Teleport.TeleportOutMapNumber(self.teleportOnClose);
                 self.teleportOnClose = false;
                 self.teleportTicks = 0;
             }
@@ -262,7 +256,7 @@ class Terminal play {
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(4, 2, 3, 0, 4, 5, 0, 0));
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(5, 0, 6, 0, 0, 0, 0, 0));
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(5, 1, 3, 0, 0, 0, 0, 0));
-        TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(5, 2, 3, 0, 3, 6, 3, 0));
+        TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(5, 2, 3, 0, 3, 6, 3, 6));
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(5, 3, 6, 0, 0, 0, 0, 0));
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(6, 0, 6, 0, 0, 0, 0, 0));
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(6, 1, 4, 0, 0, 0, 0, 0));
@@ -276,7 +270,7 @@ class Terminal play {
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(9, 1, 3, 0, 6, 10, 0, 0));
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(9, 2, 3, 0, 0, 0, 0, 0));
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(9, 3, 3, 10, 0, 0, 0, 0));
-        TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(10, 0, 3, 0, 3, 11, 3, 0));
+        TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(10, 0, 3, 0, 3, 11, 3, 11));
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(11, 0, 4, 0, 0, 0, 0, 0));
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(11, 1, 3, 0, 0, 0, 0, 0));
         TerminalManager.Get().definitions.Push(new("TerminalDefinition").Init(11, 2, 8, 0, 0, 0, 0, 0));

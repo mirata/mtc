@@ -12,24 +12,43 @@ class MarathonActor : Actor
     int preferredFloatHeight;
     property preferredFloatHeight : preferredFloatHeight;
 
+    bool cooldown;
+    int cooldownTicks;
+    int cooldownTimeout;
+    property cooldownTimeout : cooldownTimeout;
+
     Vector3 lastPos;
     Vector3 velocity;
     double hudOpacity;
     bool show;
     int timeout;
 
-    bool disableFloat;
-    int disableTicks;
+    float prevz;
+    bool isStable;
+    int stableTicks;
+    bool moveToFloatHeight;
+
+    bool isFloatingActor;
 
     override void BeginPlay()
     {
         super.BeginPlay();
+        isFloatingActor = bFloat;;
         lastPos = (pos.x, pos.y, pos.z);
         velocity = (0, 0, 0);
         hudOpacity = 0;
         timeout = 0;
-        disableFloat = false;
-        disableTicks = 0;
+
+        prevz = pos.z;
+        isStable = true;
+        stableTicks = 0;
+        moveToFloatHeight = false;
+
+        cooldown = false;
+        cooldownTicks = 0;
+        if(cooldownTimeout == 0) {
+            cooldownTimeout = 50; //Default cooldown timeout
+        }
     }
 
     override void Tick()
@@ -72,45 +91,88 @@ class MarathonActor : Actor
             }
         }
 
+        double targetFloor = floorz;
+        // if(target)
+        // {
+        //     targetFloor = target.floorz;
+        //     FLineTraceData h;
+
+        //     LineTrace(AngleTo(target), radius * 2, 0, TRF_THRUACTORS, 0, data: h); //Trace a line aimed at the target
+
+        //     if(h.HitType == TRACE_HitWall)
+        //     {
+        //         //Console.Printf("Hit, %d, %d", h.HitSector != null ? h.HitSector.GetTag(0) : -1, h.LinePart);
+        //         if(h.HitLine != null) {
+        //             let front = h.HitLine.frontsector;
+        //             let back = h.HitLine.backsector;
+        //             if(front != null && back != null) {
+        //                 if(front != null && front != h.HitSector) {
+        //                     targetFloor = -front.floorplane.d;
+        //                 };
+        //                 if(back != null && back != h.HitSector) {
+        //                     targetFloor = -back.floorplane.d;
+        //                 };
+        //             }
+        //         }
+        //         Console.Printf("target floor: %f, %f", pos.z, targetFloor);
+        //     }
+        // }
+
         //float height
-        if(bFloat && !disableFloat)
-        {
-            double targetHeight = floorz + preferredFloatHeight;
-
-            if (pos.z < targetHeight - 8) // Allow for a small buffer to prevent jittering
-            {
-                vel.z += 2.0; // Move up
+        if(isFloatingActor)
+        {                
+            let dz = pos.z - prevz;
+            if(!isStable && dz == 0) {
+                isStable = true;
+                stableTicks = 0;
+                Console.Printf("Stable");
             }
-            else if (pos.z > targetHeight + 8)
-            {
-                vel.z = -2.0; // Move down
+            if(isStable && dz != 0) {
+                isStable = false;
+                stableTicks = 0;
+                Console.Printf("Unstable");
             }
-            else{
-                vel.z = 0;
+            if(isStable) {
+                stableTicks++;
+            }
+            if(stableTicks > 35) {
+                moveToFloatHeight = true;
+                Console.Printf("moveToFloatHeight");
             }
 
-            if(target)
-            {
-                FLineTraceData h; //Save LineTrace data to this variable
+            if(moveToFloatHeight) {
+                double targetHeight = targetFloor + preferredFloatHeight;
 
-                LineTrace(AngleTo(target), radius * 2, 0, TRF_THRUACTORS, 0, data:h); //Trace a line aimed at the target
-
-                if(h.HitType == TRACE_HitWall && vel.x == 0 && vel.y == 0)
+                // Console.Printf("target floor: %f, %f", pos.z, targetHeight);
+                if (pos.z < targetHeight) // Allow for a small buffer to prevent jittering
                 {
-                    //Console.Printf("Disable");
-                    disableFloat = true;
+                    // Console.Printf("Moving up");
+                    vel.z = 2.0; // Move up
+                }
+                else if (pos.z > targetHeight)
+                {
+                    bFloat = false; // Disable native floating
+                    // Console.Printf("Moving down");
+                    vel.z = -2.0; // Move down
+                }
+                else{
+                    //Console.Printf("Done");
+                    moveToFloatHeight = false;
+                    vel.z = 0;
+                    bFloat = true; 
                 }
             }
-        }   
+        }
 
-        if(disableFloat)
+        if(cooldown)
         {
-            disableTicks++;
-            if(vel.x != 0 || vel.y != 0 || disableTicks > 200)
+            cooldownTicks++;
+            // Console.Printf("Cooldown");
+            if (cooldownTicks >= cooldownTimeout)
             {
-                disableFloat = false;
-                disableTicks = 0;
-                //Console.Printf("Enable");
+                cooldown = false;
+                cooldownTicks = 0;
+                // Console.Printf("Cooldown ended");
             }
         }
 
@@ -131,6 +193,8 @@ class MarathonActor : Actor
         //         }
         //     }
         // }
+
+        prevz = pos.z;
     }
 
 

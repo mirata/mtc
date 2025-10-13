@@ -61,7 +61,7 @@ class PolygonThinker : Thinker {
                 if(currentSectorNum == level.sectors[self.sectorIndexes[i]].sectornum) {
                     if(currentSectorNum != self.lastSectorNum) {
                     
-                        if(self.type == "Teleport") {
+                        if(self.type == "Teleport" || self.type == "AutomaticExit") {
                             if(!self.isTeleportStart) {
                                 self.isTeleportStart = true;
                             }
@@ -89,6 +89,16 @@ class PolygonThinker : Thinker {
                             Console.Printf("Waking monsters");
                             player.A_AlertMonsters();
                         }
+                        else if(self.type == "InvisibleMonsterTrigger") {
+                            //self.playerInfo.DesiredFov = self.playerFOV;
+                            Console.Printf("Waking monsters");
+                            player.A_AlertMonsters();
+                        }
+                        else if(self.type == "DualMonsterTrigger") {
+                            //self.playerInfo.DesiredFov = self.playerFOV;
+                            Console.Printf("Waking monsters");
+                            player.A_AlertMonsters();
+                        }
                     }
                 } else{
                     self.isTeleportStart = false;
@@ -97,7 +107,11 @@ class PolygonThinker : Thinker {
         }
 
         if(!self.isTeleporting && self.isTeleportStart && player.vel.Length() < 1.0) {
-            Teleport.TeleportTo(self.targetId);            
+            if(self.type == "AutomaticExit") {
+                Teleport.TeleportOutMapNumber(self.targetId);
+            } else if (self.type == "Teleport") {      
+                Teleport.TeleportTo(self.targetId);    
+            }        
             self.isTeleporting = true;
             self.isTeleportStart = false;
         }
@@ -118,13 +132,13 @@ class Polygon play {
         int tagId, 
         string type,
         int targetId) {
-        PolygonThinker p = GetInstance(tagId);
-        if(p == null) {
-            p = new ("PolygonThinker").Init(
+        //PolygonThinker p = GetInstance(tagId);
+        //if(p == null) {
+            new ("PolygonThinker").Init(
                 tagId, 
                 type,
                 targetId);
-        }
+        //}
     }
 
     static PolygonThinker GetInstance(int tagId) {

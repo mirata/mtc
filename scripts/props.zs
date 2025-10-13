@@ -18,6 +18,7 @@ class UprightWaste : Actor
         Stop;
     }
 }
+
 class SidewaysWaste : Actor
 {
     Default

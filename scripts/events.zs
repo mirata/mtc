@@ -74,7 +74,7 @@ class DamageOverlay : EventHandler
             actorClass = e.DamageSource.GetClassName();
         }
 
-        Console.Printf("Damaged: %s, %s, %s", inflictorClass, actorClass, e.DamageType);
+        // Console.Printf("Damaged: %s, %s, %s", inflictorClass, actorClass, e.DamageType);
         
         //this is most likely sector damage
         if(inflictorClass == '' && actorClass == '')
@@ -151,7 +151,9 @@ class TeleportOverlay : EventHandler
             }
         }
 
-        Teleport.TeleportIn();
+        LevelManager.Get().levelIndex;
+
+        //Teleport.TeleportIn();
     }
 
     override void WorldThingSpawned(WorldEvent e)
@@ -159,6 +161,7 @@ class TeleportOverlay : EventHandler
         if (e.Thing.GetClass() == "MarathonTeleportOut")
         {
             self.player.StartSoundSequence("TeleportOut", 0);
+            Console.Printf("Teleporting out");
             show = true;
             fadeIn = true;
             ticks = 0;
@@ -166,7 +169,15 @@ class TeleportOverlay : EventHandler
         else if (e.Thing.GetClass() == "MarathonTeleportIn")
         {
             self.player.StartSoundSequence("TeleportIn", 0);
+            Console.Printf("Teleporting in");
             show = true;
+            fadeIn = false;
+            ticks = 0;
+        }
+        else if (e.Thing.GetClass() == "MarathonRemoveTeleport")
+        {
+            Console.Printf("Removing teleport");
+            show = false;
             fadeIn = false;
             ticks = 0;
         }
@@ -188,12 +199,12 @@ class TeleportOverlay : EventHandler
             // Console.Printf("Teleport intensity: %f", intensity);
             int pos = ticks;
             float val = Sin(intensity * 90);
-            self.playerInfo.DesiredFOV = ((160.0 - self.PlayerFOV) * val) + self.PlayerFOV;
+            // self.playerInfo.DesiredFOV = ((160.0 - self.PlayerFOV) * val) + self.PlayerFOV;
 
-            if(ticks > (teleportDuration + 35))
-            {
-                show = false;
-            }
+            // if(ticks > (teleportDuration + 35))
+            // {
+            //     show = false;
+            // }
         }
     }
 
@@ -285,5 +296,113 @@ class VacuumHandler : EventHandler
 
             ticks++;
         }
+    }
+}
+
+class BobCountHandler : EventHandler
+{    
+    override void WorldLoaded(WorldEvent e) {
+        LevelManager.Get().bobCount = GetCount();
+    }
+
+    int GetCount(){
+        let count = 0;
+        let it = ThinkerIterator.Create("Bob1");
+        Thinker thinker = null;
+        
+        while (thinker = it.next()) {
+            let a = Bob1(thinker);
+            if(a == null || a.health <= 0) {
+                continue;
+            }
+            count++;
+        }
+        return count;
+    }
+
+    override void WorldThingSpawned(WorldEvent e)
+    {
+        LevelManager.Get().bobCount = GetCount();
+    }
+
+    override void WorldThingDied(WorldEvent e)
+    {
+        LevelManager.Get().bobCount = GetCount();
+    }
+}
+
+class EnemyCountHandler : EventHandler
+{    
+    override void WorldLoaded(WorldEvent e) {
+        LevelManager.Get().enemyCount = GetCount();
+    }
+
+    int GetCount() {
+        let count = 0;
+        let it = ThinkerIterator.Create("MarathonActor");
+        Thinker thinker = null;
+        
+        while (thinker = it.next()) {
+            let a = MarathonActor(thinker);
+            if(a == null || a.health <= 0 || a.friendlyHud) {
+                continue;
+            }
+            count++;
+        }
+        return count;
+    }
+
+    override void WorldThingSpawned(WorldEvent e)
+    {
+        LevelManager.Get().enemyCount = GetCount();
+    }
+
+    override void WorldThingDied(WorldEvent e)
+    {
+        LevelManager.Get().enemyCount = GetCount();
+    }
+}
+
+class ExploredMarkerHandler : EventHandler
+{    
+    PlayerPawn player;
+    Array<bool> exploredMarkers;
+
+    override void WorldLoaded(WorldEvent e) {
+        let it = ThinkerIterator.Create("ExploreMarker");
+        Thinker thinker = null;
+        
+        while (thinker = it.next()) {
+            exploredMarkers.Push(false);
+        }
+        LevelManager.Get().exploredMarkerTotal = exploredMarkers.Size();
+        
+
+        for (int i = 0; i < Players.size(); i++) {
+            self.player = PlayerPawn(Players[i].mo);
+            if (self.player != null) {
+                break; // Take the first valid player
+            }
+        }
+    }
+
+    override void WorldTick()
+    {
+        let count = 0;
+        let it = ThinkerIterator.Create("ExploreMarker");
+        Thinker thinker = null;
+        
+        while (thinker = it.next()) {
+            let a = ExploreMarker(thinker);
+            if(player.CheckSight(a, SF_SEEPASTBLOCKEVERYTHING|SF_SEEPASTSHOOTABLELINES)){
+                if(!exploredMarkers[count]) {
+                    exploredMarkers[count] = true;
+                    LevelManager.Get().exploredMarkerCount++;
+                }
+            };
+            count++;
+        }
+
+        // Console.Printf("Explored Markers: %d/%d", LevelManager.Get().exploredMarkerCount, LevelManager.Get().exploredMarkerTotal);
     }
 }

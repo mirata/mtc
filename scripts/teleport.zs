@@ -41,6 +41,17 @@ class TeleportThinker : Thinker {
         }
     }
 
+    void TeleportOutMapNumber(int mapNumber) {
+        let teleportLevel = mapNumber + 1;
+        let mapName = "MAP";
+        if(teleportLevel < 10) {
+            mapName = mapName .. "0";
+        }
+        mapName = mapName .. teleportLevel;
+
+        TeleportOut(mapName);
+    }
+
     void TeleportOut(string mapName) {
         self.mapName = mapName;
         isActive = true;
@@ -50,6 +61,10 @@ class TeleportThinker : Thinker {
 
     void TeleportIn() {
         Actor.Spawn("MarathonTeleportIn", (0,0,0), ALLOW_REPLACE);
+    }
+
+    void RemoveTeleport() {
+        Actor.Spawn("MarathonRemoveTeleport", (0,0,0), ALLOW_REPLACE);
     }
     
     override void Tick() {
@@ -91,7 +106,15 @@ class Teleport play {
         TeleportThinker.Get().TeleportOut(mapName);
     }
 
+    static void TeleportOutMapNumber(int mapNumber) {
+        TeleportThinker.Get().TeleportOutMapNumber(mapNumber);
+    }
+
     static void TeleportIn() {
         TeleportThinker.Get().TeleportIn();
+    }
+
+    static void RemoveTeleport() {
+        TeleportThinker.Get().RemoveTeleport();
     }
 }

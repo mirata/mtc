@@ -173,4 +173,39 @@ class MarathonPlayer : PlayerPawn
             PLAY S -1 ACS_Execute(779,0,0,0,0);
             stop;
     }
+
+    // double lastSpeed;
+
+    // override void Tick()
+    // {
+    //     super.Tick();
+
+    //     // Track current speed
+    //     double currentSpeed = vel.Length();
+    //     double expectedSpeed = lastSpeed;
+    //     if(MovementBlockingLine != null && currentSpeed < expectedSpeed) {
+    //         Console.Printf("Expectd speed : %f, Actual speed: %f", expectedSpeed, currentSpeed);
+    //         let newVel = vel.Unit() * (currentSpeed * 2);
+    //         Vel.x = newVel.x;
+    //         Vel.y = newVel.y;
+    //         Vel.z = newVel.z; // Preserve vertical velocity  
+    //     }
+    //     // Detect wall contact
+    //     // if (IsTouchingWall())
+    //     // {
+    //     //     // Re-normalize velocity to restore original magnitude
+    //     //     if (currentSpeed < expectedSpeed)
+    //     //     {
+    //     //         vel = vel.Unit() * expectedSpeed;
+    //     //     }
+    //     // }
+
+    //     lastSpeed = vel.Length();
+    // }
+
+    // bool IsTouchingWall()
+    // {
+    //     // Broadly detect wall contact using actor flags or sector touch
+    //     return (flags & MF_TOUCHWALL) != 0;
+    // }
 }

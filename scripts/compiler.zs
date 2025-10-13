@@ -7,7 +7,7 @@ class Compiler1 : MarathonActor
         //$Angled
         //$Category "Marathon Monsters"
 
-        MarathonActor.hurtByLava true;
+        MarathonActor.hurtByLava false;
         MarathonActor.preferredFloatHeight 0;
         MONSTER;
         +FLOAT;
@@ -41,14 +41,37 @@ class Compiler1 : MarathonActor
             COMP A 0 TargetPlayerAllies();
 			COMP AAABBB 3 A_Chase;
 			Loop;
+        FaceTarget:
+            COMP A 3 A_FaceTarget;
+            TNT1 A 0
+            {
+                if(!cooldown) {
+                    SetStateLabel("See");
+                }
+            }
+            Loop;
 		Missile:
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("FaceTarget");
+                }
+            }
 			COMP B 7 Bright A_FaceTarget;
 			COMP C 7 Bright A_FaceTarget;
 			COMP D 7 Bright A_CustomMissile("CompilerBall",42,0,0,8,0);
 			COMP C 7 Bright A_FaceTarget;
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
 			goto See;
 		Pain:
 			COMP L 3 Bright A_Pain;
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
 			goto See;
 		Death:
 			COMP L 4 Bright A_NoGravity;
@@ -79,9 +102,19 @@ class Compiler2 : Compiler1
             CFOG BCD 4 Bright;
             Stop;
         Missile:
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("FaceTarget");
+                }
+            }
             COMP C 7 Bright A_FaceTarget;
             COMP D 7 Bright A_CustomMissile("Compilerball2",42,0,0,8,0);
             COMP C 7 Bright A_FaceTarget;
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
             goto See;
     }
 }
@@ -121,6 +154,179 @@ class Compiler4 : Compiler2
     Default
     {
         //$Title "Compiler Stealth Major"
+        MarathonActor.invisibleHud true;
+        Translation "Shadow";
+        RenderStyle "STYLE_Translucent";
+        alpha 0.35;
+        obituary "%o thought he saw a compiler.";
+    }
+    States
+    {
+        Pain:
+            TNT1 A 0 A_SetTranslation("");
+            TNT1 A 0 A_SetRenderStyle(1, STYLE_Normal);
+            COMP L 3 Bright A_Pain;
+            TNT1 A 0 A_SetTranslation("Shadow");
+            TNT1 A 0 A_SetRenderStyle(0.25, STYLE_Translucent);
+            goto See;
+        Death:
+            TNT1 A 0 A_NoGravity;
+            TNT1 A 0 A_SetTranslation("");
+            TNT1 A 0 A_SetRenderStyle(1, STYLE_Normal);
+            CFOG A 4 Bright A_Scream;
+            CFOG BCD 4 Bright;
+            Stop;
+    }
+}
+
+class FriendlyCompiler1 : MarathonAlly
+{
+    Default
+    {
+        //marathon scale factor 5
+        //$Title "Friendly Compiler"
+        //$Angled
+        //$Category "Marathon Monsters"
+
+        MarathonActor.friendlyHud false;
+        MarathonActor.hurtByLava false;
+        MarathonActor.preferredFloatHeight 0;
+        MONSTER;
+        +FRIENDLY;
+        +FLOAT;
+        +NOGRAVITY;
+        +NOSPLASHALERT;
+        +DONTGIB;
+        +NOBLOOD;
+        obituary "%o was scrambled by a compiler.";
+        health 100;
+        radius 14;
+        height 56;
+        mass 400;
+        speed 6;
+        painchance 255;
+        seesound "";
+        painsound "COMPPAIN";
+        deathsound "COMPDEAD";
+        activesound "";
+        attacksound "";
+        damagefactor "fire", 0.0;
+        scale 0.3125; //with proper scale it should probably be 0.375 vertical due to the vertical warp
+        //YScale 0.375; 
+    }
+
+	States
+	{
+		Spawn:
+			COMP A 3 A_Look;
+			Loop;
+		See:
+            COMP A 0 TargetPlayerAllies();
+			COMP AAABBB 3 A_Chase;
+			Loop;
+        FaceTarget:
+            COMP A 3 A_FaceTarget;
+            TNT1 A 0
+            {
+                if(!cooldown) {
+                    SetStateLabel("See");
+                }
+            }
+            Loop;
+		Missile:
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("FaceTarget");
+                }
+            }
+			COMP B 7 Bright A_FaceTarget;
+			COMP C 7 Bright A_FaceTarget;
+			COMP D 7 Bright A_CustomMissile("CompilerBall",42,0,0,8,0);
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
+			COMP C 7 Bright A_FaceTarget;
+			goto See;
+		Pain:
+			COMP L 3 Bright A_Pain;       
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
+			goto See;
+		Death:
+			COMP L 4 Bright A_NoGravity;
+			CFOG A 4 Bright A_Scream;
+			CFOG BCD 4 Bright;
+			Stop;
+	}
+}
+class FriendlyCompiler2 : FriendlyCompiler1
+{
+    Default
+    {
+        //$Title "Friendly Compiler Major"
+        health 150;
+        Translation "CompilerMajor";
+    }
+    States
+    {
+        Pain:
+            TNT1 A 0 A_SetTranslation("");
+            COMP L 3 Bright A_Pain;
+            TNT1 A 0 A_SetTranslation("CompilerMajor");
+            goto See;
+        Death:
+            TNT1 A 0 A_NoGravity;
+            TNT1 A 0 A_SetTranslation("");
+            CFOG A 4 Bright A_Scream;
+            CFOG BCD 4 Bright;
+            Stop;
+        Missile:
+            COMP C 7 Bright A_FaceTarget;
+            COMP D 7 Bright A_CustomMissile("Compilerball2",42,0,0,8,0);
+            COMP C 7 Bright A_FaceTarget;
+            goto See;
+    }
+}
+
+class FriendlyCompiler3 : FriendlyCompiler1
+{
+    Default
+    {
+        //$Title "Friendly Compiler Stealth"
+        MarathonActor.invisibleHud true;
+        Translation "Shadow";
+        RenderStyle "STYLE_Translucent";
+        alpha 0.35;
+        obituary "%o thought he saw a compiler.";
+    }
+    States
+    {
+        Pain:
+            TNT1 A 0 A_SetTranslation("");
+            TNT1 A 0 A_SetRenderStyle(1, STYLE_Normal);
+            COMP L 3 Bright A_Pain;
+            TNT1 A 0 A_SetTranslation("Shadow");
+            TNT1 A 0 A_SetRenderStyle(0.25, STYLE_Translucent);
+            goto See;
+        Death:
+            TNT1 A 0 A_NoGravity;
+            TNT1 A 0 A_SetTranslation("");
+            TNT1 A 0 A_SetRenderStyle(1, STYLE_Normal);
+            CFOG A 4 Bright A_Scream;
+            CFOG BCD 4 Bright;
+            Stop;
+    }
+}
+
+class FriendlyCompiler4 : FriendlyCompiler1
+{
+    Default
+    {
+        //$Title "Friendly Compiler Stealth Major"
         MarathonActor.invisibleHud true;
         Translation "Shadow";
         RenderStyle "STYLE_Translucent";

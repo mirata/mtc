@@ -8,6 +8,10 @@ DoomEdNums
    16011 = "Compiler2"
    16012 = "Compiler3"
    16013 = "Compiler4"
+   16014 = "FriendlyCompiler1"
+   16015 = "FriendlyCompiler2"
+   16016 = "FriendlyCompiler3"
+   16017 = "FriendlyCompiler4"
    16020 = "Trooper1"
    16021 = "Trooper2"
    16030 = "Bob1"
@@ -50,6 +54,8 @@ DoomEdNums
    30020 = "DeadBob2"
    30021 = "DeadBob3"
    30022 = "DeadBob4"
+   30030 = "DefenseChip"
+   30040 = "ExploreMarker"
 }
 
 gameinfo
@@ -80,7 +86,7 @@ gameinfo
    noautosave = true
    PlayerClass = "MarathonPlayer"
    StatusBarClass = "MarathonStatusBar"
-   AddEventHandlers = "JuggernautExplosion", "DamageOverlay", "TeleportOverlay", "VacuumHandler"
+   AddEventHandlers = "JuggernautExplosion", "DamageOverlay", "TeleportOverlay", "VacuumHandler", "BobCountHandler", "EnemyCountHandler", "ExploredMarkerHandler"
 }
 
 Automap
@@ -565,7 +571,7 @@ map map24 "Ain't got time pfhor this..."
 map map25 "Welcome to the revolution..."
 {
    sky1 = "SKY", 0.0
-   music = "LEELA"
+   music = "SWIRLS"
    next = "map26"
    nojump
    nocrouch

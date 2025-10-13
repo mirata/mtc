@@ -39,12 +39,31 @@ class Hunter1 : MarathonActor
             HUNT A 0 TargetPlayerAllies();
             HUNT AABBCCDD 3 A_Chase;
             Loop;
+        FaceTarget:
+            HUNT A 3 A_FaceTarget;
+            TNT1 A 0
+            {
+                if(!cooldown) {
+                    SetStateLabel("See");
+                }
+            }
+            Loop;
         Missile:
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("FaceTarget");
+                }
+            }
             HUNT F 6 Bright A_FaceTarget;
             HUNT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
             HUNT F 6 Bright A_FaceTarget;
             HUNT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
             HUNT E 3;
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
             goto See;
         Death:
             HUNT H 5 A_FaceTarget;
@@ -129,6 +148,12 @@ class Hunter2 : Hunter1
     States
     {
         Missile:
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("FaceTarget");
+                }
+            }
             HUNT F 6 Bright A_FaceTarget;
             HUNT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
             HUNT F 6 Bright A_FaceTarget;
@@ -140,6 +165,10 @@ class Hunter2 : Hunter1
             HUNT F 6 Bright A_FaceTarget;
             HUNT G 3 Bright A_SpawnProjectile("HunterShot",56,4,random(-1,1),8,random(-1,1));
             HUNT E 3;
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
             goto See;
     }
 }

@@ -30,7 +30,7 @@ QUITMSG6 = "Security Guard for sale! Cheap!\nMoving, MUST sell.\nPress Y to be s
 QUITMSG7 = "liked this mod? want the real game?\nvisit source.bungie.org/get for all 3 games!";
 
 
-QUITMSG8 = "There are obviously many things\nwhich you do not understand, and\nmay never be able too...";
+QUITMSG8 = "There are obviously many things\nwhich you do not understand, and\nmay never be able to...";
 QUITMSG9 = "don't go now, there's a \ngang of juggernauts waiting\nat the desktop!";
 QUITMSG10 = "get outta here and go back\nto your boring doom 2 deathmatches.";
 QUITMSG11 = "Durandal will not appreciate your attempt\nto leave...";

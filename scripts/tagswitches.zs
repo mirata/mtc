@@ -35,10 +35,8 @@ class TagSwitchThinker : Thinker {
             return;
         }
 
-        TagSwitchManager m = TagSwitchManager.Get();
-        m.count++;
-        Console.Printf("TagSwitch count: %d", m.count);
-        
+        LevelManager.Get().tagSwitchCount++;
+        self.player.TakeInventory("DefenseChip", 1);
         self.isActive = true;
 
         Switches.Toggle(self.tagId, true);
@@ -58,32 +56,13 @@ class TagSwitchThinker : Thinker {
     }
 }
 
-class TagSwitchManager : Thinker
-{
-    int count;
-
-    static TagSwitchManager Get()
-    {
-        TagSwitchManager m;
-        ThinkerIterator it = ThinkerIterator.Create("TagSwitchManager");
-        m = TagSwitchManager(it.Next());
-        if (m == null)
-        {
-            m = new("TagSwitchManager");
-            m.count = 0;
-        }
-
-        return m;
-    }
-}
-
 class TagSwitch play {
     static void Init(
         int tagId, 
         int levelIndex,
         int tagSwitchIndex) {
 
-
+        LevelManager.Get().tagSwitchTotal++;
         TagSwitchThinker p = GetInstance(tagId);
         if(p == null) {
             p = new ("TagSwitchThinker").Init(
