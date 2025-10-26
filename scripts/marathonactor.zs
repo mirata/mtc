@@ -125,19 +125,19 @@ class MarathonActor : Actor
             if(!isStable && dz == 0) {
                 isStable = true;
                 stableTicks = 0;
-                Console.Printf("Stable");
+                // Console.Printf("Stable");
             }
             if(isStable && dz != 0) {
                 isStable = false;
                 stableTicks = 0;
-                Console.Printf("Unstable");
+                // Console.Printf("Unstable");
             }
             if(isStable) {
                 stableTicks++;
             }
             if(stableTicks > 35) {
                 moveToFloatHeight = true;
-                Console.Printf("moveToFloatHeight");
+                // Console.Printf("moveToFloatHeight");
             }
 
             if(moveToFloatHeight) {

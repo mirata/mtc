@@ -21,125 +21,125 @@ class TextureThinker : Thinker {
         self.sideWhich = GetSideType(position);
         self.ticks = 0;
 
-        if(position == "Floor" || position == "Ceiling") {
-            SectorTagIterator sti = level.CreateSectorTagIterator(tagId);
-            int i;
+        // if(position == "Floor" || position == "Ceiling") {
+        //     SectorTagIterator sti = level.CreateSectorTagIterator(tagId);
+        //     int i;
 
-            while((i = sti.Next()) >= 0)
-            {
-                self.sectorIndexes.Push(i);
-            }
-        } else {
-            for(int i = 0; i < level.sectors.Size(); i++) {
-                let sector = level.sectors[i];
-                for(int j = 0; j < sector.lines.Size(); j++) {
-                    let line = sector.lines[j];
+        //     while((i = sti.Next()) >= 0)
+        //     {
+        //         self.sectorIndexes.Push(i);
+        //     }
+        // } else {
+        //     for(int i = 0; i < level.sectors.Size(); i++) {
+        //         let sector = level.sectors[i];
+        //         for(int j = 0; j < sector.lines.Size(); j++) {
+        //             let line = sector.lines[j];
                         
-                    for(let k = 0; k < line.CountIDs(); k++) {
-                        if(line.GetID(k) == tagId) {
-                            sides.Push(new("SideDefinition").Init(i, j));
-                            break;
-                        }
-                    }
-                }
-            }
-        }
+        //             for(let k = 0; k < line.CountIDs(); k++) {
+        //                 if(line.GetID(k) == tagId) {
+        //                     sides.Push(new("SideDefinition").Init(i, j));
+        //                     break;
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         return self;
     }
 
     override void Tick() {
         
-        double val = Sin(double(ticks) / 3 * 180 - 90) / 2 + 0.5; 
+        // double val = Sin(double(ticks) / 3 * 180 - 90) / 2 + 0.5; 
 
-        if(self.sectorIndexes.Size() > 0) {
-            for(int i=0;i<sectorIndexes.Size(); i++){
-                let sector = level.sectors[sectorIndexes[i]];
-                let off = sector.GetXOffset(0);
-                off += 0.2;
-                sector.SetXOffset(0, off);
-            }
-        }
-
-        if(sides.Size() > 0) {
-            for(int i = 0; i < sides.Size(); i++) {
-                let side = sides[i];
-                let sector = level.sectors[side.sectorIndex];
-                let line = sector.lines[side.sideIndex];
-
-                if (type == "Pulsate") {
-
-                }
-                else if (type == "Wobble") {
-                    if(line.sidedef[0] != null) {
-                        let side = line.sidedef[0];
-                        let scale = (val * 0.05) + 1.0;
-                        Console.Printf("Scale: %f", scale);
-                        side.SetTextureXScale(sideWhich, scale);
-                        side.SetTextureYScale(sideWhich, scale);
-                    };
-                    if(line.sidedef[1] != null) {
-                        let side = line.sidedef[1];
-                        let scale = (val * 0.05) + 1.0;
-                        side.SetTextureXScale(sideWhich, scale);
-                        side.SetTextureYScale(sideWhich, scale);
-                    }
-                }
-                else if (type == "FastWobble") {
-
-                }
-                else if (type == "HorizontalSlide") {
-                    if(line.sidedef[0] != null) {
-                        let side = line.sidedef[0];
-                        let off = side.GetTextureXOffset(sideWhich);
-                        off -= 0.1;
-                        side.SetTextureXOffset(sideWhich, off);
-                    };
-                    if(line.sidedef[1] != null) {
-                        let side = line.sidedef[1];
-                        let off = side.GetTextureXOffset(sideWhich);
-                        off -= 0.1;
-                        side.SetTextureXOffset(sideWhich, off);
-                    }
-                }
-                else if (type == "FastHorizontalSlide") {
-
-                }
-                else if (type == "VerticalSlide") {
-                    if(line.sidedef[0] != null) {
-                        let side = line.sidedef[0];
-                        let off = side.GetTextureYOffset(sideWhich);
-                        off -= 0.1;
-                        side.SetTextureYOffset(sideWhich, off);
-                    };
-                    if(line.sidedef[1] != null) {
-                        let side = line.sidedef[1];
-                        let off = side.GetTextureYOffset(sideWhich);
-                        off -= 0.1;
-                        side.SetTextureYOffset(sideWhich, off);
-                    }
-                }
-                else if (type == "FastVerticalSlide") {
-
-                }
-                else if (type == "Wander") {
-
-                }
-                else if (type == "FastWander") {
-
-                }
-
-            }
-        }
-        // for(let i = 0; i < sides.Size(); i++) {
-        //     let side = sides[i];
-            
-        //     let off = side.GetTextureXOffset(Side.top);
-        //     off -= 0.1;
-        //     side.SetTextureXOffset(Side.top, off);
+        // if(self.sectorIndexes.Size() > 0) {
+        //     for(int i=0;i<sectorIndexes.Size(); i++){
+        //         let sector = level.sectors[sectorIndexes[i]];
+        //         let off = sector.GetXOffset(0);
+        //         off += 0.2;
+        //         sector.SetXOffset(0, off);
+        //     }
         // }
 
-        self.ticks++;
+        // if(sides.Size() > 0) {
+        //     for(int i = 0; i < sides.Size(); i++) {
+        //         let side = sides[i];
+        //         let sector = level.sectors[side.sectorIndex];
+        //         let line = sector.lines[side.sideIndex];
+
+        //         if (type == "Pulsate") {
+
+        //         }
+        //         else if (type == "Wobble") {
+        //             if(line.sidedef[0] != null) {
+        //                 let side = line.sidedef[0];
+        //                 let scale = (val * 0.05) + 1.0;
+        //                 Console.Printf("Scale: %f", scale);
+        //                 side.SetTextureXScale(sideWhich, scale);
+        //                 side.SetTextureYScale(sideWhich, scale);
+        //             };
+        //             if(line.sidedef[1] != null) {
+        //                 let side = line.sidedef[1];
+        //                 let scale = (val * 0.05) + 1.0;
+        //                 side.SetTextureXScale(sideWhich, scale);
+        //                 side.SetTextureYScale(sideWhich, scale);
+        //             }
+        //         }
+        //         else if (type == "FastWobble") {
+
+        //         }
+        //         else if (type == "HorizontalSlide") {
+        //             if(line.sidedef[0] != null) {
+        //                 let side = line.sidedef[0];
+        //                 let off = side.GetTextureXOffset(sideWhich);
+        //                 off -= 0.1;
+        //                 side.SetTextureXOffset(sideWhich, off);
+        //             };
+        //             if(line.sidedef[1] != null) {
+        //                 let side = line.sidedef[1];
+        //                 let off = side.GetTextureXOffset(sideWhich);
+        //                 off -= 0.1;
+        //                 side.SetTextureXOffset(sideWhich, off);
+        //             }
+        //         }
+        //         else if (type == "FastHorizontalSlide") {
+
+        //         }
+        //         else if (type == "VerticalSlide") {
+        //             if(line.sidedef[0] != null) {
+        //                 let side = line.sidedef[0];
+        //                 let off = side.GetTextureYOffset(sideWhich);
+        //                 off -= 0.1;
+        //                 side.SetTextureYOffset(sideWhich, off);
+        //             };
+        //             if(line.sidedef[1] != null) {
+        //                 let side = line.sidedef[1];
+        //                 let off = side.GetTextureYOffset(sideWhich);
+        //                 off -= 0.1;
+        //                 side.SetTextureYOffset(sideWhich, off);
+        //             }
+        //         }
+        //         else if (type == "FastVerticalSlide") {
+
+        //         }
+        //         else if (type == "Wander") {
+
+        //         }
+        //         else if (type == "FastWander") {
+
+        //         }
+
+        //     }
+        // }
+        // // for(let i = 0; i < sides.Size(); i++) {
+        // //     let side = sides[i];
+            
+        // //     let off = side.GetTextureXOffset(Side.top);
+        // //     off -= 0.1;
+        // //     side.SetTextureXOffset(Side.top, off);
+        // // }
+
+        // self.ticks++;
     }
     
     int GetSideType(string position) {

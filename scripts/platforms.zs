@@ -386,20 +386,19 @@ class PlatformThinker : Thinker {
                     ceilingHeight = sector.ceilingplane.d;
                     
                     for(int i = 0; i < self.sectorIndexes.Size(); i++) {
-                        let s = level.sectors[self.sectorIndexes[i]];
-                        for(int j = 0; j < s.lines.Size(); j++) {
-                            let line = s.lines[j];
+                        for(int j = 0; j < level.sectors[self.sectorIndexes[i]].lines.Size(); j++) {
+                            let line = level.sectors[self.sectorIndexes[i]].lines[j];
                                 
                             Side side0 = line.sidedef[0];
                             if(side0 != null) {
                                 let off = side0.GetTextureYOffset(Side.mid);
-                                off += (cur - s.ceilingplane.d);
+                                off += (cur - level.sectors[self.sectorIndexes[i]].ceilingplane.d);
                                 side0.SetTextureYOffset(Side.mid, off);
                             }
                             Side side1 = line.sidedef[1];
                             if(side1 != null) {
                                 let off = side1.GetTextureYOffset(Side.mid);
-                                off += (cur - s.ceilingplane.d);
+                                off += (cur - level.sectors[self.sectorIndexes[i]].ceilingplane.d);
                                 side1.SetTextureYOffset(Side.mid, off);
                             }
                         }
