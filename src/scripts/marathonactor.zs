@@ -33,7 +33,7 @@ class MarathonActor : Actor
     override void BeginPlay()
     {
         super.BeginPlay();
-        isFloatingActor = bFloat;;
+        isFloatingActor = bFloat;
         lastPos = (pos.x, pos.y, pos.z);
         velocity = (0, 0, 0);
         hudOpacity = 0;
@@ -47,7 +47,7 @@ class MarathonActor : Actor
         cooldown = false;
         cooldownTicks = 0;
         if(cooldownTimeout == 0) {
-            cooldownTimeout = 50; //Default cooldown timeout
+            cooldownTimeout = 35; //Default cooldown timeout
         }
     }
 
@@ -120,46 +120,50 @@ class MarathonActor : Actor
 
         //float height
         if(isFloatingActor)
-        {                
-            let dz = pos.z - prevz;
-            if(!isStable && dz == 0) {
-                isStable = true;
-                stableTicks = 0;
-                // Console.Printf("Stable");
-            }
-            if(isStable && dz != 0) {
-                isStable = false;
-                stableTicks = 0;
-                // Console.Printf("Unstable");
-            }
-            if(isStable) {
-                stableTicks++;
-            }
-            if(stableTicks > 35) {
-                moveToFloatHeight = true;
-                // Console.Printf("moveToFloatHeight");
-            }
-
-            if(moveToFloatHeight) {
-                double targetHeight = targetFloor + preferredFloatHeight;
-
-                // Console.Printf("target floor: %f, %f", pos.z, targetHeight);
-                if (pos.z < targetHeight) // Allow for a small buffer to prevent jittering
-                {
-                    // Console.Printf("Moving up");
-                    vel.z = 2.0; // Move up
+        {        
+            if(health <= 0) {
+                bFloat = false; 
+            } else{        
+                let dz = pos.z - prevz;
+                if(!isStable && dz == 0) {
+                    isStable = true;
+                    stableTicks = 0;
+                    // Console.Printf("Stable");
                 }
-                else if (pos.z > targetHeight)
-                {
-                    bFloat = false; // Disable native floating
-                    // Console.Printf("Moving down");
-                    vel.z = -2.0; // Move down
+                if(isStable && dz != 0) {
+                    isStable = false;
+                    stableTicks = 0;
+                    // Console.Printf("Unstable");
                 }
-                else{
-                    //Console.Printf("Done");
-                    moveToFloatHeight = false;
-                    vel.z = 0;
-                    bFloat = true; 
+                if(isStable) {
+                    stableTicks++;
+                }
+                if(stableTicks > 35) {
+                    moveToFloatHeight = true;
+                    // Console.Printf("moveToFloatHeight");
+                }
+
+                if(moveToFloatHeight) {
+                    double targetHeight = targetFloor + preferredFloatHeight;
+
+                    // Console.Printf("target floor: %f, %f", pos.z, targetHeight);
+                    if (pos.z < targetHeight) // Allow for a small buffer to prevent jittering
+                    {
+                        // Console.Printf("Moving up");
+                        vel.z = 2.0; // Move up
+                    }
+                    else if (pos.z > targetHeight)
+                    {
+                        bFloat = false; // Disable native floating
+                        // Console.Printf("Moving down");
+                        vel.z = -2.0; // Move down
+                    }
+                    else{
+                        //Console.Printf("Done");
+                        moveToFloatHeight = false;
+                        vel.z = 0;
+                        bFloat = true; 
+                    }
                 }
             }
         }

@@ -1,1 +1,4 @@
 /dist
+*.wad.backup*
+*.dbs
+*.autosave*

@@ -161,7 +161,7 @@ class TeleportOverlay : EventHandler
         if (e.Thing.GetClass() == "MarathonTeleportOut")
         {
             self.player.StartSoundSequence("TeleportOut", 0);
-            Console.Printf("Teleporting out");
+            // Console.Printf("Teleporting out");
             show = true;
             fadeIn = true;
             ticks = 0;
@@ -169,14 +169,14 @@ class TeleportOverlay : EventHandler
         else if (e.Thing.GetClass() == "MarathonTeleportIn")
         {
             self.player.StartSoundSequence("TeleportIn", 0);
-            Console.Printf("Teleporting in");
+            // Console.Printf("Teleporting in");
             show = true;
             fadeIn = false;
             ticks = 0;
         }
         else if (e.Thing.GetClass() == "MarathonRemoveTeleport")
         {
-            Console.Printf("Removing teleport");
+            // Console.Printf("Removing teleport");
             show = false;
             fadeIn = false;
             ticks = 0;
@@ -274,7 +274,7 @@ class VacuumHandler : EventHandler
     {
         if(isVacuum) {
             int oxygenCount = player.CountInv("OxygenTank");
-            Console.Printf("Oxygen count: %d", oxygenCount);
+            // Console.Printf("Oxygen count: %d", oxygenCount);
 
             if(ticks > 12) {
                 player.TakeInventory("OxygenTank", 1);
@@ -285,7 +285,7 @@ class VacuumHandler : EventHandler
                 player.A_StartSound("AIRWARN", CHAN_BODY, CHANF_DEFAULT, 1);
             }
 
-            Console.Printf("AirSupply: %d", level.airsupply);
+            // Console.Printf("AirSupply: %d", level.airsupply);
             if(oxygenCount <= 0) {
                 player.DamageMobj(null, null, 999, "Suffocation");
                 if(!playedSound) {

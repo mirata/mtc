@@ -61,7 +61,7 @@ DoomEdNums
 gameinfo
 {
 	titlepage = "TITLEPIC"
-	creditpage = "CREDIT2"
+	creditpage = "CREDIT1"
 	titlemusic = ""
 	titletime = 11
 	advisorytime = 0
@@ -69,8 +69,8 @@ gameinfo
 	chatsound = "TERM"
 	finalemusic = "RUSHING"
 	finaleflat = "1SET28"
-	finalepage = "CREDIT2"
-	infopage = "HELP1", "HELP2", "CREDIT1", "CREDIT2"
+	finalepage = "CREDIT1"
+	infopage = "CREDIT1"
 	quitsound = "TITLE"
 	borderflat = "2SET13"
 	border = DoomBorder

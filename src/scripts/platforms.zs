@@ -635,7 +635,7 @@ class Platform play {
     }
 
     static void ToggleTouch(int tagId, string monsterClass) {
-        Console.Printf("Monster %s", monsterClass);
+        // Console.Printf("Monster %s", monsterClass);
         PlatformThinker p = GetInstance(tagId);
         let isPlayer = monsterClass == "MarathonPlayer";
         if(p != null) {

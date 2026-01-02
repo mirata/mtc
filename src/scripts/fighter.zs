@@ -15,7 +15,7 @@ class Fighter1 : MarathonActor
         hitobituary "%o was smacked down by a fighter.";
         health 25;
         radius 13;
-        height 51;
+        height 50;
         mass 100;
         speed 7;
         PainChance 256;
@@ -25,6 +25,7 @@ class Fighter1 : MarathonActor
         deathsound "PFHORDIE";
         activesound "PFHOR";
         bloodcolor "ff ff 33";
+        MaxStepHeight 32;
         scale 0.375;
         //YScale 0.4;
     }
@@ -38,15 +39,38 @@ class Fighter1 : MarathonActor
             FIGH A 0 TargetPlayerAllies();
             FIGH ABCD 3 A_Chase;
             Loop;
+        FaceTarget:
+            FIGH E 3 A_FaceTarget;
+            TNT1 A 0
+            {
+                if(!cooldown) {
+                    SetStateLabel("See");
+                }
+            }
+            Loop;
         Melee:
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("FaceTarget");
+                }
+            }
             FIGH E 6 A_FaceTarget;
             FIGH A 0 A_StartSound("PFHORAT1");
             FIGH FG 6 Bright A_FaceTarget;
             FIGH H 6 Bright A_CustomMeleeattack(random(4,32),"PFHORAT2","NONE","Staff",1);
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
             goto See;
-        // Pain:
-        //     FIGH B 10 A_FaceTarget;
-        //     goto See;
+        Pain:
+            FIGH B 3 A_FaceTarget;
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
+            goto See;
         Death:
             FIGH I 0 A_FaceTarget;
             FIGH I 8 A_Scream;
@@ -178,6 +202,12 @@ class Fighter3 : Fighter1
     States
     {
         Missile:
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("FaceTarget");
+                }
+            }
             FIGH E 6 A_FaceTarget;
             FIGH FG 6 Bright A_FaceTarget;
             FIGH H 6 Bright A_CustomMissile("FighterProjectile",32,0,random(-1,1),8,random(-1,1));
@@ -197,6 +227,12 @@ class Fighter4 : Fighter1
     States
     {
         Missile:
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("FaceTarget");
+                }
+            }
             FIGH E 6 A_FaceTarget;
             FIGH FG 6 Bright A_FaceTarget;
             FIGH H 6 Bright A_CustomMissile("FighterProjectile",32,0,random(-1,1),8,random(-1,1));

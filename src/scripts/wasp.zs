@@ -36,19 +36,48 @@ class Wasp1 : MarathonActor
     States
     {
         Spawn:
-            WASP A 0 A_StartSound("WASPFLAP");
-            WASP ABCB 6 A_Look;
+            TNT1 A 0
+            {
+                isFloatingActor = false;
+            }
+            // WASP A 0 A_StartSound("WASPFLAP");
+            WASP A 6 A_Look;
             Loop;
         See:
+            TNT1 A 0
+            {
+                isFloatingActor = true;
+            }
             WASP A 0 TargetPlayerAllies();
             WASP A 0 A_StartSound("WASPFLAP");
             WASP AABBCCBB 3 A_Chase;
             Loop;
+        FaceTarget:
+            WASP AABBCCBB 3 A_FaceTarget;
+            TNT1 A 0
+            {
+                if(!cooldown) {
+                    SetStateLabel("See");
+                }
+            }
+            Loop;
         Melee:
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("FaceTarget");
+                }
+            }
             WASP DE 6 A_FaceTarget;
-            WASP F 6 A_CustomMeleeAttack(random(5,12),"WASPSPIT","WASPSPIT");
+            // WASP F 6 A_CustomMeleeAttack(random(5,12),"WASPSPIT","WASPSPIT");
             Goto See;
         Missile:
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("FaceTarget");
+                }
+            }
             WASP DE 6 A_FaceTarget;
             WASP F 6 A_CustomMissile("SpitBall",4,0,random(-1,1),8,random(-1,1));
             Goto See;
@@ -63,6 +92,15 @@ class Wasp1 : MarathonActor
             WASP R 7;
             WASP S -1 RemoveOnLava;
             Stop;
+    }
+
+    override void Tick()
+    {
+        super.Tick();
+        if(CurState == FindState('Spawn'))
+        {
+            Console.Printf("Wasp is in Spawn state");
+        }
     }
 }
 

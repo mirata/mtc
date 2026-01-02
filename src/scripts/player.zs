@@ -8,7 +8,7 @@ class MarathonPlayer : PlayerPawn
         Speed 1;
         Health 100;
         Radius 11;
-        Height 51;
+        Height 50;
         Mass 100;
         PainChance 0;
         Player.ForwardMove .5,.5;
