@@ -405,20 +405,55 @@ class PlatformThinker : Thinker {
                     }
                 }
 
-                if(Utils.OverlapsSector(player, sector)) {
-                    // Conlsole.Printf("Player overlaps sector");
-                    let space = ceilingHeight + floorHeight - player.Height;
-                    if(space <= 0) {
-                        if(self.causesDamage){
-                            if(self.reversesDirectionWhenObstructed) {
+                if (player != null && Utils.OverlapsSector(player, sector))
+                {
+                    // Player overlaps this platform's sector; compute a seam-aware ceiling/floor
+                    // using all sectors the player's radius touches.
+                    Array<int> touched;
+                    Utils.GetOverlappedSectorIndexes(player, touched, 32, 3, player.radius);
+
+                    // double effectiveFloor = -1e30;
+                    double effectiveCeiling = 1e30;
+
+                    string debugLine = "Count: " .. touched.Size() .. " - ";
+
+                    for (int ts = 0; ts < touched.Size(); ts++)
+                    {
+                        let s = level.sectors[touched[ts]];
+                        if (s == null) continue;
+                        effectiveCeiling = min(effectiveCeiling, s.ceilingplane.d);
+                        // effectiveFloor = max(effectiveFloor,-s.floorplane.d);
+                        debugLine = debugLine .. " " .. s.Index() .. "=" .. s.ceilingplane.d;
+                    }
+
+                    // Throttle to avoid spamming the console too hard.
+                    if ((level.time & 3) == 0)
+                    {
+                        debugLine = debugLine .. " min=" .. effectiveCeiling;
+                        // Console.Printf("%s", debugLine);
+                    }
+
+                    // Same clearance math as before, but using the tightest corridor.
+                    let space = effectiveCeiling + floorHeight - player.Height;
+                    Console.Printf("Effective Floor: %f, Effective Ceiling: %f, Space: %f", floorHeight, effectiveCeiling, space);
+                    if (space <= 0)
+                    {
+                        Console.Printf("Player crushed! Space: %f", space);
+                        if (self.causesDamage)
+                        {
+                            if (self.reversesDirectionWhenObstructed)
+                            {
                                 player.A_StartSound("CRUNCH", CHAN_BODY, CHANF_DEFAULT, 1);
                                 player.DamageMobj(player, player, 22, "Crush");
-                            } else {
+                            }
+                            else
+                            {
                                 player.DamageMobj(player, player, 999, "Crush");
                             }
                         }
-                        
-                        if(self.reversesDirectionWhenObstructed) {
+
+                        if (self.reversesDirectionWhenObstructed)
+                        {
                             Console.Printf("Obstruction!: %f", space);
                             self.obstructReverse = true;
                             Console.Printf("Reversing direction due to obstruction");

@@ -208,4 +208,63 @@ class MarathonPlayer : PlayerPawn
     //     // Broadly detect wall contact using actor flags or sector touch
     //     return (flags & MF_TOUCHWALL) != 0;
     // }
+
+    //TAKE@
+
+    // Vector2 PrevVel;
+
+    // override void Tick()
+    // {
+    //     // Save velocity at start of tic
+    //     Vector2 oldVel = (vel.xy);
+
+    //     super.Tick();
+
+    //     // Only operate if player is alive and on ground
+    //     // if (health <= 0 || !bOnGround)
+    //     // {
+    //     //     PrevVel = vel.xy;
+    //     //     return;
+    //     // }
+
+    //     Vector2 newVel = vel.xy;
+
+    //     // If we lost a lot of speed this tic, likely due to wall collision
+    //     double oldSpeed = oldVel.Length();
+    //     double newSpeed = newVel.Length();
+
+    //     // Threshold prevents jitter on small adjustments
+    //     if (oldSpeed > 0.1 && newSpeed < oldSpeed * 0.6)
+    //     {
+    //     Console.Printf("Old Speed: %f, New Speed: %f", oldSpeed, newSpeed);
+    //         // Direction of movement before collision
+    //         Vector2 dir = newVel.Unit();
+
+    //         // Preserve a portion of previous momentum
+    //         double preserve = oldSpeed * 1.0;
+
+    //         // Apply only if current movement roughly matches previous direction
+    //         if (newSpeed > 0.05)
+    //         {
+    //             double alignment = Dot2(newVel.Unit(), dir);
+
+    //             // Prevent corner boosting
+    //             if (alignment > 0.4)
+    //             {
+    //                 Vector2 corrected = dir * oldSpeed;
+
+    //                 // Blend, don't overwrite
+    //                 vel.X = corrected.X; //vel.X * 0.5 + corrected.X * 0.5;
+    //                 vel.Y = corrected.Y; //vel.Y * 0.5 + corrected.Y * 0.5;
+    //             }
+    //         }
+    //     }
+
+    //     PrevVel = vel.xy;
+    // }
+
+    // static double Dot2(Vector2 a, Vector2 b)
+    // {
+    //     return (a.X * b.X) + (a.Y * b.Y);
+    // }
 }
