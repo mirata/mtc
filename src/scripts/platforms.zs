@@ -56,6 +56,7 @@ class PlatformThinker : Thinker {
 
     array <int> sectorIndexes;
     array <int> adjacentPlatformTags;
+    array <int> influenceSectorIndexes;
 
     PlatformThinker Init(
         int tagId, 
@@ -176,7 +177,69 @@ class PlatformThinker : Thinker {
             Polygon.Init(tagId, "PlatformActivate", tagId);
         }
 
+        BuildInfluenceSectors(2);
+
         return self;
+    }
+
+    void BuildInfluenceSectors(int depth)
+    {
+        // Sectors that could plausibly be involved in crush checks for actors on/near this platform.
+        // This is a prefilter only; final overlap is still per-actor.
+        while (self.influenceSectorIndexes.Size() > 0)
+        {
+            self.influenceSectorIndexes.Delete(self.influenceSectorIndexes.Size() - 1, 1);
+        }
+
+        Array<int> open;
+        Array<int> depths;
+
+        for (int i = 0; i < self.sectorIndexes.Size(); i++)
+        {
+            int idx = self.sectorIndexes[i];
+            Utils.AddUniqueInt(self.influenceSectorIndexes, idx);
+            open.Push(idx);
+            depths.Push(0);
+        }
+
+        while (open.Size() > 0)
+        {
+            int last = open.Size() - 1;
+            int curIdx = open[last];
+            int curDepth = depths[last];
+            open.Delete(last, 1);
+            depths.Delete(last, 1);
+
+            if (curDepth >= depth) continue;
+
+            let curSec = level.sectors[curIdx];
+            if (curSec == null) continue;
+
+            for (int li = 0; li < curSec.lines.Size(); li++)
+            {
+                let line = curSec.lines[li];
+                if (line.frontsector != null)
+                {
+                    int nIdx = line.frontsector.Index();
+                    if (!Utils.ContainsInt(self.influenceSectorIndexes, nIdx))
+                    {
+                        Utils.AddUniqueInt(self.influenceSectorIndexes, nIdx);
+                        open.Push(nIdx);
+                        depths.Push(curDepth + 1);
+                    }
+                }
+                if (line.backsector != null)
+                {
+                    int nIdx = line.backsector.Index();
+                    if (!Utils.ContainsInt(self.influenceSectorIndexes, nIdx))
+                    {
+                        Utils.AddUniqueInt(self.influenceSectorIndexes, nIdx);
+                        open.Push(nIdx);
+                        depths.Push(curDepth + 1);
+                    }
+                }
+            }
+        }
     }
     
     void GetAdjacentPlatformTags() {
@@ -405,52 +468,63 @@ class PlatformThinker : Thinker {
                     }
                 }
 
-                if (player != null && Utils.OverlapsSector(player, sector))
+                // Only treat obstructions while the platform is closing (reducing space).
+                bool isClosing = (self.fromFloor && self.isExtending) || (self.fromCeiling && self.isExtending);
+                if (isClosing)
                 {
-                    // Player overlaps this platform's sector; compute a seam-aware ceiling/floor
-                    // using all sectors the player's radius touches.
+                    ThinkerIterator it = ThinkerIterator.Create("Actor");
+                    Actor mo;
                     Array<int> touched;
-                    double effectiveCeiling = 1e30;
-                    Utils.GetOverlappedSectorIndexes(player, touched, 16, 3, player.radius);
+                    bool anyObstruction = false;
 
-                    for (int ts = 0; ts < touched.Size(); ts++)
+                    while (mo = Actor(it.Next()))
                     {
-                        let s = level.sectors[touched[ts]];
-                        if (s == null) continue;
-                        effectiveCeiling = min(effectiveCeiling, s.ceilingplane.d);
-                    }
+                        if (mo == null) continue;
 
-                    // Only treat this as an obstruction while the platform is closing (reducing space).
-                    // When retracting/opening, transient overlaps can happen and we don't want reversal loops.
-                    bool isClosing = (self.fromFloor && self.isExtending) || (self.fromCeiling && self.isExtending);
-                    if (isClosing)
-                    {
-                        // Same clearance math as before, but using the tightest corridor.
-                        let space = effectiveCeiling + floorHeight - player.Height;
-                        // Console.Printf("Effective Floor: %f, Effective Ceiling: %f, Space: %f", floorHeight, effectiveCeiling, space);
+                        // Skip non-living actors.
+                        if (mo.health <= 0) continue;
+
+                        // Prefilter: actor origin sector must be in this platform's influence set.
+                        let originSec = Level.PointInSector((mo.Pos.X, mo.Pos.Y));
+                        if (originSec == null) continue;
+                        if (!Utils.ContainsInt(self.influenceSectorIndexes, originSec.Index())) continue;
+
+                        // Only consider actors overlapping the platform's sector.
+                        if (!Utils.OverlapsSector(mo, sector)) continue;
+
+                        double effectiveCeiling = 1e30;
+                        Utils.GetOverlappedSectorIndexes(mo, touched, 16, 3, mo.radius);
+                        for (int ts = 0; ts < touched.Size(); ts++)
+                        {
+                            let s = level.sectors[touched[ts]];
+                            if (s == null) continue;
+                            effectiveCeiling = min(effectiveCeiling, s.ceilingplane.d);
+                        }
+
+                        let space = effectiveCeiling + floorHeight - mo.Height;
                         if (space <= 0)
                         {
+                            anyObstruction = true;
+
                             if (self.causesDamage)
                             {
                                 if (self.reversesDirectionWhenObstructed)
                                 {
-                                    player.A_StartSound("CRUNCH", CHAN_BODY, CHANF_DEFAULT, 1);
-                                    player.DamageMobj(player, player, 22, "Crush");
+                                    mo.A_StartSound("CRUNCH", CHAN_BODY, CHANF_DEFAULT, 1);
+                                    mo.DamageMobj(mo, mo, 22, "Crush");
                                 }
                                 else
                                 {
-                                    player.DamageMobj(player, player, 999, "Crush");
+                                    mo.DamageMobj(mo, mo, 999, "Crush");
                                 }
                             }
-
-                            if (self.reversesDirectionWhenObstructed)
-                            {
-                                // Console.Printf("Obstruction!: %f", space);
-                                self.obstructReverse = true;
-                                // Console.Printf("Reversing direction due to obstruction");
-                                self.isExtending = !self.isExtending;
-                            }
                         }
+                    }
+
+                    if (anyObstruction && self.reversesDirectionWhenObstructed)
+                    {
+                        self.obstructReverse = true;
+                        self.isExtending = !self.isExtending;
                     }
                 }
 
