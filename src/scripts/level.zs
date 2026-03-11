@@ -38,6 +38,7 @@ class LevelManager : Thinker
         definitions[5].extermination = true;
         definitions[5].rescue = true;
         definitions[6].repair = true;
+        definitions[7].retrieval = true;
         definitions[8].repair = true;
         definitions[9].exploration = true;
         definitions[10].extermination = true;
@@ -103,8 +104,18 @@ class LevelManager : Thinker
             if(Get().player == null) {
                 return false;
             }
-            let inv = Get().player.FindInventory("DefenseChip");
-            return inv != null && inv.amount == 3;
+            let levelIndex = Get().levelIndex;
+            if(levelIndex ==2) {
+                let inv = Get().player.FindInventory("DefenseChip");
+                return inv != null && inv.amount == 3;
+            } else if(levelIndex == 7) {
+                let inv = Get().player.FindInventory("FusionPistol");
+                return inv != null && inv.amount == 1;
+            } else if(levelIndex == 15) {
+                let inv = Get().player.FindInventory("DefenseChip");
+                return inv != null && inv.amount == 1;
+            }
+            return false;
         }
         if(definition.repair) {
             Console.Printf("Check Repair state");
@@ -116,7 +127,7 @@ class LevelManager : Thinker
         }
         if(definition.exploration) {
             Console.Printf("Check Exploration state");
-            return Get().exploredMarkerCount == Get().exploredMarkerTotal    ;
+            return Get().exploredMarkerCount == Get().exploredMarkerTotal;
         }
         return false;
     }

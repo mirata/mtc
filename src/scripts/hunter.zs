@@ -52,7 +52,7 @@ class Hunter1 : MarathonActor
             TNT1 A 0
             {
                 if(cooldown) {
-                    SetStateLabel("FaceTarget");
+                    SetStateLabel("See");
                 }
             }
             HUNT F 6 Bright A_FaceTarget;
@@ -151,7 +151,7 @@ class Hunter2 : Hunter1
             TNT1 A 0
             {
                 if(cooldown) {
-                    SetStateLabel("FaceTarget");
+                    SetStateLabel("See");
                 }
             }
             HUNT F 6 Bright A_FaceTarget;

@@ -97,7 +97,6 @@ ACTOR term9 10008
 
 #include "scripts/pickups.txt"
 #include "scripts/weapons.txt"
-#include "scripts/unused.txt"
 
 ACTOR Invisibility : PowerupGiver replaces blursphere
 {

@@ -16,8 +16,8 @@ class Wasp1 : MarathonActor
         +NOSPLASHALERT;
         +DONTGIB;
         Health 16;
-        Radius 10;
-        Height 20;
+        Radius 13;
+        Height 32;
         Mass 50;
         Speed 10;
         Painchance 200;

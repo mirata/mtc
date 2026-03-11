@@ -2,7 +2,7 @@ class Hound1 : MarathonActor
 {
     Default
     {
-        //marathon scale factor 7
+        scale 0.3125; //with proper scale it should probably be 0.375 vertical due to the vertical warp
         //$Title "Hound Minor"
         //$Angled
         //$Category "Marathon Monsters"
@@ -54,19 +54,12 @@ class Hound1 : MarathonActor
     }
 }
 
-class HoundBBoom : Actor
+class Hound2 : Hound1
 {
     Default
     {
-        +EXTREMEDEATH;
-        speed 1;
-    }
-
-    States
-    {
-        Spawn:
-            TNT1 A 0;
-            TNT1 A 0 A_Explode(128,128);
-            Stop;
+        //$Title "Hound Major"
+        health 1;
+        Translation "48:63=[57,228,139]:[2,15,8]", "64:71=[255,211,155]:[129,85,33]", "71:79=[116,76,30]:[22,14,6]", "96:111=[240,240,240]:[15,15,15]", "80:95=[193,198,234]:[15,15,15]", "128:135=[255,211,155]:[129,85,33]", "136:143=[116,76,30]:[22,14,6]", "144:151=[199,171,155]:[107,79,75]", "152:159=[107,79,75]:[19,11,11]", "32:47=[161,0,100]:[20,0,1]", "176:191=[161,0,100]:[20,0,1]";
     }
 }

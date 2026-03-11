@@ -8,11 +8,15 @@ Some documentation can be found at:
 Often if I want to be sure something is supported, i deep dive the .zs files in the lzdoom source
 - https://github.com/christianhaitian/lzdoom
 
-Please be sure all commands written are supported. It is recommended that you search these sites for suitable commands if ever uncure.
+Please be sure all commands written are supported. It is recommended that you search these sites for suitable commands if ever unsure.
+
+Additionally, I sometimes write UDBScript, a language that automates commands in the Ultimate Doom Builder editor. UDBScript files are JS files but they have a UDBScript set of objects and classes.
+Documentation can be found at:
+- - UDBScript Docs: https://biwa.github.io/udbscript-docs/
 
 ## Verification policy (allowed sources)
 
-When uncertain about whether a ZScript API / flag / property / type exists (or behaves the same in LZDoom), you are allowed and encouraged to verify before answering by consulting:
+When uncertain about whether a UDBScript or ZScript API / flag / property / type exists (or behaves the same in LZDoom), you are allowed and encouraged to verify before answering by consulting:
 
 - ZDoom wiki ZScript pages: https://zdoom.org/wiki/ZScript
 - Staging ZScript docs: https://zdoom-docs.github.io/staging/ZScript.html

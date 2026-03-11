@@ -17,10 +17,10 @@ class Juggernaut : MarathonActor
         +FLOORCLIP;
         obituary "%o was nuked by a Juggernaut.";
         hitobituary "%o was nuked by a Juggernaut.";
-        health 10;
+        health 2000;
         radius 64;
         height 128;
-        mass 100;
+        mass 1000;
         speed 7;
         PainChance 0;
         attacksound "JUGASLT";
@@ -44,27 +44,27 @@ class Juggernaut : MarathonActor
         See:
             JUGG A 3 A_Chase;
             Loop;
-        // Missile:
-        //     JUGG A 0 A_Jump(32,"Missile2");
-        //     JUGG A 2 A_FaceTarget;
-        //     JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-        //     JUGG B 2 Bright;
-        //     JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-        //     JUGG B 2 Bright;
-        //     JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-        //     JUGG B 2 Bright;
-        //     JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-        //     JUGG B 2 Bright;
-        //     JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-        //     JUGG B 2 Bright;
-        //     JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-        //     JUGG B 2 Bright;
-        //     JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-        //     JUGG B 2 Bright;
-        //     JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-        //     JUGG B 2 Bright;
-        //     goto See;
         Missile:
+            JUGG A 0 A_Jump(128,"Missile2");
+            JUGG A 2 A_FaceTarget;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            JUGG C 2 Bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            JUGG B 2 Bright;
+            goto See;
+        Missile2:
             JUGG A 6 A_FaceTarget;
             JUGG A 0 Bright A_CustomMissile("JuggernautRocket", 4, -40, 15, CMF_OFFSETPITCH, 30);
             JUGG A 6 Bright A_CustomMissile("JuggernautRocket", 4, 40, -15, CMF_OFFSETPITCH, 30);

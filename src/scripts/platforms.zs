@@ -397,6 +397,10 @@ class PlatformThinker : Thinker {
     }
 
     override void Tick() {
+        if(sector == null) {
+            return;
+        }
+        
         double originalFloorHeight = sector.floorplane.d;
         double originalCeilingHeight = sector.ceilingplane.d;
 
@@ -472,7 +476,7 @@ class PlatformThinker : Thinker {
                 bool isClosing = (self.fromFloor && self.isExtending) || (self.fromCeiling && self.isExtending);
                 if (isClosing)
                 {
-                    ThinkerIterator it = ThinkerIterator.Create("Actor");
+                    ThinkerIterator it = ThinkerIterator.Create("MarathonActor");
                     Actor mo;
                     Array<int> touched;
                     bool anyObstruction = false;

@@ -48,9 +48,10 @@ class TextureThinker : Thinker {
         if(sectorIndexes.Size() > 0) {
             for(int i=0;i<sectorIndexes.Size(); i++){
                 Sector s = level.sectors[sectorIndexes[i]];
-                let off = s.GetXOffset(0);
+                let index = position == "Floor" ? 0 : 1;
+                let off = s.GetXOffset(index);
                 off += 0.2;
-                s.SetXOffset(0, off);
+                s.SetXOffset(index, off);
             }
         }
 
@@ -67,7 +68,7 @@ class TextureThinker : Thinker {
                     if(line.sidedef[0] != null) {
                         let side = line.sidedef[0];
                         let scale = (val * 0.05) + 1.0;
-                        Console.Printf("Scale: %f", scale);
+                        //Console.Printf("Scale: %f", scale);
                         side.SetTextureXScale(sideWhich, scale);
                         side.SetTextureYScale(sideWhich, scale);
                     };
@@ -83,7 +84,7 @@ class TextureThinker : Thinker {
                     if(line.sidedef[0] != null) {
                         let side = line.sidedef[0];
                         let scale = (val * 0.05) + 1.0;
-                        Console.Printf("Scale: %f", scale);
+                        //Console.Printf("Scale: %f", scale);
                         side.SetTextureXScale(sideWhich, scale);
                         side.SetTextureYScale(sideWhich, scale);
                     };

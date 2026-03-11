@@ -16,11 +16,11 @@ class Compiler1 : MarathonActor
         +DONTGIB;
         +NOBLOOD;
         obituary "%o was scrambled by a compiler.";
-        health 100;
+        health 160;
         radius 14;
         height 56;
         mass 400;
-        speed 6;
+        speed 5;
         painchance 255;
         seesound "";
         painsound "COMPPAIN";
@@ -54,7 +54,7 @@ class Compiler1 : MarathonActor
             TNT1 A 0
             {
                 if(cooldown) {
-                    SetStateLabel("FaceTarget");
+                    SetStateLabel("See");
                 }
             }
 			COMP B 7 Bright A_FaceTarget;
@@ -85,7 +85,7 @@ class Compiler2 : Compiler1
     Default
     {
         //$Title "Compiler Major"
-        health 150;
+        health 200;
         Translation "CompilerMajor";
     }
     States
@@ -105,7 +105,7 @@ class Compiler2 : Compiler1
             TNT1 A 0
             {
                 if(cooldown) {
-                    SetStateLabel("FaceTarget");
+                    SetStateLabel("See");
                 }
             }
             COMP C 7 Bright A_FaceTarget;
@@ -199,7 +199,7 @@ class FriendlyCompiler1 : MarathonAlly
         +DONTGIB;
         +NOBLOOD;
         obituary "%o was scrambled by a compiler.";
-        health 100;
+        health 160;
         radius 14;
         height 56;
         mass 400;
@@ -237,7 +237,7 @@ class FriendlyCompiler1 : MarathonAlly
             TNT1 A 0
             {
                 if(cooldown) {
-                    SetStateLabel("FaceTarget");
+                    SetStateLabel("See");
                 }
             }
 			COMP B 7 Bright A_FaceTarget;
@@ -268,7 +268,7 @@ class FriendlyCompiler2 : FriendlyCompiler1
     Default
     {
         //$Title "Friendly Compiler Major"
-        health 150;
+        health 200;
         Translation "CompilerMajor";
     }
     States
@@ -361,7 +361,7 @@ class CompilerBall : Actor
         Height 10;
         Speed 8;
         FastSpeed 16;
-        Damage 4;
+        DamageFunction GetDamage();
         Projectile;
         SeeSound "COMPATK1";
         DeathSound "COMPATK2";
@@ -370,9 +370,14 @@ class CompilerBall : Actor
         //YScale 0.5;
     }
 
-  bool isClose;
-  double closeDistance;
-  bool played;
+    bool isClose;
+    double closeDistance;
+    bool played;
+    
+    int GetDamage()
+	{
+		return random(30, 50);
+	}
 
     override void Tick()
     {

@@ -47,7 +47,7 @@ class MarathonActor : Actor
         cooldown = false;
         cooldownTicks = 0;
         if(cooldownTimeout == 0) {
-            cooldownTimeout = 35; //Default cooldown timeout
+            cooldownTimeout = 45; //Default cooldown timeout
         }
     }
 
@@ -92,6 +92,19 @@ class MarathonActor : Actor
         }
 
         double targetFloor = floorz;
+
+        // 3D floors: if we're above a 3D floor, treat the highest such floor under us
+        // as the effective minimum floor for float-height logic.
+        let curSec = Level.PointInSector((pos.x, pos.y));
+        if (curSec != null && curSec.Get3DFloorCount() > 0)
+        {
+            double fz;
+            Sector fsec;
+            F3DFloor ff;
+            // Query slightly above our current Z so the floor we're standing on counts.
+            [fz, fsec, ff] = curSec.NextLowestFloorAt(pos.x, pos.y, pos.z + 1.0);
+            targetFloor = max(targetFloor, fz);
+        }
         // if(target)
         // {
         //     targetFloor = target.floorz;

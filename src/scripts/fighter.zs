@@ -13,11 +13,11 @@ class Fighter1 : MarathonActor
         +DONTGIB;
         obituary "%o was smacked down by a fighter.";
         hitobituary "%o was smacked down by a fighter.";
-        health 25;
+        health 40;
         radius 13;
         height 50;
         mass 100;
-        speed 7;
+        speed 5;
         PainChance 256;
         Translation "112:127=[4,198,101]:[0,32,27]", "199:207=[9,191,206]:[0,98,130]", "240:247=[1,69,88]:[0,0,0]";
         seesound "PFHOR";
@@ -58,7 +58,7 @@ class Fighter1 : MarathonActor
             FIGH E 6 A_FaceTarget;
             FIGH A 0 A_StartSound("PFHORAT1");
             FIGH FG 6 Bright A_FaceTarget;
-            FIGH H 6 Bright A_CustomMeleeattack(random(4,32),"PFHORAT2","NONE","Staff",1);
+            FIGH H 6 Bright A_CustomMeleeattack(random(15,25),"PFHORAT2","NONE","Staff",1);
 			TNT1 A 0
             {
                 cooldown = true;
@@ -186,7 +186,8 @@ class Fighter2 : Fighter1
     Default
     {
         //$Title "Fighter Major"
-        health 50;
+        health 80;
+        speed 6;
         Translation "112:127=[161,0,100]:[0,0,0]";
     }
 }
@@ -195,7 +196,8 @@ class Fighter3 : Fighter1
     Default
     {
         //$Title "Projectile Fighter"
-        health 50;
+        health 80;
+        speed 7;
         Translation "112:127=[246,37,0]:[0,0,0]", "200:207=[57,228,139]:[5,44,24]", "240:246=[5,44,24]:[0,0,0]";
     }
 
@@ -211,6 +213,10 @@ class Fighter3 : Fighter1
             FIGH E 6 A_FaceTarget;
             FIGH FG 6 Bright A_FaceTarget;
             FIGH H 6 Bright A_CustomMissile("FighterProjectile",32,0,random(-1,1),8,random(-1,1));
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
             goto See;
     }
 }
@@ -219,9 +225,9 @@ class Fighter4 : Fighter1
     Default
     {
         //$Title "Projectile Fighter Major"
-        health 50;
+        health 80;
+        speed 8;
         Translation "112:127=[12,0,255]:[0,0,0]", "200:207=[57,228,139]:[5,44,24]", "240:246=[5,44,24]:[0,0,0]";
-        speed 9;
     }
 
     States
@@ -239,6 +245,10 @@ class Fighter4 : Fighter1
             FIGH E 6 A_FaceTarget;
             FIGH FG 6 Bright A_FaceTarget;
             FIGH H 6 Bright A_CustomMissile("FighterProjectile",32,0,random(-1,1),8,random(-1,1));
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
             goto See;
     }
 }
@@ -251,7 +261,7 @@ class FighterProjectile : Actor
         Height 8;
         Speed 15;
         FastSpeed 30;
-        Damage 4;
+        DamageFunction GetDamage();
         Projectile;
         DamageType "Staff";
         SeeSound "PFHORAT1";
@@ -265,6 +275,11 @@ class FighterProjectile : Actor
     bool isClose;
     double closeDistance;
     bool played;
+    
+    int GetDamage()
+	{
+		return random(25, 35);
+	}
 
     override void Tick()
     {

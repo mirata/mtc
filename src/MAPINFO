@@ -31,6 +31,7 @@ DoomEdNums
    16081 = "Madd"
    16082 = "BadMadd"
    16090 = "Hound1"
+   16091 = "Hound2"
    16100 = "Leader"
    17000 = "Juggernaut"
    30000 = "UprightWaste"

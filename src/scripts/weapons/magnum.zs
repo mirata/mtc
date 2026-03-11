@@ -1,5 +1,11 @@
 class Magnum : Weapon
 {
+	action void A_FireMagnumBullet()
+	{
+		// A_FireBullets normally multiplies damage by random(1,3) unless FBF_NORANDOM is set.
+		A_FireBullets(0, 0, 1, random(12, 28), "MarathonPuff", FBF_USEAMMO | FBF_NORANDOM);
+	}
+
     Default
     {
         Weapon.SelectionOrder 1900;
@@ -12,12 +18,12 @@ class Magnum : Weapon
         Obituary "%k put a cap in %o's ass.";
         Inventory.Pickupmessage "durandal does not tolerate cheaters....";
         Attacksound "MAGNUM1";
-        +WEAPON.NOALERT;
-        -ACTIVATEIMPACT;
-        -ACTIVATEPCROSS;
         weapon.yadjust 12;
         Weapon.PreferredSkin "PlayerPistol";
         Decal "BulletChip";
+        +WEAPON.NOALERT;
+        -ACTIVATEIMPACT;
+        -ACTIVATEPCROSS;
         -ACTIVATEIMPACT;
     }
   
@@ -34,7 +40,7 @@ class Magnum : Weapon
             Loop;
         Fire:
             MAGN A 0 A_JumpIfNoAmmo("Dry");
-            MAGN B 0 bright A_FireBullets(0,0,1,8,"MarathonPuff",1);
+			MAGN B 0 bright A_FireMagnumBullet;
             MAGN A 0 A_Light1;
             MAGN A 0 A_FireCustomMissile("GunLight",0,0,0,0,0);
             MAGN B 5 bright NoiseAlert(0,0);
@@ -67,6 +73,11 @@ class Magnum : Weapon
 
 class Magnums : Weapon
 {
+	action void A_FireMagnumBullet()
+	{
+		A_FireBullets(0, 0, 1, random(12, 28), "MarathonPuff", FBF_USEAMMO | FBF_NORANDOM);
+	}
+
     Default
     {
         Weapon.SelectionOrder 1600;
@@ -100,7 +111,7 @@ class Magnums : Weapon
             MAG2 A 0 A_JumpIfNoAmmo("Dry");
             MAG2 I 0 A_JumpIfInventory("MagnumClip",1,1);
             goto Fire+9;
-            MAG2 B 0 bright A_FireBullets(0,0,1,8,"MarathonPuff",1);
+			MAG2 B 0 bright A_FireMagnumBullet;
             MAG2 B 0 A_Light1;
             MAG2 B 0 A_FireCustomMissile("GunLight",0,0,0,0,0);
             MAG2 B 2 bright NoiseAlert(0,0);
@@ -109,7 +120,7 @@ class Magnums : Weapon
             MAG2 E 3;
             MAG2 A 0 A_JumpIfInventory("MagnumClip3",1,1);
             goto fire+18;
-            MAG2 F 0 bright A_FireBullets(0,0,1,8,"MarathonPuff",1);
+			MAG2 F 0 bright A_FireMagnumBullet;
             MAG2 F 0 A_Light1;
             MAG2 F 0 A_FireCustomMissile("GunLight",0,0,0,0,0);
             MAG2 F 2 bright NoiseAlert(0,0);

@@ -1,4 +1,4 @@
-/* Glow
+Glow
 {
 	Flats
 	{
@@ -13,9 +13,10 @@
 		4SET05
 	}
 	Texture "1SET19", 2E2EFF, fullbright
-	Texture "2SET12", FFDD10, fullbright
-	Texture "4SET05", 25FF25, fullbright
-} */
+	Texture "2SET12", 010000, fullbright
+	Texture "4SET05", 000100, fullbright
+}
+
 pointlight MarathonPuff1
 {
     color 1.0 1.0 0.0

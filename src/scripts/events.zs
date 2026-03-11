@@ -258,14 +258,35 @@ class VacuumHandler : EventHandler
     int ticks;
 
     override void WorldLoaded(WorldEvent e) {
-        isVacuum = level.airsupply == 0;
-        playedSound = false;
-        ticks = 0;
-
         for (int i = 0; i < Players.size(); i++) {
             self.player = PlayerPawn(Players[i].mo);
             if (self.player != null) {
                 break; // Take the first valid player
+            }
+        }
+
+        isVacuum = level.airsupply == 0;
+        playedSound = false;
+        ticks = 0;
+
+        if (player != null)
+        {
+            if (isVacuum)
+            {
+                // Mark vacuum state for weapon logic etc.
+                if (player.CountInv("Vacuum") <= 0)
+                {
+                    player.GiveInventory("Vacuum", 1);
+                }
+            }
+            else
+            {
+                // Ensure we don't carry the token into non-vacuum maps.
+                int vacuumCount = player.CountInv("Vacuum");
+                if (vacuumCount > 0)
+                {
+                    player.TakeInventory("Vacuum", vacuumCount);
+                }
             }
         }
     }

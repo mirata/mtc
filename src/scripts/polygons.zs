@@ -105,7 +105,6 @@ class PolygonThinker : Thinker {
                 }
             }
         }
-
         if(!self.isTeleporting && self.isTeleportStart && player.vel.Length() < 1.0) {
             if(self.type == "AutomaticExit") {
                 Teleport.TeleportOutMapNumber(self.targetId);
@@ -118,7 +117,8 @@ class PolygonThinker : Thinker {
 
         self.lastSectorNum = currentSectorNum;
 
-        if(self.isTeleporting) {            
+        if(self.isTeleporting) {   
+            self.teleportTicks++;         
             if(self.teleportTicks >= 30) {
                 self.isTeleporting = false;
                 self.teleportTicks = 0;

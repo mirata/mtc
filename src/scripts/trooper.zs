@@ -13,7 +13,7 @@ class Trooper1 : MarathonActor
         +FLOORCLIP;
         obituary "%o was shot by a trooper.";
         hitobituary "%o was shot by a trooper.";
-        health 45;
+        health 110;
         radius 10;
         height 56;
         mass 100;
@@ -29,6 +29,13 @@ class Trooper1 : MarathonActor
         Decal "BulletChip";
         scale 0.375;
         //YScale 0.4;
+    }
+
+    action void A_TrooperFireBullet()
+    {
+        // Make the *final* hitscan damage be exactly 11..19.
+        // A_CustomBulletAttack normally multiplies by random(1,3) unless CBAF_NORANDOM is set.
+        A_CustomBulletAttack(6, 6, 1, random(5, 8), "marathonpuff", 0, CBAF_NORANDOM);
     }
 
 
@@ -61,30 +68,49 @@ class Trooper1 : MarathonActor
             TROP A 0 TargetPlayerAllies();
             TROP ABCD 3 A_Chase;
             loop;
+        FaceTarget:
+            TROP E 3 A_FaceTarget;
+            TNT1 A 0
+            {
+                if(!cooldown) {
+                    SetStateLabel("See");
+                }
+            }
+            Loop;
         Missile:
-            TROP E 1 A_Jump(32,"Missile2");
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("See");
+                }
+            }
+            TROP E 1 A_Jump(256,"Missile2");
             TROP E 2 A_FaceTarget;
-            TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            TROP F 2 bright A_TrooperFireBullet;
             TROP E 2;
-            TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            TROP F 2 bright A_TrooperFireBullet;
             TROP E 2;
-            TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            TROP F 2 bright A_TrooperFireBullet;
             TROP E 2;
-            TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            TROP E 2;
-            TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            TROP E 2;
-            TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            TROP E 2;
-            TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            TROP E 2;
-            TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
-            TROP E 2;
+			TNT1 A 0
+            {
+                cooldown = true; 
+            }
             goto See;
         Missile2:
+            TNT1 A 0
+            {
+                if(cooldown) {
+                    SetStateLabel("See");
+                }
+            }
             TROP E 3 A_FaceTarget;
-            TROP F 3 bright A_CustomMissile("TrooperGrenade",22,0,random(-5,5),8,random(-5,5));
+            TROP F 3 bright A_CustomMissile("TrooperGrenade",22,-16,random(-10,10),8,0);
             TROP E 3;
+			TNT1 A 0
+            {
+                cooldown = true;
+            }
             goto See;
         Death:
             TROP G 0 A_FaceTarget;
@@ -168,38 +194,59 @@ class Trooper2 : Trooper1
   Default
   {
     //$Title "Trooper Major"
-    health 85;
+    health 200;
+    speed 6;
     Translation "112:127=[161,0,100]:[0,0,0]";
   }
 
   States
   {
     Missile:
+        TNT1 A 0
+        {
+            if(cooldown) {
+                SetStateLabel("FaceTarget");
+            }
+        }
       TROP E 1 A_Jump(48,"Missile2");
       TROP E 2 A_FaceTarget;
-      TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            TROP F 2 bright A_TrooperFireBullet;
       TROP E 2;
-      TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            TROP F 2 bright A_TrooperFireBullet;
       TROP E 2;
-      TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            TROP F 2 bright A_TrooperFireBullet;
       TROP E 2;
-      TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            TROP F 2 bright A_TrooperFireBullet;
       TROP E 2;
-      TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            TROP F 2 bright A_TrooperFireBullet;
       TROP E 2;
-      TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            TROP F 2 bright A_TrooperFireBullet;
       TROP E 2;
-      TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            TROP F 2 bright A_TrooperFireBullet;
       TROP E 2;
-      TROP F 2 bright A_CustomBulletAttack(6,6,1,3,"marathonpuff",0,0);
+            TROP F 2 bright A_TrooperFireBullet;
       TROP E 2;
+        TNT1 A 0
+        {
+            cooldown = true;
+        }
       goto See;
     Missile2:
+        TNT1 A 0
+        {
+            if(cooldown) {
+                SetStateLabel("FaceTarget");
+            }
+        }
       TROP E 3 A_FaceTarget;
-      TROP F 3 bright A_CustomMissile("TrooperGrenade",22,0,random(-5,5),8,random(-5,5));
+        TROP F 3 bright A_CustomMissile("TrooperGrenade",22,-16,random(-5,5),8,0);
       TROP E 3;
-      TROP F 3 bright A_CustomMissile("TrooperGrenade",22,0,random(-5,5),8,random(-5,5));
+        TROP F 3 bright A_CustomMissile("TrooperGrenade",22,-16,random(-5,5),8,0);
       TROP E 3;
+        TNT1 A 0
+        {
+            cooldown = true;
+        }
       goto See;
   }
 }
@@ -214,8 +261,11 @@ class TrooperGrenade : Actor
     -DOOMBOUNCE;
     +FORCEXYBILLBOARD;
     +EXTREMEDEATH;
+        Radius 4;
+        Height 8;
     Gravity 1;
     Speed 10;
+    DamageFunction GetDamage();
     seesound "ASSAULT1";
     deathsound "ASSAULT3";
     Decal "Scorch";
@@ -225,9 +275,14 @@ class TrooperGrenade : Actor
     damage 4;
   }
 
-  bool isClose;
+    bool isClose;
     double closeDistance;
     bool played;
+    
+    int GetDamage()
+	{
+		return random(20, 60);
+	}
 
     override void Tick()
     {

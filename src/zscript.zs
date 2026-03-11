@@ -1,6 +1,9 @@
 version "4.6.1"
 
+#include "scripts/puffs.zs"
 #include "scripts/weapons/magnum.zs"
+#include "scripts/weapons/ma75.zs"
+#include "scripts/weapons/alienweapon.zs"
 #include "scripts/player.zs"
 #include "scripts/marathonactor.zs"
 #include "scripts/props.zs"
