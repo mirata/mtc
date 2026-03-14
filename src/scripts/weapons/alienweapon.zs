@@ -41,46 +41,67 @@ class AlienWeapon : Weapon
     States
     {
         Ready:
+            ALEN A 0 A_JumpIfInventory("AlienClip", 1, "ReadyLoop");
+            Goto Expire;
+        ReadyLoop:
             ALEN A 1 A_WeaponReady;
             Loop;
         Select:
             ALEN A 1 A_Raise;
             Loop;
-        DeSelect:
-            ALEN A 0 A_JumpIfNoAmmo("DeSelect2");
+        Deselect:
             ALEN A 1 A_Lower;
             Loop;
-        DeSelect2:
-            ALEN AAAAAAAAAAAA 1 A_Lower;
-            ALEN A 0 A_TakeInventory("AlienWeapon",1);
-            Loop;
+        Expire:
+            ALEN C 3 bright
+            {
+                Console.Printf("AlienWeapon Expire");
+                A_TakeInventory("AlienWeapon", 1);
+                A_TakeInventory("AlienWeaponSequence", 999);
+            }
+            Stop;
         Fire:
+            ALEN A 0 A_JumpIfInventory("AlienClip", 1, "FireDo");
+            Goto Expire;
+        FireDo:
             ALEN A 0 A_Recoil(0.1);
             ALEN A 0 A_Jumpifinventory("alienweaponsequence",2,"Fire3");
             ALEN A 0 A_Jumpifinventory("alienweaponsequence",1,"Fire2");
             ALEN A 0 A_Light2;
             ALEN A 0 A_FireCustomMissile("GunLight",0,0,0,0,0);
-            ALEN B 3 bright A_FireBullets(7.5,0,3,5,"AlienPuff",1,0);
+            ALEN B 3 bright A_FireBullets(7.5,0,3,5,"AlienPuff", FBF_USEAMMO);
             ALEN A 0 A_Light0;
             ALEN A 0 A_GiveInventory("AlienWeaponSequence",1);
+            ALEN A 0 A_JumpIfNoAmmo("Expire");
             ALEN A 1 A_Refire;
-            Goto Ready;
+            ALEN A 0 A_JumpIfInventory("AlienClip", 1, "Ready");
+            Goto Expire;
             Fire2:
+            ALEN A 0 A_JumpIfInventory("AlienClip", 1, "Fire2Do");
+            Goto Expire;
+        Fire2Do:
             ALEN A 0 A_Light2;
             ALEN A 0 A_FireCustomMissile("GunLight",0,0,0,0,0);
-            ALEN C 3 bright A_FireBullets(7.5,0,3,5,"AlienPuff",1,0);
+            ALEN C 3 bright A_FireBullets(7.5,0,3,5,"AlienPuff", FBF_USEAMMO);
             ALEN A 0 A_Light0;
             ALEN A 0 A_GiveInventory("AlienWeaponSequence",1);
+            ALEN A 0 A_JumpIfNoAmmo("Expire");
             ALEN A 1 A_Refire;
-            Goto Ready;
+            ALEN A 0 A_JumpIfInventory("AlienClip", 1, "Ready");
+            Goto Expire;
             Fire3:
+            ALEN A 0 A_JumpIfInventory("AlienClip", 1, "Fire3Do");
+            Goto Expire;
+        Fire3Do:
             ALEN A 0 A_Light2;
             ALEN A 0 A_FireCustomMissile("GunLight",0,0,0,0,0);
-            ALEN D 3 bright A_FireBullets(7.5,0,3,5,"AlienPuff",1,0);
+            ALEN D 3 bright A_FireBullets(7.5,0,3,5,"AlienPuff", FBF_USEAMMO);
             ALEN A 0 A_Light0;
             ALEN A 0 A_TakeInventory("AlienWeaponSequence",2);
+            ALEN A 0 A_JumpIfNoAmmo("Expire");
             ALEN A 1 A_Refire;
-            Goto Ready;
+            ALEN A 0 A_JumpIfInventory("AlienClip", 1, "Ready");
+            Goto Expire;
         Spawn:
             ALEN E -1;
             Stop;

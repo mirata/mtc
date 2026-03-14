@@ -13,7 +13,7 @@ class Enforcer1 : MarathonActor
         +DONTGIB;
         obituary "%o was killed by an enforcer.";
         hitobituary "%o was smacked down by an enforcer.";
-        health 25;
+        health 120;
         radius 13;
         height 51;
         mass 100;
@@ -60,6 +60,7 @@ class Enforcer1 : MarathonActor
             goto See;
         Death:
             ENFO E 0 A_FaceTarget;
+            TNT1 A 0 A_SpawnItem("AlienPickup");
             ENFO E 8 A_Scream;
             ENFO E 1 A_CheckFloor("Death2");
             Wait;
@@ -124,7 +125,7 @@ class Enforcer2 : Enforcer1
     Default
     {
         //$Title "Enforcer Major"
-        health 50;
+        health 160;
         Translation "192:207=[57,228,139]:[2,15,8]", "168:191=[161,0,100]:[51,0,32]", "208:223=[237,215,20]:[54,49,7]";
     }
 }

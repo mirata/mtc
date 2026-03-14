@@ -228,8 +228,6 @@ actor FusionPistolPickup : CustomInventory replaces plasmarifle
 {
   Inventory.PickupMessage "Zeus-Class Fusion Pistol"
   scale 0.5
-  //YScale 0.5
-  Translation "199:207=[2,169,183]:[1,68,80]", "240:247=[0,87,102]:[0,0,0]"
   States
   {
   Spawn:

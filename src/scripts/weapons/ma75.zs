@@ -162,21 +162,24 @@ class MA75AssaultRifle : Weapon
             ASSU A 0 A_JumpIfInventory("Vacuum",1,"Vacuum");
             ASSU A 0 NoiseAlert(0,0);
             ASSU A 0 A_GunFlash;
-            ASSU A 0 A_Jump(170,"Fire22","Fire32");
+			ASSU A 0 A_Jump(170,"Fire22","Fire23");
 			ASSU B 4 bright A_MA75_FireGrenade;
-            ASSU A 0 A_Jumpifnoammo("dry2");
-            Goto Ready2;
+			Goto AltCooldown;
         Fire22:
             ASSU A 0 A_Jumpifnoammo("dry2");
 			ASSU C 4 bright A_MA75_FireGrenade;
-            ASSU A 0 A_Jumpifnoammo("dry2");
-            Goto Ready2;
+			Goto AltCooldown;
         Fire23:
             ASSU A 0 A_Jumpifnoammo("dry2");
 			ASSU D 4 bright A_MA75_FireGrenade;
-            ASSU A 0 A_Jumpifnoammo("dry2");
-            Goto Ready2;
+			Goto AltCooldown;
+		AltCooldown:
+            // 4 tics firing + 14 tics cooldown = 18 tics (~0.51 seconds).
+            ASSU A 25;
+			ASSU A 0 A_Jumpifnoammo("dry2");
+			Goto Ready2;
         Dry2:
+            ASSU A 0 A_TakeInventory("MA75AssaultRifle", 1);
             ASSU A 0 A_JumpIfInventory("grenadeammo",1,"Reload2");
             ASSU A 24 A_StartSound("DRY", CHAN_WEAPON);
             goto Ready2;
@@ -206,12 +209,13 @@ class MA75AssaultRiflePickup : CustomInventory replaces chaingun
     ASSU G -1;
     Loop;
   Pickup:
-    TNT1 A 0 A_JumpIfInventory("MA75AssaultRifle",1,3);
+    TNT1 A 0 A_JumpIfInventory("MA75AssaultRifle", 1, "PickupAmmo");
     TNT1 A 0 A_GiveInventory("MA75AssaultRifle");
 	//TNT1 A 0 A_GiveInventory("ma75grenadelauncher");
-    Stop;
-    TNT1 A 0 A_GiveInventory("AssaultAmmo",1);
-	TNT1 A 0 A_GiveInventory("GrenadeAmmo",1);
+    TNT1 A 0 A_GiveInventory("grenadeclip", 7); // start with grenades loaded
+PickupAmmo:
+    TNT1 A 0 A_GiveInventory("AssaultAmmo", 1);
+	TNT1 A 0 A_GiveInventory("GrenadeAmmo", 1);
     Stop;
   }
 }
