@@ -11,16 +11,26 @@ class TextureThinker : Thinker {
 
     int ticks;
 
+    bool mediaInited;
+    double angle;
+    double magnitude;
+
     TextureThinker Init(
         int tagId,
         string position,
-        string type) {
+        string type,
+        double angle, 
+        double magnitude) {
         self.tagId = tagId;
         self.position = position;
         self.type = type;
 
         self.sideWhich = GetSideType(position);
         self.ticks = 0;
+
+        self.mediaInited = magnitude != 0;
+        self.angle = angle;
+        self.magnitude = magnitude;
 
         if(position == "Floor" || position == "Ceiling") {
             SectorTagIterator sti = level.CreateSectorTagIterator(tagId);
@@ -49,9 +59,20 @@ class TextureThinker : Thinker {
             for(int i=0;i<sectorIndexes.Size(); i++){
                 Sector s = level.sectors[sectorIndexes[i]];
                 let index = position == "Floor" ? 0 : 1;
-                let off = s.GetXOffset(index);
-                off += 0.2;
-                s.SetXOffset(index, off);
+                if (mediaInited) {
+                Console.Printf("Index: %d, Angle: %f, Magnitude: %f", index, angle, magnitude);
+                    double dx = Cos(angle - 90) * magnitude * 0.035;
+                    double dy = Sin(angle - 90) * magnitude * 0.035;
+
+                    let offx = s.GetXOffset(index);
+                    let offy = s.GetYOffset(index);
+                    s.SetXOffset(index, offx + dx);
+                    s.SetYOffset(index, offy + dy);
+                } else {
+                    let off = s.GetXOffset(index);
+                    off += 0.2;
+                    s.SetXOffset(index, off);
+                }
             }
         }
 
@@ -173,22 +194,27 @@ class Transfer play {
         int tagId, 
         string position,
         string type) {
-        TextureThinker p = GetInstance(tagId);
+        TextureThinker p = GetInstance(tagId, position);
         if(p == null) {
-            new ("TextureThinker").Init(
-                tagId, 
-                position,
-                type);
+            new ("TextureThinker").Init(tagId, position, type, 0, 0);
         }
     }
 
-    static TextureThinker GetInstance(int tagId) {
+    static void InitMedia(int tagId, double angle, double magnitude) {
+        let position = "Ceiling"; // default to ceiling for media thinkers
+        TextureThinker p = GetInstance(tagId, position);
+        if (p == null) {
+            new ("TextureThinker").Init(tagId, position, "", angle, magnitude);
+        }
+    }
+
+    static TextureThinker GetInstance(int tagId, string position) {
         ThinkerIterator it = ThinkerIterator.Create("TextureThinker");
         TextureThinker p = null;
 
         while (p = TextureThinker(it.next()))
         {
-            if(p.tagId == tagId) {
+            if(p.tagId == tagId && p.position == position) {
                 //Console.Printf("Found existing thinker for tag %d", tagId);
                 return p;
             }
